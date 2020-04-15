@@ -1,0 +1,36 @@
+name: Prerelease PR
+
+on: [pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: yarn
+
+      - name: Build
+        working-directory: packages/cli
+        run: yarn build
+
+      - name: Configure NPM for Publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
+      - name: Publish (eslint-config)
+        working-directory: packages/eslint-config
+        run: |
+          npm --no-git-tag-version version prerelease --preid=pr.${PULL_REQUEST_NUMBER}.commit.$(git rev-parse --short HEAD)
+          npm publish --tag pr --access public
+
+      - name: Publish (cli)
+        working-directory: packages/cli
+        run: |
+          npm --no-git-tag-version version prerelease --preid=pr.${PULL_REQUEST_NUMBER}.commit.$(git rev-parse --short HEAD)
+          npm publish --tag pr --access public
