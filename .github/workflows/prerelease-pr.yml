@@ -3,7 +3,7 @@ name: Prerelease PR
 on: [pull_request]
 
 jobs:
-  verify:
+  pipeline:
     runs-on: ubuntu-latest
     env:
       PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
