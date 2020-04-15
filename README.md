@@ -1,6 +1,6 @@
 # TS Engine
 
-![Pipeline](https://github.com/ts-engine/ts-engine/workflows/Pipeline/badge.svg)
+![Verify](https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg)
 
 Zero config CLI for writing TypeScript packages.
 
