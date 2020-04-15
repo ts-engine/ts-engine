@@ -8,7 +8,7 @@ This is a Yarn Workspace's powered mono repo and some packages depend on other p
 yarn
 ```
 
-## Running tests in `packages/cli`
+## Running tests in `packages/cli`
 
 Because all tests are e2e tests and the test script uses TS Engine itself to run we need to build the CLI tool first.
 
@@ -32,7 +32,7 @@ yarn lint
 
 ## Publishing
 
-Each pushed commit is built, verified and published as a prerelease to npm with the commit id appended to the version. Checkout GitHub Actions - https://github.com/ts-engine/ts-engine/actions.
+Each pushed commit is built, verified and pull requests are published as a prerelease to npm with the pull request number and commit id appended to the version. Checkout GitHub Actions - https://github.com/ts-engine/ts-engine/actions.
 
 When a new release is ready we do the proper release manually using the npm CLI.
 
