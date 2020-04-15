@@ -1,0 +1,20 @@
+{
+  "name": "@ts-engine/eslint-config",
+  "version": "1.0.0",
+  "description": "@ts-engine's ESLint config.",
+  "repository": {
+    "url": "https://github.com/ts-engine/ts-engine"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^2.0.4"
+  }
+}
