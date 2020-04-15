@@ -6,6 +6,17 @@
     "url": "https://github.com/ts-engine/ts-engine"
   },
   "license": "MIT",
+  "keywords": [
+    "typescript",
+    "cli",
+    "packaging",
+    "bundling",
+    "rollup",
+    "linting",
+    "eslint",
+    "testing",
+    "jest"
+  ],
   "bin": {
     "ts-engine": "./dist/cli.js"
   },
@@ -16,13 +27,8 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "@babel/preset-typescript": "^7.9.0",
+    "@ts-engine/babel-preset": "^1.0.0",
     "@ts-engine/eslint-config": "^1.0.0",
     "@types/eslint": "^6.1.9",
     "@types/fs-extra": "^8.1.0",
@@ -32,7 +38,6 @@
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "chalk": "^4.0.0",
-    "core-js": "^3.6.4",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",

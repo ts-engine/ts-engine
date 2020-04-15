@@ -6,6 +6,13 @@
     "url": "https://github.com/ts-engine/ts-engine"
   },
   "license": "MIT",
+  "keywords": [
+    "linting",
+    "eslint",
+    "config",
+    "eslint-config",
+    "prettier"
+  ],
   "main": "index.js",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^2.26.0",
@@ -15,6 +22,9 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.8.2",
     "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^2.0.4"
+    "prettier": "^2.0.4",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0"
   }
 }

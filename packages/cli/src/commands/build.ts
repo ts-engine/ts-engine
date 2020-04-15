@@ -10,6 +10,7 @@ import { print, printError } from "../utils/print";
 import { getConsumerPackage } from "../utils/package";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getTsEngineConfig } from "../config/ts-engine";
+import { getBabelConfigFilename } from "../config/babel";
 
 const tsEngineConfig = getTsEngineConfig();
 const extensions = tsEngineConfig.extensions.map((x) => `.${x}`);
@@ -30,11 +31,11 @@ const createConfig = async () => {
       babel({
         exclude: "node_modules/**",
         extensions,
-        configFile: require.resolve("../tool-files/babel.config.js"),
+        configFile: getBabelConfigFilename(),
       }),
       terser(),
     ],
-    external: getConsumerPackage().json?.dependencies ?? [],
+    external: Object.keys(getConsumerPackage().json?.dependencies ?? {}),
   };
 };
 

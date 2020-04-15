@@ -11,6 +11,8 @@ module.exports = {
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:jest/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
   ],
   globals: {
     console: "readonly",
@@ -24,7 +26,15 @@ module.exports = {
     jsx: true,
     sourceType: "module",
   },
-  plugins: ["prettier", "@typescript-eslint", "import", "jest"],
+  plugins: [
+    "prettier",
+    "@typescript-eslint",
+    "import",
+    "jest",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+  ],
   rules: {
     "prettier/prettier": "error",
     "no-var": "error",
@@ -52,6 +62,9 @@ module.exports = {
           ".cjs",
         ],
       },
+    },
+    react: {
+      version: "detect",
     },
   },
 };
