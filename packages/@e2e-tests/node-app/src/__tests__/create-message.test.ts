@@ -1,4 +1,4 @@
-import { createMessage } from "../createMessage";
+import { createMessage } from "../create-message";
 
 describe("createMessage", () => {
   it("should create a message", () => {

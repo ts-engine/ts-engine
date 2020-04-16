@@ -1,7 +1,7 @@
 {
   "name": "@ts-engine/cli",
   "version": "1.0.0",
-  "description": "Zero config CLI for writing TypeScript packages.",
+  "description": "Power TypeScript packages and reduce your config overhead.",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
@@ -37,6 +37,7 @@
     "@types/node": "^13.11.0",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
+    "builtin-modules": "^3.1.0",
     "chalk": "^4.0.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",

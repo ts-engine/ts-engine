@@ -1,0 +1,22 @@
+{
+  "name": "@e2e-tests/test-utils",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && ts-engine build",
+    "lint": "ts-engine lint",
+    "typecheck": "ts-engine typecheck"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "^1.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "fs-extra": "^9.0.0",
+    "strip-ansi": "^6.0.0",
+    "terminate": "^2.1.2"
+  }
+}

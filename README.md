@@ -2,7 +2,7 @@
 
 ![Verify](https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg)
 
-Zero config CLI for writing TypeScript packages.
+Power TypeScript packages and reduce your config overhead.
 
 # Packages
 

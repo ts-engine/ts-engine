@@ -5,6 +5,7 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 const babel = require("rollup-plugin-babel");
 import { terser } from "rollup-plugin-terser";
+import builtInModules from "builtin-modules";
 import type { Command } from "../types";
 import { print, printError } from "../utils/print";
 import { getConsumerPackage } from "../utils/package";
@@ -27,6 +28,7 @@ const createConfig = async () => {
       commonjs(),
       resolve({
         extensions,
+        preferBuiltins: true,
       }),
       babel({
         exclude: "node_modules/**",
@@ -35,7 +37,10 @@ const createConfig = async () => {
       }),
       terser(),
     ],
-    external: Object.keys(getConsumerPackage().json?.dependencies ?? {}),
+    external: [
+      ...builtInModules,
+      ...Object.keys(getConsumerPackage().json?.dependencies ?? {}),
+    ],
   };
 };
 
