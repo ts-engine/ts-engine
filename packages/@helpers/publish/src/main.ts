@@ -44,9 +44,14 @@ const updatePackageVersions = (packages: Package[], version: string) => {
   }
 };
 
-const publishPackages = (packages: Package[], tag: string = "latest") => {
+const publishPackages = (
+  packages: Package[],
+  version: string,
+  tag: string = "latest"
+): Promise<void> => {
+  const successes: Package[] = [];
   for (let pkg of packages) {
-    console.log(`Publishing ${chalk.greenBright(pkg.name)}`);
+    console.log(`Publishing ${chalk.greenBright(pkg.name)}...`);
     const result = spawnSync(
       "npm",
       ["publish", "--access", "public", "--tag", tag],
@@ -54,12 +59,32 @@ const publishPackages = (packages: Package[], tag: string = "latest") => {
         cwd: pkg.dir,
       }
     );
-    console.log(
-      result.status === 0
-        ? chalk.greenBright("Success")
-        : chalk.redBright("Failed")
-    );
+    if (result.status === 0) {
+      console.log(chalk.greenBright("Success"));
+      successes.push(pkg);
+    } else {
+      console.log(chalk.redBright("Failed"));
+      break;
+    }
   }
+
+  if (successes.length === packages.length) {
+    return Promise.resolve();
+  }
+
+  for (let pkg of successes) {
+    console.log(`Rolling back ${chalk.greenBright(pkg.name)}...`);
+    const result = spawnSync("npm", ["unpublish", `${pkg.name}@${version}`], {
+      cwd: pkg.dir,
+    });
+    if (result.status === 0) {
+      console.log(chalk.greenBright("Success"));
+    } else {
+      console.log(chalk.redBright("Failed"));
+    }
+  }
+
+  return Promise.reject();
 };
 
 const updateGit = (version: string) => {
@@ -86,6 +111,18 @@ const updateGit = (version: string) => {
   spawnSync("git", ["push", version]);
 };
 
+const resetPackageVersions = (packages: Package[]) => {
+  for (let pkg of packages) {
+    console.log(`Resetting ${chalk.greenBright(pkg.name)}'s version...`);
+    const result = spawnSync("npm", ["version", pkg.version], { cwd: pkg.dir });
+    if (result.status === 0) {
+      console.log(chalk.greenBright("Success"));
+    } else {
+      console.log(chalk.redBright("Failed"));
+    }
+  }
+};
+
 const run = async () => {
   switch (command) {
     case "plan": {
@@ -99,9 +136,13 @@ const run = async () => {
       const packages = await getPackagesToPublish();
       updatePackageVersions(packages, options.version);
       console.log();
-      publishPackages(packages, options.tag);
-      console.log();
-      updateGit(options.version);
+      try {
+        await publishPackages(packages, options.version, options.tag);
+        console.log();
+        updateGit(options.version);
+      } catch {
+        resetPackageVersions(packages);
+      }
       break;
     }
     default: {

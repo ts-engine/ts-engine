@@ -42,6 +42,7 @@ export interface Package {
   dir: string;
   name: string;
   private: boolean;
+  version: string;
 }
 
 export const getPackages = async (currentDir: string): Promise<Package[]> => {
