@@ -11,6 +11,8 @@ module.exports = {
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:jest/recommended",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
   ],
   globals: {
     console: "readonly",
@@ -24,7 +26,15 @@ module.exports = {
     jsx: true,
     sourceType: "module",
   },
-  plugins: ["prettier", "@typescript-eslint", "import", "jest"],
+  plugins: [
+    "prettier",
+    "@typescript-eslint",
+    "import",
+    "jest",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+  ],
   rules: {
     "prettier/prettier": "error",
     "no-var": "error",
@@ -37,6 +47,8 @@ module.exports = {
     "import/no-unresolved": "off",
     // Advanced users are fine importing jest
     "jest/no-jest-import": "off",
+    // Not always true, when using libraries like RTL you don't always need expect calls
+    "jest/expect-expect": "off",
   },
   settings: {
     "import/resolver": {
@@ -52,6 +64,9 @@ module.exports = {
           ".cjs",
         ],
       },
+    },
+    react: {
+      version: "detect",
     },
   },
 };

@@ -1,0 +1,24 @@
+name: Verify e2e
+
+on: [push]
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: yarn
+
+      - name: Build cli
+        working-directory: packages/cli
+        run: yarn build
+
+      - name: Build test utils
+        working-directory: packages/@e2e-tests/test-utils
+        run: yarn build
+
+      - name: Run e2e tests
+        run: yarn test:e2e

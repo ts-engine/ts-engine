@@ -1,0 +1,25 @@
+name: Verify cli
+
+on: [push]
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: yarn
+
+      - name: Build
+        working-directory: packages/cli
+        run: yarn build
+
+      - name: Typecheck
+        working-directory: packages/cli
+        run: yarn typecheck
+
+      - name: Lint
+        working-directory: packages/cli
+        run: yarn lint

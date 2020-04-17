@@ -5,11 +5,13 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 const babel = require("rollup-plugin-babel");
 import { terser } from "rollup-plugin-terser";
+import builtInModules from "builtin-modules";
 import type { Command } from "../types";
 import { print, printError } from "../utils/print";
 import { getConsumerPackage } from "../utils/package";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getTsEngineConfig } from "../config/ts-engine";
+import { getBabelConfigFilename } from "../config/babel";
 
 const tsEngineConfig = getTsEngineConfig();
 const extensions = tsEngineConfig.extensions.map((x) => `.${x}`);
@@ -26,15 +28,19 @@ const createConfig = async () => {
       commonjs(),
       resolve({
         extensions,
+        preferBuiltins: true,
       }),
       babel({
         exclude: "node_modules/**",
         extensions,
-        configFile: require.resolve("../tool-files/babel.config.js"),
+        configFile: getBabelConfigFilename(),
       }),
       terser(),
     ],
-    external: getConsumerPackage().json?.dependencies ?? [],
+    external: [
+      ...builtInModules,
+      ...Object.keys(getConsumerPackage().json?.dependencies ?? {}),
+    ],
   };
 };
 

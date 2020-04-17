@@ -11,7 +11,6 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "^1.0.0",
-    "@ts-engine/eslint-config": "^1.0.0"
+    "@ts-engine/cli": "^1.0.0"
   }
 }
