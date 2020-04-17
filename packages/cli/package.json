@@ -44,7 +44,6 @@
     "jest": "^25.2.4",
     "minimist": "^1.2.5",
     "prettier": "^2.0.2",
-    "regenerator-runtime": "^0.13.5",
     "rollup": "^2.3.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
