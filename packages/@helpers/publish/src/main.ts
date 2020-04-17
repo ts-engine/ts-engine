@@ -47,7 +47,9 @@ const updatePackageVersions = (packages: Package[], version: string) => {
 const publishPackages = (packages: Package[], tag: string = "latest") => {
   for (let pkg of packages) {
     console.log(`Publishing ${chalk.greenBright(pkg.name)}`);
-    spawnSync("npm", ["publish", "--access", "public"], { cwd: pkg.dir });
+    spawnSync("npm", ["publish", "--access", "public", "--tag", tag], {
+      cwd: pkg.dir,
+    });
   }
 };
 
