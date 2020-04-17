@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("build-error", () => {
   it("should print error and exit with 1 if no entry file", async () => {

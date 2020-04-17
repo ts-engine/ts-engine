@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("test", () => {
   it("run tests that contain JSX", async () => {

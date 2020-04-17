@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("lint-issues", () => {
   it("should print linting issues with auto fix suggestion and exit with 1", async () => {

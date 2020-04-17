@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 import packageJson from "@ts-engine/cli/package.json";
 
 describe("--version", () => {

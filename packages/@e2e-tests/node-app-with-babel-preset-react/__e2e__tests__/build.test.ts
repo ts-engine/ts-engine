@@ -1,4 +1,4 @@
-import { fileSystem, runCliCommand } from "@e2e-tests/test-utils";
+import { fileSystem, runCliCommand } from "@helpers/test-utils";
 
 describe("build", () => {
   beforeEach(async () => {

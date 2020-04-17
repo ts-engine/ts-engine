@@ -1,10 +1,11 @@
 import chalk from "chalk";
 import * as rollup from "rollup";
-const json = require("rollup-plugin-json");
+import json from "rollup-plugin-json";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-const babel = require("rollup-plugin-babel");
+import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
+import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
 import builtInModules from "builtin-modules";
 import type { Command } from "../types";
 import { print, printError } from "../utils/print";
@@ -24,6 +25,7 @@ const createConfig = async () => {
       format: "cjs",
     },
     plugins: [
+      preserveShebangs(),
       json(),
       commonjs(),
       resolve({
@@ -34,6 +36,7 @@ const createConfig = async () => {
         exclude: "node_modules/**",
         extensions,
         configFile: getBabelConfigFilename(),
+        runtimeHelpers: true,
       }),
       terser(),
     ],
@@ -71,7 +74,7 @@ export const build: Command<BuildCommandOptions> = {
       const config = await createConfig();
       if (parsedOptions.watch) {
         // Setup watcher
-        const watcher = rollup.watch(config as any);
+        const watcher = rollup.watch({ ...(config as any) });
 
         return new Promise(() => {
           watcher.on("event", (event) => {

@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("unknown", () => {
   it("should print help suggestion for unknown command and exit with status 1", async () => {

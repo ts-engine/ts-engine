@@ -1,4 +1,4 @@
-import { fileSystem, runCliCommand } from "@e2e-tests/test-utils";
+import { fileSystem, runCliCommand } from "@helpers/test-utils";
 
 describe("typecheck", () => {
   it("exits successfully on well typed code base", async () => {

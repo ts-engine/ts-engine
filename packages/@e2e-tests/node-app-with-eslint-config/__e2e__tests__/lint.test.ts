@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("lint", () => {
   it("picks up .eslintrc config file and exits successfully", async () => {

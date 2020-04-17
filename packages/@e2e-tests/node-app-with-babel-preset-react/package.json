@@ -16,7 +16,7 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@e2e-tests/test-utils": "^1.0.0",
+    "@helpers/test-utils": "^1.0.0",
     "@ts-engine/babel-preset": "^1.0.0",
     "@ts-engine/babel-preset-react": "^1.0.0",
     "@ts-engine/cli": "^1.0.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@e2e-tests/test-utils",
+  "name": "@helpers/test-utils",
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
