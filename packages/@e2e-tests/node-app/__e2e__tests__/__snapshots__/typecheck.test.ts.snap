@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`typecheck type declaration files when run in emit mode: create-message.d.ts 1`] = `
+"export declare const createMessage: (name: string) => string;
+"
+`;
+
+exports[`typecheck type declaration files when run in emit mode: main.d.ts 1`] = `
+"export {};
+"
+`;

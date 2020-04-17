@@ -1,4 +1,4 @@
-name: Verify
+name: Verify cli
 
 on: [push]
 
@@ -19,10 +19,6 @@ jobs:
       - name: Typecheck
         working-directory: packages/cli
         run: yarn typecheck
-
-      - name: Test
-        working-directory: packages/cli
-        run: yarn test
 
       - name: Lint
         working-directory: packages/cli

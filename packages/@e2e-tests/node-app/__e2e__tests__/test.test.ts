@@ -2,7 +2,7 @@ import { runCliCommand } from "@e2e-tests/test-utils";
 
 describe("test", () => {
   it("run tests", async () => {
-    const runner = runCliCommand("yarn run test");
+    const runner = runCliCommand("yarn run ts-engine test");
 
     // Wait for tool to complete
     const statusCode = await runner.waitForStatusCode();
@@ -21,7 +21,7 @@ describe("test", () => {
   });
 
   it("forwards jests status code", async () => {
-    const runner = runCliCommand("yarn run test no-tests.ts");
+    const runner = runCliCommand("yarn run ts-engine test no-tests.ts");
 
     // Wait for tool to complete
     const statusCode = await runner.waitForStatusCode();
@@ -36,7 +36,9 @@ describe("test", () => {
   });
 
   it("forwards args onto jest", async () => {
-    const runner = runCliCommand("yarn run test --passWithNoTests no-tests.ts");
+    const runner = runCliCommand(
+      "yarn run ts-engine test --passWithNoTests no-tests.ts"
+    );
 
     // Wait for tool to complete
     const statusCode = await runner.waitForStatusCode();

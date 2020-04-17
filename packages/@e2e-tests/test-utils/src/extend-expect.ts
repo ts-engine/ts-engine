@@ -61,7 +61,7 @@ export const extendExpect = () => {
   expect.extend({
     toContainInOrder: (received: string[], expected: string[]) => {
       const recievedStr = chalk.red(JSON.stringify(received, null, 2));
-      const expectedStr = chalk.green(JSON.stringify(received, null, 2));
+      const expectedStr = chalk.green(JSON.stringify(expected, null, 2));
 
       const result = containsInOrder(received, expected);
 

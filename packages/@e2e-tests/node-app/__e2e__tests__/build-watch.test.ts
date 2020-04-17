@@ -12,7 +12,7 @@ describe("build-watch", () => {
   });
 
   it("should rebuild on changes", async () => {
-    const runner = runCliCommand("yarn run build --watch");
+    const runner = runCliCommand("yarn run ts-engine build --watch");
 
     // Wait for tool to start waiting for changes
     await runner.waitUntilStdoutLine("Watching for changes...");

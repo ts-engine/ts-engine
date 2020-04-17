@@ -15,7 +15,7 @@ export const getA = () => {
   });
 
   it("should print fixable issues and suggest auto fix", async () => {
-    const runner = runCliCommand("yarn run lint");
+    const runner = runCliCommand("yarn run ts-engine lint");
 
     // Wait for tool to complete
     const statusCode = await runner.waitForStatusCode();
@@ -33,7 +33,7 @@ export const getA = () => {
   });
 
   it("should fix fixable linting issues", async () => {
-    const runner = runCliCommand("yarn run lint --fix");
+    const runner = runCliCommand("yarn run ts-engine lint --fix");
 
     // Wait for tool to complete
     const statusCode = await runner.waitForStatusCode();

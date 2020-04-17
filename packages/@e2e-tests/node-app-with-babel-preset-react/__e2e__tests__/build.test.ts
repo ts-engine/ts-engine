@@ -5,7 +5,7 @@ describe("build", () => {
     await fileSystem.deleteDir("dist");
   });
 
-  it("should build the code", async () => {
+  it("should build the code containing JSX", async () => {
     const runner = runCliCommand("yarn run ts-engine build");
 
     // Wait for tool to complete

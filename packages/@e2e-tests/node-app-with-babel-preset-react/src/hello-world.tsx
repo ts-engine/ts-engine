@@ -1,10 +1,10 @@
 import React from "react";
-import { renderToString } from "react-dom/server";
+import ReactDom from "react-dom/server";
 
-const HelloWorld = () => {
+export const HelloWorld = () => {
   return <span>hello world</span>;
 };
 
 export const render = (): string => {
-  return renderToString(<HelloWorld />);
+  return ReactDom.renderToStaticMarkup(<HelloWorld />);
 };

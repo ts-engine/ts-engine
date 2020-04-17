@@ -23,7 +23,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc --project tsconfig.build.json && cp -R src/tool-files dist && rm -rf node_modules && yarn",
     "lint": "ts-engine lint",
-    "test": "ts-engine test --runInBand --testTimeout=20000",
+    "test": "ts-engine test",
     "typecheck": "tsc"
   },
   "dependencies": {

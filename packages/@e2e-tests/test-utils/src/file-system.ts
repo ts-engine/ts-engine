@@ -31,3 +31,7 @@ export const editFileTemporarily = async (
 export const deleteDir = (dir: string): Promise<void> => {
   return fs.remove(dir);
 };
+
+export const fileExists = (filename: string): Promise<boolean> => {
+  return fs.pathExists(filename);
+};

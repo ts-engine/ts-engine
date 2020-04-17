@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`build should build the code: original 1`] = `
+exports[`build-watch should rebuild on changes: original 1`] = `
 "\\"use strict\\";console.log(\\"Hello \\".concat(\\"Lee\\",\\"!\\"));
 "
 `;
 
-exports[`build should build the code: updated 1`] = `
+exports[`build-watch should rebuild on changes: updated 1`] = `
 "\\"use strict\\";console.log(\\"new content\\");
 "
 `;

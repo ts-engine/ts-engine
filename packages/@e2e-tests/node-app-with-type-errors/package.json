@@ -1,5 +1,5 @@
 {
-  "name": "@e2e-tests/node-app-with-react-support",
+  "name": "@e2e-tests/node-app-with-type-errors",
   "version": "1.0.0",
   "description": "A e2e test package",
   "license": "MIT",
@@ -12,19 +12,12 @@
     "build": "ts-engine build",
     "lint": "ts-engine lint",
     "test": "ts-engine test",
-    "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__",
+    "test:e2e": "jest --runInBand __e2e__tests__",
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@e2e-tests/test-utils": "^1.0.0",
-    "@ts-engine/babel-preset": "^1.0.0",
-    "@ts-engine/babel-preset-react": "^1.0.0",
     "@ts-engine/cli": "^1.0.0",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.6"
-  },
-  "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "@ts-engine/babel-preset": "^1.0.0",
+    "@e2e-tests/test-utils": "^1.0.0"
   }
 }
