@@ -21,4 +21,4 @@ jobs:
         run: yarn build
 
       - name: Run e2e tests
-        run: npx mono run test:e2e -i @e2e-tests/*
+        run: yarn test:e2e
