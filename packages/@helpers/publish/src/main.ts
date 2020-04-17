@@ -68,12 +68,12 @@ const updateGit = (version: string) => {
   spawnSync("git", ["commit", "-m", `"updated versions to ${version}"`]);
 
   console.log(`Pushing branch ${chalk.yellowBright(`publish-${version}`)}`);
-  spawnSync("git", ["push", "--set-upstream", "origin", "publish-1.1.0"]);
+  spawnSync("git", ["push"]);
 
-  console.log(`Tagging commit ${chalk.yellowBright(`${version}}`)}`);
+  console.log(`Tagging commit ${chalk.yellowBright(`${version}`)}`);
   spawnSync("git", ["tag", version]);
 
-  console.log(`Pushing tag ${chalk.yellowBright(`${version}}`)}`);
+  console.log(`Pushing tag ${chalk.yellowBright(`${version}`)}`);
   spawnSync("git", ["push", version]);
 };
 
