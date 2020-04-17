@@ -8,6 +8,7 @@ import { getMonoRepo, getPackages, Package } from "./mono-repo";
 
 interface Options {
   version: string;
+  tag?: string;
 }
 const [, , command, ...args] = process.argv;
 const options = minimist<Options>(args);
@@ -43,7 +44,7 @@ const updatePackageVersions = (packages: Package[], version: string) => {
   }
 };
 
-const publishPackages = (packages: Package[]) => {
+const publishPackages = (packages: Package[], tag: string = "latest") => {
   for (let pkg of packages) {
     console.log(`Publishing ${chalk.greenBright(pkg.name)}`);
     spawnSync("npm", ["publish", "--access", "public"], { cwd: pkg.dir });
@@ -87,7 +88,7 @@ const run = async () => {
       const packages = await getPackagesToPublish();
       updatePackageVersions(packages, options.version);
       console.log();
-      publishPackages(packages);
+      publishPackages(packages, options.tag);
       console.log();
       updateGit(options.version);
       break;
