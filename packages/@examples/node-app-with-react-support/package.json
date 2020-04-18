@@ -5,13 +5,12 @@
   "private": true,
   "main": "dist/main.js",
   "scripts": {
-    "build": "ts-engine build",
+    "build": "ts-engine build --node-app",
     "lint": "ts-engine lint",
     "test": "ts-engine test",
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/babel-preset": "^1.0.0",
     "@ts-engine/babel-preset-react": "^1.0.0",
     "@ts-engine/cli": "^1.0.0"
   },

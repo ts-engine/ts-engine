@@ -1,8 +1,8 @@
 import chalk from "chalk";
 import * as rollup from "rollup";
-import json from "rollup-plugin-json";
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
+import json from "@rollup/plugin-json";
+import commonjs from "@rollup/plugin-commonjs";
+import resolve from "@rollup/plugin-node-resolve";
 import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
@@ -17,7 +17,12 @@ import { getBabelConfigFilename } from "../config/babel";
 const tsEngineConfig = getTsEngineConfig();
 const extensions = tsEngineConfig.extensions.map((x) => `.${x}`);
 
-const createConfig = async () => {
+interface OutputType {
+  isNodeApp: boolean;
+  isLibrary: boolean;
+}
+
+const createConfig = async (outputType: OutputType) => {
   return {
     input: tsEngineConfig.entryFilename,
     output: {
@@ -42,7 +47,9 @@ const createConfig = async () => {
     ],
     external: [
       ...builtInModules,
-      ...Object.keys(getConsumerPackage().json?.dependencies ?? {}),
+      ...(outputType.isLibrary
+        ? Object.keys(getConsumerPackage().json?.dependencies ?? {})
+        : []),
     ],
   };
 };
@@ -104,12 +111,18 @@ export const build: Command<BuildCommandOptions> = {
       return Promise.reject();
     }
 
+    // Determine output type
+    const outputType: OutputType = {
+      isNodeApp: parsedOptions["node-app"],
+      isLibrary: parsedOptions.library,
+    };
+
     // Announce tool
     print(`Building code with ${chalk.blueBright("Rollup")}`);
     print();
 
     try {
-      const config = await createConfig();
+      const config = await createConfig(outputType);
       if (parsedOptions.watch) {
         // Setup watcher
         const watcher = rollup.watch({ ...(config as any) });

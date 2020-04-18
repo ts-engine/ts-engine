@@ -15,6 +15,7 @@
     "react"
   ],
   "dependencies": {
+    "@ts-engine/babel-preset": "^1.0.0",
     "@babel/preset-react": "^7.9.4",
     "@babel/core": "^7.9.0"
   }

@@ -21,7 +21,7 @@ describe("build", () => {
     ]);
 
     // Built file is written to file system
-    expect(await fileSystem.readFile("dist/main.js")).toMatchSnapshot();
+    expect(await fileSystem.fileExists("dist/main.js")).toBe(true);
   });
 
   it("should enforce --node-app or --library build to be specified", async () => {
@@ -74,7 +74,6 @@ describe("build", () => {
     // Wait for app to complete
     const statusCode = await appRunner.waitForStatusCode();
 
-    console.log(appRunner.stdoutLines);
     // Should exist successfully
     expect(statusCode).toBe(0);
 

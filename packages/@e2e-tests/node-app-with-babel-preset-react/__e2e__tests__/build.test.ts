@@ -1,8 +1,20 @@
+import path from "path";
+import os from "os";
 import { fileSystem, runCliCommand } from "@helpers/test-utils";
 
 describe("build", () => {
+  const tempDir = path.resolve(
+    os.homedir(),
+    ".ts-engine/temp/node-app-with-babel-preset-react/dist"
+  );
   beforeEach(async () => {
     await fileSystem.deleteDir("dist");
+    await fileSystem.ensureDir(tempDir);
+    await fileSystem.deleteDir(tempDir);
+  });
+
+  afterEach(async () => {
+    await fileSystem.deleteDir(tempDir);
   });
 
   it("should build the code containing JSX", async () => {
@@ -21,17 +33,20 @@ describe("build", () => {
     ]);
 
     // Built file is written to file system
-    expect(await fileSystem.readFile("dist/main.js")).toMatchSnapshot();
+    expect(await fileSystem.fileExists("dist/main.js")).toBe(true);
   });
 
-  it("built app should work", async () => {
+  it("built app should work without node_modules as externals should be bundled in", async () => {
     const runner = runCliCommand("yarn run ts-engine build --node-app");
 
     // Wait for tool to complete
     await runner.waitForStatusCode();
 
-    // Run the app
-    const appRunner = runCliCommand("node dist/main.js");
+    // Copy app to dir without node_modules access
+    await fileSystem.copyDir("dist", tempDir);
+
+    // Run the app in temp dir
+    const appRunner = runCliCommand(`node ${path.resolve(tempDir, "main.js")}`);
 
     // Wait for app to complete
     const statusCode = await appRunner.waitForStatusCode();

@@ -9,7 +9,7 @@
   "private": true,
   "main": "dist/main.js",
   "scripts": {
-    "build": "ts-engine build",
+    "build": "ts-engine build --node-app",
     "lint": "ts-engine lint",
     "start": "chmod u+x dist/main.js && ./dist/main.js",
     "test": "ts-engine test",

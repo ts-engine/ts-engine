@@ -1,5 +1,5 @@
 module.exports = () => {
   return {
-    presets: ["@babel/react"],
+    presets: ["@babel/react", "@ts-engine/babel-preset"],
   };
 };

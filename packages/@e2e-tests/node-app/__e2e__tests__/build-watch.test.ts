@@ -25,9 +25,10 @@ describe("build-watch", () => {
     ]);
 
     // Built file is written to file system
-    expect(await fileSystem.readFile("dist/main.js")).toMatchSnapshot(
-      "original"
-    );
+    expect(await fileSystem.fileExists("dist/main.js")).toBe(true);
+
+    // Clean up build
+    await fileSystem.deleteDir("dist");
 
     // Update file
     revertFileEdit = await fileSystem.editFileTemporarily(
