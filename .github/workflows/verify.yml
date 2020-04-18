@@ -1,4 +1,4 @@
-name: Verify cli
+name: Verify
 
 on: [push]
 
