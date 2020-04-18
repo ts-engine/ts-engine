@@ -12,9 +12,11 @@ yarn add --dev @ts-engine/babel-preset @ts-engine/babel-preset-react
 
 ### Create a babel config file
 
+The ordering is important as Babel presets are run last first.
+
 ```js
 // .babel.config.js
 module.exports = {
-  presets: ["@ts-engine/babel-preset", "@ts-engine/babel-preset-react"],
+  presets: ["@ts-engine/babel-preset-react", "@ts-engine/babel-preset"],
 };
 ```

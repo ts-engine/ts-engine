@@ -5,7 +5,7 @@ describe("build", () => {
     await fileSystem.deleteDir("dist");
   });
 
-  it("should build the code containing JSX", async () => {
+  it("should build the code", async () => {
     const runner = runCliCommand("yarn run ts-engine build --node-app");
 
     // Wait for tool to complete
@@ -40,6 +40,6 @@ describe("build", () => {
     expect(statusCode).toBe(0);
 
     // Should have printed message
-    expect(appRunner.stdoutLines).toContain("<span>hello world</span>");
+    expect(appRunner.stdoutLines).toContain("Hello Lee!");
   }, 10000);
 });

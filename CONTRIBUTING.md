@@ -58,4 +58,4 @@ yarn start --version 1.1.0
 
 3. Push branch and raise pull request and merge
 
-4. Create release and tag on GitHub, this will trigger a release to NPM
+4. Create release and tag in the format of `release-*` on the `master` branch on GitHub, this will trigger a release to NPM

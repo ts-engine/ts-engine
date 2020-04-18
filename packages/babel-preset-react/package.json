@@ -11,7 +11,8 @@
     "babel",
     "preset",
     "babel-preset",
-    "typescript"
+    "typescript",
+    "react"
   ],
   "dependencies": {
     "@babel/preset-react": "^7.9.4",

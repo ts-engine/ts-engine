@@ -1,7 +1,7 @@
 {
   "name": "@e2e-tests/node-app-with-type-errors",
   "version": "1.0.0",
-  "description": "A e2e test package",
+  "description": "An e2e test package",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
@@ -9,11 +9,7 @@
   "private": true,
   "main": "dist/main.js",
   "scripts": {
-    "build": "ts-engine build",
-    "lint": "ts-engine lint",
-    "test": "ts-engine test",
-    "test:e2e": "jest --runInBand __e2e__tests__",
-    "typecheck": "ts-engine typecheck"
+    "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__"
   },
   "devDependencies": {
     "@ts-engine/cli": "^1.0.0",

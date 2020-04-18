@@ -18,5 +18,5 @@ describe("test", () => {
       "Test Suites: 1 passed, 1 total",
       "Ran all test suites.",
     ]);
-  });
+  }, 10000);
 });

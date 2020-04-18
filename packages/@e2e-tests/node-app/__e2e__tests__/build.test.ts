@@ -6,7 +6,7 @@ describe("build", () => {
   });
 
   it("should build the code", async () => {
-    const runner = runCliCommand("yarn run ts-engine build");
+    const runner = runCliCommand("yarn run ts-engine build --node-app");
 
     // Wait for tool to complete
     const statusCode = await runner.waitForStatusCode();
@@ -23,4 +23,62 @@ describe("build", () => {
     // Built file is written to file system
     expect(await fileSystem.readFile("dist/main.js")).toMatchSnapshot();
   });
+
+  it("should enforce --node-app or --library build to be specified", async () => {
+    const runner = runCliCommand("yarn run ts-engine build");
+
+    // Wait for tool to complete
+    const statusCode = await runner.waitForStatusCode();
+
+    // Should exit in failure
+    expect(statusCode).toBe(1);
+
+    // Printed info to stderr
+    expect(runner.stderrLines).toContainInOrder([
+      "Must specify either --node-app or --library",
+    ]);
+
+    // File not written to file system
+    expect(await fileSystem.fileExists("dist/main.js")).toBe(false);
+  });
+
+  it("should enforce only one of --node-app or --library to be specified", async () => {
+    const runner = runCliCommand(
+      "yarn run ts-engine build --node-app --library"
+    );
+
+    // Wait for tool to complete
+    const statusCode = await runner.waitForStatusCode();
+
+    // Should exit in failure
+    expect(statusCode).toBe(1);
+
+    // Printed info to stderr
+    expect(runner.stderrLines).toContainInOrder([
+      "Cannot specify both --node-app and --library, please provide one",
+    ]);
+
+    // File not written to file system
+    expect(await fileSystem.fileExists("dist/main.js")).toBe(false);
+  });
+
+  it("built app should work", async () => {
+    const runner = runCliCommand("yarn run ts-engine build --node-app");
+
+    // Wait for tool to complete
+    await runner.waitForStatusCode();
+
+    // Run the app
+    const appRunner = runCliCommand("node dist/main.js");
+
+    // Wait for app to complete
+    const statusCode = await appRunner.waitForStatusCode();
+
+    console.log(appRunner.stdoutLines);
+    // Should exist successfully
+    expect(statusCode).toBe(0);
+
+    // Should have printed message
+    expect(appRunner.stdoutLines).toContain("Hello Lee!");
+  }, 10000);
 });
