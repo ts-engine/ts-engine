@@ -4,7 +4,7 @@
     "packages/**"
   ],
   "scripts": {
-    "test:e2e": "mono run test:e2e -i @e2e-tests/*"
+    "test:e2e:all": "mono run test:e2e -i @e2e-tests/*"
   },
   "devDependencies": {
     "@enzsft/mono": "^1.2.1"

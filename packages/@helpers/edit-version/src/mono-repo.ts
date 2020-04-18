@@ -54,8 +54,6 @@ export const getPackages = async (currentDir: string): Promise<Package[]> => {
     return [];
   }
 
-  // Load all packages config
-
   // Build globs to packages package.json files
   const packageGlobs = monoRepo.workspaces.map((x) =>
     path.resolve(monoRepo.dir, x, "package.json")

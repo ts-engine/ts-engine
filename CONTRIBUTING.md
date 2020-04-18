@@ -29,7 +29,7 @@ Under `packages/@e2e-tests/` there are many test packages of varying states. The
 You can run them all in one go from the root of the repo:
 
 ```sh
-yarn run:e2e
+yarn run:e2e:all
 ```
 
 Or you can go into them and run them by themselves:
@@ -41,33 +41,21 @@ yarn test:e2e
 
 ### Publishing
 
-There is a helper package just for publishing. It takes care of:
-
-- Updating public package versions
-- Publishing public packages
-- Creating, committing to and pushing a `publish-<version>` branch
-
-Publish process should be:
-
 1. Build @ts-engine/cli
 
-```
+```sh
 cd packages/cli
 yarn build
 ```
 
-2. Build @helpers/publish
+2. Edit the versions
 
-```
-cd packages/@helpers/publish
+```sh
+cd packages/@helpers/edit-version
 yarn build
+yarn start --version 1.1.0
 ```
 
-3. Run the publish tool
+3. Push branch and raise pull request and merge
 
-```
-cd packages/@helpers/publish
-yarn start
-```
-
-4. Go to GitHub, raise a PR and merge it to the `master` branch ASAP
+4. Create release and tag on GitHub, this will trigger a release to NPM

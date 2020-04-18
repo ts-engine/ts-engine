@@ -1,0 +1,37 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - release-*
+
+jobs:
+  pipeline:
+    if: github.event.base_ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: yarn
+
+      - name: Build
+        working-directory: packages/cli
+        run: yarn build
+
+      - name: Publish (eslint-config)
+        working-directory: packages/eslint-config
+        run: npm publish --tag latest --access public
+
+      - name: Publish (babel-preset)
+        working-directory: packages/babel-preset
+        run: npm publish --tag latest --access public
+
+      - name: Publish (babel-preset-react)
+        working-directory: packages/babel-preset-react
+        run: npm publish --tag latest --access public
+
+      - name: Publish (cli)
+        working-directory: packages/cli
+        run: npm publish --tag latest --access public
