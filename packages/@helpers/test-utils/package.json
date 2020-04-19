@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
-  "main": "dist/main.js",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "scripts": {
     "build": "rm -rf dist && ts-engine build --library",

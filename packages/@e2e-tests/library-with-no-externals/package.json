@@ -7,7 +7,10 @@
     "url": "https://github.com/ts-engine/ts-engine"
   },
   "private": true,
-  "main": "dist/main.js",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
+  "types": "dist/main.d.ts",
+  "sideEffects": false,
   "scripts": {
     "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__"
   },

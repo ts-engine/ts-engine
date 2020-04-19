@@ -7,7 +7,6 @@
     "url": "https://github.com/ts-engine/ts-engine"
   },
   "private": true,
-  "main": "dist/main.js",
   "scripts": {
     "build": "ts-engine build --node-app",
     "lint": "ts-engine lint",

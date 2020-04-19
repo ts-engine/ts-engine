@@ -22,13 +22,28 @@ interface OutputType {
   isLibrary: boolean;
 }
 
+const libraryOutput = [
+  {
+    file: tsEngineConfig.outputLibraryCjsFilename,
+    format: "cjs",
+  },
+  {
+    file: tsEngineConfig.outputLibraryEsmFilename,
+    format: "es",
+  },
+];
+
+const nodeAppOutput = [
+  {
+    file: tsEngineConfig.outputNodeAppFilename,
+    format: "cjs",
+  },
+];
+
 const createConfig = async (outputType: OutputType) => {
   return {
     input: tsEngineConfig.entryFilename,
-    output: {
-      file: tsEngineConfig.outputFilename,
-      format: "cjs",
-    },
+    output: outputType.isLibrary ? libraryOutput : nodeAppOutput,
     plugins: [
       preserveShebangs(),
       json(),
@@ -131,11 +146,13 @@ export const build: Command<BuildCommandOptions> = {
           watcher.on("event", (event) => {
             switch (event.code) {
               case "START": {
-                print(
-                  `${chalk.greenBright(config.input)} ${chalk.blueBright(
-                    "⮕"
-                  )}  ${chalk.greenBright(config.output.file)}`
-                );
+                for (let output of config.output) {
+                  print(
+                    `${chalk.greenBright(config.input)} ${chalk.blueBright(
+                      "⮕"
+                    )}  ${chalk.greenBright(output.file)}`
+                  );
+                }
                 break;
               }
               case "END": {
@@ -156,12 +173,14 @@ export const build: Command<BuildCommandOptions> = {
       } else {
         // Perform single build and write it out
         const bundle = await rollup.rollup(config as any);
-        await bundle.write(config.output as any);
-        print(
-          `${chalk.greenBright(config.input)} ${chalk.blueBright(
-            "⮕"
-          )}  ${chalk.greenBright(config.output.file)}`
-        );
+        for (let output of config.output) {
+          await bundle.write(output as any);
+          print(
+            `${chalk.greenBright(config.input)} ${chalk.blueBright(
+              "⮕"
+            )}  ${chalk.greenBright(output.file)}`
+          );
+        }
         print();
       }
     } catch (error) {

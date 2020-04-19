@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
-  "main": "dist/main.js",
   "scripts": {
     "build": "ts-engine build --node-app",
     "lint": "ts-engine lint",

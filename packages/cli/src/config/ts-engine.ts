@@ -4,7 +4,9 @@ const defaultTsEngineConfig = {
   entryFilename: "main.ts",
   extensions: ["js", "jsx", "ts", "tsx", "json", "es6", "mjs", "cjs"],
   outputDir: "dist",
-  outputFilename: "main.js",
+  outputLibraryCjsFilename: "main.cjs.js",
+  outputLibraryEsmFilename: "main.esm.js",
+  outputNodeAppFilename: "main.js",
   srcDir: "src",
 };
 
@@ -17,7 +19,18 @@ export const getTsEngineConfig = () => {
     entryFilename: path.join(config.srcDir, config.entryFilename),
     extensions: config.extensions,
     outputDir: config.outputDir,
-    outputFilename: path.join(config.outputDir, config.outputFilename),
+    outputLibraryCjsFilename: path.join(
+      config.outputDir,
+      config.outputLibraryCjsFilename
+    ),
+    outputLibraryEsmFilename: path.join(
+      config.outputDir,
+      config.outputLibraryEsmFilename
+    ),
+    outputNodeAppFilename: path.join(
+      config.outputDir,
+      config.outputNodeAppFilename
+    ),
     srcDir: config.srcDir,
   };
 };
