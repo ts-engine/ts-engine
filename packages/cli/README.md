@@ -34,12 +34,20 @@ A new build will be available in `dist/main.js`.
 
 Build your code using [Rollup](https://rollupjs.org/).
 
+There are 2 types of build:
+
+- `--node-app` for building Node.js applications. This outputs a single file `dist/main.js` that has all none node dependencies baked into the file making it very easy to deploy and run.
+- `--library` for building JavaScript libraries. This outputs 2 files, one for CommonJS `dist/main.cjs.js` and one for ES Modules `dist/main.esm.js`. Library builds do **NOT** bundle in any dependencies it finds in your package.json as this can cause issues.
+
 ```sh
-# Single build
-ts-engine build
+# Build a node application
+ts-engine build --node-app
+
+# Build a JavaScript library
+ts-engine build --library
 
 # Build and watch for changes
-ts-engine build --watch
+ts-engine build --node-app --watch
 ```
 
 ### Typecheck
