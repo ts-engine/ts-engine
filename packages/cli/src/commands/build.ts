@@ -9,7 +9,10 @@ import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
 import builtInModules from "builtin-modules";
 import type { Command } from "../types";
 import { print, printError } from "../utils/print";
-import { getConsumerPackage } from "../utils/package";
+import {
+  getConsumerPackage,
+  getLibraryPackageJsonReport,
+} from "../utils/package";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getTsEngineConfig } from "../config/ts-engine";
 import { getBabelConfigFilename } from "../config/babel";
@@ -131,6 +134,21 @@ export const build: Command<BuildCommandOptions> = {
       isNodeApp: parsedOptions["node-app"],
       isLibrary: parsedOptions.library,
     };
+
+    // Check package.json is valid
+    if (outputType.isLibrary) {
+      const report = getLibraryPackageJsonReport(getConsumerPackage().json);
+      if (report.messages.length > 0) {
+        printError(`Found issues with ${chalk.greenBright("package.json")}:`);
+
+        for (let message of report.messages) {
+          printError(message);
+        }
+
+        printError();
+        return Promise.reject();
+      }
+    }
 
     // Announce tool
     print(`Building code with ${chalk.blueBright("Rollup")}`);

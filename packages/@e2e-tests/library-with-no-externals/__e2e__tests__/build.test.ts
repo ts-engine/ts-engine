@@ -53,5 +53,5 @@ describe("build", () => {
 
     // Should have printed message
     expect(appRunner.stdoutLines).toContain("Hello Lee!");
-  }, 10000);
+  });
 });
