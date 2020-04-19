@@ -20,6 +20,11 @@ jobs:
         working-directory: packages/cli
         run: yarn build
 
+      - name: Configure NPM for Publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
       - name: Publish (eslint-config)
         working-directory: packages/eslint-config
         run: npm publish --tag latest --access public
