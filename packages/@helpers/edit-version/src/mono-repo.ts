@@ -40,6 +40,7 @@ export const getMonoRepo = async (currentDir: string): Promise<MonoRepo> => {
 
 export interface Package {
   dir: string;
+  filepath: string;
   name: string;
   private: boolean;
   version: string;
@@ -77,6 +78,7 @@ export const getPackages = async (currentDir: string): Promise<Package[]> => {
     (x, i): Package => ({
       ...x,
       dir: workspaceFilePaths[i].replace("/package.json", ""),
+      filepath: workspaceFilePaths[i],
     })
   );
 };
