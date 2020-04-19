@@ -1,4 +1,4 @@
-import { fileSystem, runCliCommand } from "@e2e-tests/test-utils";
+import { fileSystem, runCliCommand } from "@helpers/test-utils";
 
 describe("build-watch", () => {
   let revertFileEdit: () => Promise<void>;
@@ -12,7 +12,7 @@ describe("build-watch", () => {
   });
 
   it("should rebuild on changes", async () => {
-    const runner = runCliCommand("yarn run ts-engine build --watch");
+    const runner = runCliCommand("yarn run ts-engine build --node-app --watch");
 
     // Wait for tool to start waiting for changes
     await runner.waitUntilStdoutLine("Watching for changes...");
@@ -25,9 +25,10 @@ describe("build-watch", () => {
     ]);
 
     // Built file is written to file system
-    expect(await fileSystem.readFile("dist/main.js")).toMatchSnapshot(
-      "original"
-    );
+    expect(await fileSystem.fileExists("dist/main.js")).toBe(true);
+
+    // Clean up build
+    await fileSystem.deleteDir("dist");
 
     // Update file
     revertFileEdit = await fileSystem.editFileTemporarily(

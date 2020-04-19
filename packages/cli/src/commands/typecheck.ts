@@ -45,6 +45,9 @@ export const typecheck: Command<TypecheckCommandOptions> = {
   description: `Typecheck code with ${chalk.blueBright("TypeScript")}`,
   options,
   run: async (args: string[]) => {
+    // Ensure envs are set
+    process.env.TS_ENGINE_COMMAND = "typecheck";
+
     const parsedOptions = argsToOptions<TypecheckCommandOptions>(args, options);
 
     // Announce tool

@@ -15,7 +15,8 @@ export const argsToOptions = <TOptions>(
       // @ts-ignore - can trust this assignment
       parsedOptions[option.name] = option.parse(parsedOptions[option.name]);
     } else if (option.isRequired) {
-      const missingOptionErrorMessage = `Missing required option '--${option.name}'`;
+      const optionName = chalk.yellowBright(`--${option.name}`);
+      const missingOptionErrorMessage = `Missing required option ${optionName}`;
       printError(chalk.redBright(missingOptionErrorMessage));
       print();
       throw new Error(missingOptionErrorMessage);

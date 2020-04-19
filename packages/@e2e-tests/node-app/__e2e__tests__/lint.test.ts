@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("lint", () => {
   it("exits successfully on well formatted code base", async () => {

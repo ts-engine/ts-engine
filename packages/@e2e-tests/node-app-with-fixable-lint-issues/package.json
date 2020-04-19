@@ -1,23 +1,18 @@
 {
   "name": "@e2e-tests/node-app-with-fixable-lint-issues",
-  "version": "1.0.0",
-  "description": "A e2e test package",
+  "version": "1.1.0",
+  "description": "An e2e test package",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
   "private": true,
-  "main": "dist/main.js",
   "scripts": {
-    "build": "ts-engine build",
-    "lint": "ts-engine lint",
-    "test": "ts-engine test",
-    "test:e2e": "jest --runInBand __e2e__tests__",
-    "typecheck": "ts-engine typecheck"
+    "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__"
   },
   "devDependencies": {
-    "@ts-engine/cli": "^1.0.0",
-    "@ts-engine/babel-preset": "^1.0.0",
-    "@e2e-tests/test-utils": "^1.0.0"
+    "@ts-engine/cli": "1.1.0",
+    "@ts-engine/babel-preset": "1.1.0",
+    "@helpers/test-utils": "1.1.0"
   }
 }

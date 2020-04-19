@@ -26,6 +26,9 @@ export const lint: Command<LintCommandOptions> = {
   description: `Lint with ${chalk.blueBright("ESLint")}`,
   options,
   run: async (args: string[]) => {
+    // Ensure envs are set
+    process.env.TS_ENGINE_COMMAND = "lint";
+
     const parsedOptions = argsToOptions<LintCommandOptions>(args, options);
 
     // Announce tool

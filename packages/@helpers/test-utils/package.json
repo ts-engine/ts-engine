@@ -1,17 +1,18 @@
 {
-  "name": "@e2e-tests/test-utils",
-  "version": "1.0.0",
+  "name": "@helpers/test-utils",
+  "version": "1.1.0",
   "license": "MIT",
   "private": true,
-  "main": "dist/main.js",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "scripts": {
-    "build": "rm -rf dist && ts-engine build",
+    "build": "rm -rf dist && ts-engine build --library",
     "lint": "ts-engine lint",
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "^1.0.0"
+    "@ts-engine/cli": "1.1.0"
   },
   "dependencies": {
     "chalk": "^4.0.0",

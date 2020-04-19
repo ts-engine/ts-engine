@@ -35,3 +35,11 @@ export const deleteDir = (dir: string): Promise<void> => {
 export const fileExists = (filename: string): Promise<boolean> => {
   return fs.pathExists(filename);
 };
+
+export const copyDir = (dir: string, destDir: string): Promise<void> => {
+  return fs.move(dir, destDir, { overwrite: true });
+};
+
+export const ensureDir = (dir: string): Promise<void> => {
+  return fs.ensureDir(dir);
+};

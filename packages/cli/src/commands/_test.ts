@@ -4,7 +4,7 @@ import { print } from "../utils/print";
 
 const createConfig = () => {
   return {
-    testRegex: "/__tests__/.*.test.(js|jsx|ts|tsx)$",
+    testRegex: "src/.*.test.(js|jsx|ts|tsx)$",
     testURL: "http://localhost",
     transform: {
       ".(js|jsx|ts|tsx)$": require.resolve("../tool-files/jestPreprocessor"),
@@ -33,6 +33,7 @@ export const test: Command<TestCommandOptions> = {
     print();
 
     // Ensure envs are set
+    process.env.TS_ENGINE_COMMAND = "test";
     process.env.BABEL_ENV = "test";
     process.env.NODE_ENV = "test";
 

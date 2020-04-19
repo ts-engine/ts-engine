@@ -1,6 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`build should build the code 1`] = `
-"\\"use strict\\";console.log(\\"Hello \\".concat(\\"Lee\\",\\"!\\"));
-"
-`;

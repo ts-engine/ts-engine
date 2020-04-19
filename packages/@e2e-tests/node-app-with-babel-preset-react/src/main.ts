@@ -1,3 +1,3 @@
 import { render } from "./hello-world";
 
-render();
+console.log(render());

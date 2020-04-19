@@ -7,7 +7,7 @@ Provides React support.
 ### Install the package
 
 ```sh
-yarn add --dev @ts-engine/babel-preset @ts-engine/babel-preset-react
+yarn add --dev @ts-engine/babel-preset-react
 ```
 
 ### Create a babel config file
@@ -15,6 +15,6 @@ yarn add --dev @ts-engine/babel-preset @ts-engine/babel-preset-react
 ```js
 // .babel.config.js
 module.exports = {
-  presets: ["@ts-engine/babel-preset", "@ts-engine/babel-preset-react"],
+  presets: ["@ts-engine/babel-preset-react"],
 };
 ```

@@ -1,4 +1,4 @@
-import { runCliCommand } from "@e2e-tests/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("type-errors", () => {
   it("should print type errors and exit with 1", async () => {

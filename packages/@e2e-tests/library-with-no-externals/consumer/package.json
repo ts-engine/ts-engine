@@ -1,0 +1,14 @@
+{
+  "name": "@e2e-tests/library-with-no-externals-consumer",
+  "version": "1.1.0",
+  "description": "An e2e test package",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/ts-engine/ts-engine"
+  },
+  "private": true,
+  "dependencies": {
+    "@e2e-tests/library-with-no-externals": "1.1.0",
+    "@ts-engine/cli": "1.1.0"
+  }
+}
