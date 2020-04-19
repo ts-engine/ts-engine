@@ -1,4 +1,4 @@
-# TS Engine
+# ts-engine
 
 ![Verify](https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg)
 

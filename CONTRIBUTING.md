@@ -1,4 +1,4 @@
-# Contributing to TS Engine
+# Contributing
 
 ## Getting started
 
