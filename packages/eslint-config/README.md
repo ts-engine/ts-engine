@@ -1,8 +1,6 @@
-# TS Engine ESLint Config
+# @ts-engine/eslint-config
 
-Provides ESLint config if you want to extend it or allow your IDE to find it.
-
-**This is not required for TS Engine's lint command to work.**
+Provides the ts-engine ESLint config if you want to extend it or allow your IDE to find it.
 
 ## Getting Started
 

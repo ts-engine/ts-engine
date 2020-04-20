@@ -1,6 +1,6 @@
-# TS Engine Babel Preset
+# @ts-engine/babel-preset
 
-Provides core Babel preset incase you need to extend the default babel config.
+The default babel preset for ts-engine.
 
 ## Getting Started
 

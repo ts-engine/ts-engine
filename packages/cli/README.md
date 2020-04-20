@@ -1,58 +1,73 @@
-# TS Engine Cli
+# @ts-engine/cli
 
-Provides the TS Engine CLI tool `ts-engine <command> <options>`.
+Command line tool to get TypeScript packages up and running faster. It removes a lot of the config overhead.
 
-## Getting Started
-
-### Install the package
+## Installation
 
 ```sh
 yarn add --dev @ts-engine/cli
 ```
 
-### Create entry file
-
-```ts
-// src/main.ts
-
-console.log("Hello world!");
-```
-
-### Run a build
+## Usage
 
 ```sh
-yarn run ts-engine build
+# Display version
+ts-engine --version
+
+# Display help
+ts-engine --help
+
+# Run a command
+ts-engine <command> <options>
 ```
-
-### Check output
-
-A new build will be available in `dist/main.js`.
 
 ## Commands
 
 ### Build
 
-Build your code using [Rollup](https://rollupjs.org/).
+Code is built via [Babel](https://babeljs.io/) using [Rollup](https://rollupjs.org/).
 
-There are 2 types of build:
+The entry point of the package is always `src/main.ts`.
 
-- `--node-app` for building Node.js applications. This outputs a single file `dist/main.js` that has all none node dependencies baked into the file making it very easy to deploy and run.
-- `--library` for building JavaScript libraries. This outputs 2 files, one for CommonJS `dist/main.cjs.js` and one for ES Modules `dist/main.esm.js`. Library builds do **NOT** bundle in any dependencies it finds in your package.json as this can cause issues.
+#### Building Node.js applications
+
+When building a Node.js application all code and dependencies are built into a single file.
+
+The output from this build is `dist/main.js`.
 
 ```sh
-# Build a node application
+# Build
 ts-engine build --node-app
 
-# Build a JavaScript library
-ts-engine build --library
-
-# Build and watch for changes
+# Build and watch
 ts-engine build --node-app --watch
 ```
 
+#### Building a library
+
+When building a JavaScript library all code is built into a single file, however dependencies are not.
+
+The outputs from this build are `dist/main.cjs.js` and `dist/main.esm.js`. This means the built library supports both Common JS and ES Modules when being consumed.
+
+```sh
+# Build
+ts-engine build --library
+
+# Build and watch
+ts-engine build --library --watch
+```
+
+#### Extending Babel config
+
+The default babel config can be extended by proving a `babel.config.js` file in the package folder.
+
+To extend the default babel config see [ts-engines's babel preset](https://github.com/ts-engine/ts-engine/tree/master/packages/babel-preset).
+
+To support React see [ts-engines's babel preset](https://github.com/ts-engine/ts-engine/tree/master/packages/babel-preset-react).
+
 ### Typecheck
 
-Type check your code using [TypeScript](https://www.typescriptlang.org/).
+Code is typechecked using [TypeScript](https://www.typescriptlang.org/).
 
 ```sh
 # Check types only
@@ -64,19 +79,21 @@ ts-engine typecheck --emit
 
 ### Lint
 
-Lint your code using [ESLint](https://eslint.org/).
+Code is linted using [ESLint](https://eslint.org/).
+
+For IDE support and to see how to extend ESLint config see [ts-engines's lint config](https://github.com/ts-engine/ts-engine/tree/master/packages/eslint-config).
 
 ```sh
-# Lint your code
+# Lint code
 ts-engine lint
 
-# Lint your code and automatically fix fixable issues
+# Lint code and automatically fix fixable issues
 ts-engine lint --fix
 ```
 
 ### Test
 
-Run your unit tests using [Jest](https://jestjs.io/).
+Unit tests are run using [Jest](https://jestjs.io/).
 
 ```sh
 # Run tests once
@@ -84,4 +101,63 @@ ts-engine test
 
 # All args EXCEPT for --config are forward onto jest
 ts-engine test <jest_cli_args>
+```
+
+## Example package setup
+
+### Minimal Node.js application package:
+
+```ts
+// package.json
+{
+  "name": "@examples/node-app",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "ts-engine build --node-app",
+    "build:watch": "ts-engine build --node-app --watch",
+    "lint": "ts-engine lint",
+    "test": "ts-engine test",
+    "typecheck": "ts-engine typecheck"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "latest"
+  }
+}
+
+// src/main.ts
+console.log("Hello world!");
+```
+
+### Minimal library package:
+
+When building a library package ts-engine will check and enfore that `main`, `module` and `types` are set correctly in the package file, the build command will not complete a build until they are.
+
+```ts
+// package.json
+{
+  "name": "@examples/library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
+  "types": "dist/main.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "ts-engine build --library",
+    "build:watch": "ts-engine build --library --watch",
+    "lint": "ts-engine lint",
+    "test": "ts-engine test",
+    "typecheck": "ts-engine typecheck --emit"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "latest"
+  }
+}
+
+// src/main.ts
+export const printHelloWorld = () => {
+  console.log("Hello world!");
+};
 ```

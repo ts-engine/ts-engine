@@ -1,6 +1,6 @@
-# TS Engine Babel Preset React
+# @ts-engine/babel-preset-react
 
-Provides React support.
+A babel preset for ts-engine with React support.
 
 ## Getting Started
 
