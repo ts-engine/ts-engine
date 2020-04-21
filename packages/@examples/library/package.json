@@ -1,0 +1,19 @@
+{
+  "name": "@examples/library",
+  "version": "1.1.1",
+  "license": "MIT",
+  "private": true,
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
+  "types": "dist/main.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "ts-engine build --library",
+    "lint": "ts-engine lint",
+    "test": "ts-engine test",
+    "typecheck": "ts-engine typecheck --emit"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "1.1.1"
+  }
+}
