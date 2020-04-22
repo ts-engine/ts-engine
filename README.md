@@ -15,12 +15,52 @@ ts-engine is a tool that provides build, lint, test and typechecking functionali
 
 ## Public packages
 
-|                                                                          |                                                  |                                                                                                                                                                                        |
-| ------------------------------------------------------------------------ | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@ts-engine/babel-preset](./packages/babel-preset/README.md)             | The default Babel preset for ts-engine.          | <a href="https://www.npmjs.com/package/@ts-engine/babel-preset" rel="noopener noreferrer" target="_blank"><img src="https://badgen.net/npm/v/@ts-engine/babel-preset"></a>             |
-| [@ts-engine/babel-preset-react](./packages/babel-preset-react/README.md) | A Babel preset for ts-engine with React support. | <a href="https://www.npmjs.com/package/@ts-engine/babel-preset-react" rel="noopener noreferrer" target="_blank"><img src="https://badgen.net/npm/v/@ts-engine/babel-preset-react"></a> |
-| [@ts-engine/cli](./packages/cli/README.md)                               | Core package providing the ts-engine CLI.        | <a href="https://www.npmjs.com/package/@ts-engine/cli" rel="noopener noreferrer" target="_blank"><img src="https://badgen.net/npm/v/@ts-engine/cli"></a>                               |
-| [@ts-engine/eslint-config](./packages/eslint-config/README.md)           | The default ESLint config for ts-engine.         | <a href="https://www.npmjs.com/package/@ts-engine/eslint-config" rel="noopener noreferrer" target="_blank"><img src="https://badgen.net/npm/v/@ts-engine/eslint-config"></a>           |
+<table align="center">
+  <tr>
+    <td>
+      <a href="./packages/babel-preset/README.md">@ts-engine/babel-preset</a>
+    </td>
+    <td>The default Babel preset for ts-engine.</td>
+    <td>
+      <a href="https://www.npmjs.com/package/@ts-engine/babel-preset" rel="noopener noreferrer" target="_blank">
+        <img src="https://badgen.net/npm/v/@ts-engine/babel-preset">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./packages/babel-preset-react/README.md">@ts-engine/babel-preset-react</a>
+    </td>
+    <td>A Babel preset for ts-engine with React support.</td>
+    <td>
+      <a href="https://www.npmjs.com/package/@ts-engine/babel-preset-react" rel="noopener noreferrer" target="_blank">
+        <img src="https://badgen.net/npm/v/@ts-engine/babel-preset-react">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./packages/cli/README.md">@ts-engine/cli</a>
+    </td>
+    <td>Core package providing the ts-engine CLI.</td>
+    <td>
+      <a href="https://www.npmjs.com/package/@ts-engine/cli" rel="noopener noreferrer" target="_blank">
+        <img src="https://badgen.net/npm/v/@ts-engine/cli">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./packages/eslint-config/README.md">@ts-engine/eslint-config</a>
+    </td>
+    <td>The default ESLint config for ts-engine.</td>
+    <td>
+      <a href="https://www.npmjs.com/package/@ts-engine/eslint-config" rel="noopener noreferrer" target="_blank">
+        <img src="https://badgen.net/npm/v/@ts-engine/eslint-config">
+      </a>
+    </td>
+  </tr>
+</table>
 
 ## Examples
 
