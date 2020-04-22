@@ -4,9 +4,9 @@
     alt="ts-engine logo" 
   />
   <h1>ts-engine</h1>
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg">
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Publish/badge.svg">
-  <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine">
+  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg" />
+  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Publish/badge.svg" />
+  <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine" />
 </header>
 
 ts-engine is a tool that provides build, lint, test and typechecking functionality for TypeScript packages via an easy to use command line interface. It supports building Node.js applications and JavaScript libraries. This tool is not currently suitable for building websites.
