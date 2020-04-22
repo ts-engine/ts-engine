@@ -1,4 +1,4 @@
-<header style="text-align: center; margin-bottom: 20px;">
+<header align="center" style="margin-bottom: 20px;">
   <img 
     src="https://raw.githubusercontent.com/ts-engine/assets/master/logo.png"
     alt="ts-engine logo" 
