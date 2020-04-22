@@ -13,6 +13,10 @@
 
 ts-engine is a tool that provides build, lint, test and typechecking functionality for TypeScript packages via an easy to use command line interface. It supports building Node.js applications and JavaScript libraries. This tool is not currently suitable for building websites.
 
+## Documentation
+
+Checkout the official docs over at https://ts-engine.dev.
+
 ## Public packages
 
 <table align="center">
