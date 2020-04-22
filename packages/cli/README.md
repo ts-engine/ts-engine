@@ -43,7 +43,7 @@ ts-engine build --node-app
 ts-engine build --node-app --watch
 ```
 
-#### Building a library
+#### Building libraries
 
 When building a JavaScript library all code is built into a single file, however dependencies are not.
 
@@ -57,7 +57,7 @@ ts-engine build --library
 ts-engine build --library --watch
 ```
 
-#### Build a standalone package
+#### Standalone packages
 
 Sometimes a standalone package is useful as you can run the output file without requiring `node_modules` to provide any external dependencies. These are easier to use, share and deploy as there is just a single file. You can bundle dependencies into a Node.js application or a library with ts-engine.
 
