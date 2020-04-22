@@ -57,9 +57,9 @@ ts-engine build --library
 ts-engine build --library --watch
 ```
 
-#### Standalone packages
+#### Bundling dependencies
 
-Sometimes a standalone package is useful as you can run the output file without requiring `node_modules` to provide any external dependencies. These are easier to use, share and deploy as there is just a single file. You can bundle dependencies into a Node.js application or a library with ts-engine.
+Sometimes it is useful to bundle dependencies into the output file so you can run the file without `node_modules`. This makes it easier to use, share and deploy as it is a single file. You can bundle dependencies into a Node.js application or a library with ts-engine.
 
 ```sh
 # Node.js application
@@ -69,7 +69,7 @@ ts-engine build --node-app --bundle-dependencies
 ts-engine build --library --bundle-dependencies
 ```
 
-> **Note that not all npm packages will work, ts-engine uses Rollup internally and does not support dynamic calls to `require(...)` or circular dependencies.**
+> **Not all packages can be bundled, ts-engine uses Rollup internally and does not support dynamic calls to `require(...)` or circular dependencies, as well as other things.**
 
 #### Extending Babel config
 
