@@ -5,7 +5,7 @@ import { fileSystem, runCliCommand } from "@helpers/test-utils";
 describe("build", () => {
   const tempDir = path.resolve(
     os.homedir(),
-    ".ts-engine/temp/node-app-with-babel-preset-react/dist"
+    ".ts-engine/temp/node-app-with-dependencies/dist"
   );
   beforeEach(async () => {
     await fileSystem.deleteDir("dist");
@@ -17,14 +17,14 @@ describe("build", () => {
     await fileSystem.deleteDir(tempDir);
   });
 
-  it("should build the code containing JSX", async () => {
+  it("built app should work with dependencies", async () => {
     const runner = runCliCommand("yarn run ts-engine build --node-app");
 
     // Wait for tool to complete
-    const statusCode = await runner.waitForStatusCode();
+    const toolStatusCode = await runner.waitForStatusCode();
 
     // Should exit successfully
-    expect(statusCode).toBe(0);
+    expect(toolStatusCode).toBe(0);
 
     // Printed info to stdout
     expect(runner.stdoutLines).toContainInOrder([
@@ -32,13 +32,22 @@ describe("build", () => {
       "src/main.ts ⮕  dist/main.js",
     ]);
 
-    // Built file is written to file system
-    expect(await fileSystem.fileExists("dist/main.js")).toBe(true);
+    // Run the app from the package dist
+    const appRunner = runCliCommand(`node ${path.resolve("dist/main.js")}`);
+
+    // Wait for app to complete
+    const appStatusCode = await appRunner.waitForStatusCode();
+
+    // Should exist successfully
+    expect(appStatusCode).toBe(0);
+
+    // Should have printed message
+    expect(appRunner.stdoutLines).toContain("<span>hello world</span>");
   });
 
-  it("built app should work without node_modules as externals should be bundled in", async () => {
+  it("built app should work without node_modules when run with --bundle-dependencies", async () => {
     const runner = runCliCommand(
-      "yarn run ts-engine build --node-app --embed-dependencies"
+      "yarn run ts-engine build --node-app --bundle-dependencies"
     );
 
     // Wait for tool to complete

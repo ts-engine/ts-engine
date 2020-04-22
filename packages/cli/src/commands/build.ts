@@ -43,7 +43,10 @@ const nodeAppOutput = [
   },
 ];
 
-const createConfig = async (outputType: OutputType) => {
+const createConfig = async (
+  outputType: OutputType,
+  bundleDependencies: boolean
+) => {
   return {
     input: tsEngineConfig.entryFilename,
     output: outputType.isLibrary ? libraryOutput : nodeAppOutput,
@@ -64,10 +67,12 @@ const createConfig = async (outputType: OutputType) => {
       terser(),
     ],
     external: [
+      // don't try and bundle in native built in node modules like 'path' and 'fs'
       ...builtInModules,
-      ...(outputType.isLibrary
-        ? Object.keys(getConsumerPackage().json?.dependencies ?? {})
-        : []),
+      // only include dependencies if option provided to do so
+      ...(bundleDependencies
+        ? []
+        : Object.keys(getConsumerPackage().json?.dependencies ?? {})),
     ],
   };
 };
@@ -91,12 +96,19 @@ const options = [
     isRequired: false,
     defaultValue: false,
   }),
+  createBooleanOption({
+    name: "bundle-dependencies",
+    description: "Compile dependencies into final output file",
+    isRequired: false,
+    defaultValue: false,
+  }),
 ];
 
 export interface BuildCommandOptions {
   watch: boolean;
   "node-app": boolean;
   library: boolean;
+  "bundle-dependencies": boolean;
 }
 export const build: Command<BuildCommandOptions> = {
   name: "build",
@@ -155,7 +167,10 @@ export const build: Command<BuildCommandOptions> = {
     print();
 
     try {
-      const config = await createConfig(outputType);
+      const config = await createConfig(
+        outputType,
+        parsedOptions["bundle-dependencies"]
+      );
       if (parsedOptions.watch) {
         // Setup watcher
         const watcher = rollup.watch({ ...(config as any) });
