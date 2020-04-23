@@ -43,7 +43,7 @@ ts-engine build --node-app
 ts-engine build --node-app --watch
 ```
 
-#### Building a library
+#### Building libraries
 
 When building a JavaScript library all code is built into a single file, however dependencies are not.
 
@@ -56,6 +56,20 @@ ts-engine build --library
 # Build and watch
 ts-engine build --library --watch
 ```
+
+#### Bundling dependencies
+
+Sometimes it is useful to bundle dependencies into the output file so you can run the file without `node_modules`. This makes it easier to use, share and deploy as it is a single file. You can bundle dependencies into a Node.js application or a library with ts-engine.
+
+```sh
+# Node.js application
+ts-engine build --node-app --bundle-dependencies
+
+# Library
+ts-engine build --library --bundle-dependencies
+```
+
+> **Not all packages can be bundled, ts-engine uses Rollup internally and does not support dynamic calls to `require(...)` or circular dependencies, as well as other things.**
 
 #### Extending Babel config
 
