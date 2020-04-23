@@ -1,6 +1,6 @@
 {
   "name": "@examples/node-app-with-eslint-config",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -10,6 +10,6 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.1.2"
+    "@ts-engine/cli": "1.2.0"
   }
 }

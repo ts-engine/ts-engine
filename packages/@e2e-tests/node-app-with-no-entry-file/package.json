@@ -1,6 +1,6 @@
 {
   "name": "@e2e-tests/node-app-with-no-entry-file",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "An e2e test package",
   "license": "MIT",
   "repository": {
@@ -11,8 +11,8 @@
     "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.1.2",
-    "@ts-engine/babel-preset": "1.1.2",
-    "@helpers/test-utils": "1.1.2"
+    "@ts-engine/cli": "1.2.0",
+    "@ts-engine/babel-preset": "1.2.0",
+    "@helpers/test-utils": "1.2.0"
   }
 }
