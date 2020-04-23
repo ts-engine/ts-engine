@@ -38,7 +38,7 @@ describe("build", () => {
 
   it("built app should work without node_modules as externals should be bundled in", async () => {
     const runner = runCliCommand(
-      "yarn run ts-engine build --node-app --embed-dependencies"
+      "yarn run ts-engine build --node-app --bundle-dependencies"
     );
 
     // Wait for tool to complete
