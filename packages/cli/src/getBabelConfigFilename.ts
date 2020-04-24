@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs-extra";
-import { getConsumerPackage } from "../utils/package";
+import { getConsumerPackage } from "./utils/package";
 
 export const getBabelConfigFilename = () => {
   // Check if consumer is providing one
@@ -15,5 +15,5 @@ export const getBabelConfigFilename = () => {
   }
 
   // Otherwise use the default one
-  return require.resolve("../tool-files/babel.config.js");
+  return require.resolve("./tool-files/babel.config.js");
 };

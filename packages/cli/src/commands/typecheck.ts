@@ -4,7 +4,7 @@ import type { Command } from "../types";
 import { print, printError } from "../utils/print";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getConsumerPackage } from "../utils/package";
-import { getTsEngineConfig } from "../config/ts-engine";
+import { getTsEngineConfig } from "../getTsEngineConfig";
 
 const tsEngineConfig = getTsEngineConfig();
 
