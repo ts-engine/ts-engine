@@ -17,7 +17,6 @@ export const buildWithRollup = async (
   let postBuildRunner: ChildProcess | null = null;
   const killPostBuildRunner = () => {
     if (postBuildRunner) {
-      console.log("killing");
       postBuildRunner.kill("SIGTERM");
       postBuildRunner = null;
     }
@@ -41,16 +40,12 @@ export const buildWithRollup = async (
 
             break;
           }
-          case "BUNDLE_END":
-          case "BUNDLE_START": {
-            // kill the app if it is still being run
-            killPostBuildRunner();
-            break;
-          }
           case "END": {
             print(chalk.grey("Watching for changes..."));
 
             if (options.runPostBuild) {
+              killPostBuildRunner();
+
               postBuildRunner = spawn(
                 "node",
                 ["dist/main.js", ...(options.runArgs ?? [])],
