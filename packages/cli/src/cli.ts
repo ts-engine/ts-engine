@@ -6,13 +6,14 @@ import { getToolPackage } from "./utils/package";
 import { print, printError } from "./utils/print";
 import { build } from "./commands/build";
 import { lint } from "./commands/lint";
+import { start } from "./commands/start";
 import { test } from "./commands/_test";
 import { typecheck } from "./commands/typecheck";
 
 const run = async (): Promise<void> => {
   const [, , commandArg, ...args] = process.argv;
   const toolPackage = getToolPackage();
-  const commands: Command<unknown>[] = [build, lint, test, typecheck];
+  const commands: Command<unknown>[] = [build, lint, start, test, typecheck];
 
   if (commandArg === "--version") {
     // Handle top level tool options
@@ -33,7 +34,7 @@ const run = async (): Promise<void> => {
     print(toolPackage.json.description);
     print();
 
-    const nameColumnWidth = 20;
+    const nameColumnWidth = 25;
 
     const versionName = chalk.bold("--version".padEnd(nameColumnWidth));
     const versionDesc = "Print version";

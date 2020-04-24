@@ -105,6 +105,35 @@ ts-engine lint
 ts-engine lint --fix
 ```
 
+### Start
+
+Build and immediately run Node.js applications. This speeds up developer workflow as you don't need to manually stop and rerun your application after builds.
+
+```sh
+# Build and run Node.js application
+ts-engine start
+
+# Build and run Node.js application on changes
+ts-engine start --watch
+```
+
+Bundling dependencies is supported just like in the `build` command.
+
+```sh
+# Build and run Node.js application
+ts-engine start --bundle-dependencies
+
+# Build and run Node.js application on changes
+ts-engine start --watch --bundle-dependencies
+```
+
+Forward arguments onto the application using the `--args` options.
+
+```sh
+# The options "--one --two three" will be forward onto the Node.js application
+ts-engine start --watch --args --one --two three
+```
+
 ### Test
 
 Unit tests are run using [Jest](https://jestjs.io/).
@@ -132,6 +161,8 @@ ts-engine test <jest_cli_args>
     "build": "ts-engine build --node-app",
     "build:watch": "ts-engine build --node-app --watch",
     "lint": "ts-engine lint",
+    "start": "ts-engine start",
+    "start:watch": "ts-engine start --watch",
     "test": "ts-engine test",
     "typecheck": "ts-engine typecheck"
   },

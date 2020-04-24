@@ -1,81 +1,13 @@
 import chalk from "chalk";
-import * as rollup from "rollup";
-import json from "@rollup/plugin-json";
-import commonjs from "@rollup/plugin-commonjs";
-import resolve from "@rollup/plugin-node-resolve";
-import babel from "rollup-plugin-babel";
-import { terser } from "rollup-plugin-terser";
-import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
-import builtInModules from "builtin-modules";
-import type { Command } from "../types";
+import type { Command, OutputType } from "../types";
 import { print, printError } from "../utils/print";
 import {
   getConsumerPackage,
   getLibraryPackageJsonReport,
 } from "../utils/package";
 import { createBooleanOption, argsToOptions } from "../utils/options";
-import { getTsEngineConfig } from "../config/ts-engine";
-import { getBabelConfigFilename } from "../config/babel";
-
-const tsEngineConfig = getTsEngineConfig();
-const extensions = tsEngineConfig.extensions.map((x) => `.${x}`);
-
-interface OutputType {
-  isNodeApp: boolean;
-  isLibrary: boolean;
-}
-
-const libraryOutput = [
-  {
-    file: tsEngineConfig.outputLibraryCjsFilename,
-    format: "cjs",
-  },
-  {
-    file: tsEngineConfig.outputLibraryEsmFilename,
-    format: "es",
-  },
-];
-
-const nodeAppOutput = [
-  {
-    file: tsEngineConfig.outputNodeAppFilename,
-    format: "cjs",
-  },
-];
-
-const createConfig = async (
-  outputType: OutputType,
-  bundleDependencies: boolean
-) => {
-  return {
-    input: tsEngineConfig.entryFilename,
-    output: outputType.isLibrary ? libraryOutput : nodeAppOutput,
-    plugins: [
-      preserveShebangs(),
-      json(),
-      commonjs(),
-      resolve({
-        extensions,
-        preferBuiltins: true,
-      }),
-      babel({
-        exclude: "node_modules/**",
-        extensions,
-        configFile: getBabelConfigFilename(),
-        runtimeHelpers: true,
-      }),
-      terser(),
-    ],
-    external: [
-      // don't try and bundle in native built in node modules like 'path' and 'fs'
-      ...builtInModules,
-      // only include dependencies if option provided to do so
-      ...(bundleDependencies
-        ? []
-        : Object.keys(getConsumerPackage().json?.dependencies ?? {})),
-    ],
-  };
-};
+import { createRollupConfig } from "../createRollupConfig";
+import { buildWithRollup } from "../buildWithRollup";
 
 const options = [
   createBooleanOption({
@@ -110,6 +42,7 @@ export interface BuildCommandOptions {
   library: boolean;
   "bundle-dependencies": boolean;
 }
+
 export const build: Command<BuildCommandOptions> = {
   name: "build",
   description: `Build code using ${chalk.blueBright("Rollup")}`,
@@ -142,13 +75,12 @@ export const build: Command<BuildCommandOptions> = {
     }
 
     // Determine output type
-    const outputType: OutputType = {
-      isNodeApp: parsedOptions["node-app"],
-      isLibrary: parsedOptions.library,
-    };
+    const outputType: OutputType = parsedOptions["node-app"]
+      ? "node-app"
+      : "library";
 
     // Check package.json is valid
-    if (outputType.isLibrary) {
+    if (outputType === "library") {
       const report = getLibraryPackageJsonReport(getConsumerPackage().json);
       if (report.messages.length > 0) {
         printError(`Found issues with ${chalk.greenBright("package.json")}:`);
@@ -167,55 +99,15 @@ export const build: Command<BuildCommandOptions> = {
     print();
 
     try {
-      const config = await createConfig(
+      // Run the build
+      const config = createRollupConfig(
         outputType,
         parsedOptions["bundle-dependencies"]
       );
-      if (parsedOptions.watch) {
-        // Setup watcher
-        const watcher = rollup.watch({ ...(config as any) });
 
-        return new Promise(() => {
-          watcher.on("event", (event) => {
-            switch (event.code) {
-              case "START": {
-                for (let output of config.output) {
-                  print(
-                    `${chalk.greenBright(config.input)} ${chalk.blueBright(
-                      "⮕"
-                    )}  ${chalk.greenBright(output.file)}`
-                  );
-                }
-                break;
-              }
-              case "END": {
-                print(chalk.grey("Watching for changes..."));
-                break;
-              }
-              case "ERROR": {
-                printError(event.error);
-                printError();
-                break;
-              }
-              default: {
-                break;
-              }
-            }
-          });
-        });
-      } else {
-        // Perform single build and write it out
-        const bundle = await rollup.rollup(config as any);
-        for (let output of config.output) {
-          await bundle.write(output as any);
-          print(
-            `${chalk.greenBright(config.input)} ${chalk.blueBright(
-              "⮕"
-            )}  ${chalk.greenBright(output.file)}`
-          );
-        }
-        print();
-      }
+      await buildWithRollup(config, {
+        watch: parsedOptions.watch,
+      });
     } catch (error) {
       printError(error);
       printError();

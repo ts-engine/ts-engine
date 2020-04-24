@@ -4,7 +4,8 @@ const getEnvOptions = () => {
       return { useBuiltIns: "usage", corejs: { version: 3 } };
       break;
     }
-    case "build": {
+    case "build":
+    case "start": {
       return { modules: false };
       break;
     }

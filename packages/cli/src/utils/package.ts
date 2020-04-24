@@ -1,7 +1,7 @@
 import path from "path";
 import glob from "glob-promise";
 import chalk from "chalk";
-import { getTsEngineConfig } from "../config/ts-engine";
+import { getTsEngineConfig } from "../getTsEngineConfig";
 
 const tsEngineConfig = getTsEngineConfig();
 const extensions = tsEngineConfig.extensions.join(",");

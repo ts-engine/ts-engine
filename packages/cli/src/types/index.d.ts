@@ -26,3 +26,15 @@ export interface Command<TOptions> {
   options: (Option<unknown> | DummyOption)[];
   run: (args: string[]) => Promise<void>;
 }
+
+export type OutputType = "node-app" | "library";
+
+export interface RollupConfig {
+  input: string;
+  output: {
+    file: string;
+    format: string;
+  }[];
+  plugins: any[];
+  external: string[];
+}
