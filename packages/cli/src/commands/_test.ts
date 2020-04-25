@@ -1,6 +1,4 @@
-import chalk from "chalk";
 import type { Command } from "../types";
-import { print } from "../utils/print";
 
 const createConfig = () => {
   return {
@@ -15,9 +13,7 @@ const createConfig = () => {
 const options = [
   {
     name: "<jest_options>",
-    description: `Accepts all ${chalk.blueBright(
-      "Jest"
-    )} options except --config`,
+    description: "Accepts all Jest options except --config",
   },
 ];
 
@@ -25,13 +21,9 @@ export interface TestCommandOptions {}
 
 export const test: Command<TestCommandOptions> = {
   name: "test",
-  description: `Run tests using ${chalk.blueBright("Jest")}`,
+  description: "Run tests using Jest",
   options,
   run: async (args: string[]) => {
-    // Announce tool
-    print(`Running tests with ${chalk.blueBright("Jest")}`);
-    print();
-
     // Ensure envs are set
     process.env.TS_ENGINE_COMMAND = "test";
     process.env.BABEL_ENV = "test";

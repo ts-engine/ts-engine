@@ -1,8 +1,8 @@
 import { runCliCommand } from "@helpers/test-utils";
 
-describe("build-error", () => {
+describe("start-error", () => {
   it("should print error and exit with 1 if there is a build error", async () => {
-    const runner = runCliCommand("yarn run ts-engine build --node-app");
+    const runner = runCliCommand("yarn run ts-engine start");
 
     // Wait for tool to complete
     const statusCode = await runner.waitForStatusCode();
@@ -16,7 +16,7 @@ describe("build-error", () => {
   });
 
   it("should print build error when running in watch mode", async () => {
-    const runner = runCliCommand("yarn run ts-engine build --node-app --watch");
+    const runner = runCliCommand("yarn run ts-engine start --watch");
 
     // Wait for tool to complete
     await runner.waitUntilStdoutLine("Watching for changes...");

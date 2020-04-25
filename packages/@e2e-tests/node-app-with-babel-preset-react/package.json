@@ -1,5 +1,5 @@
 {
-  "name": "@e2e-tests/node-app-with-react-support",
+  "name": "@e2e-tests/node-app-with-babel-preset-react",
   "version": "1.3.0",
   "description": "An e2e test package",
   "license": "MIT",

@@ -14,7 +14,7 @@ describe("type-errors", () => {
     expect(runner.stderrLines).toContainInOrder([
       "Found 1 type errors:",
       "src/main.ts",
-      "(2,3): Type 'string' is not assignable to type 'number'.",
+      "(2,3) Type 'string' is not assignable to type 'number'. (TS2322)",
     ]);
   });
 });

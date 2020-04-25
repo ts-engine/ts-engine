@@ -19,9 +19,9 @@ describe("start-watch", () => {
 
     // Printed info to stdout
     expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.js",
+      "Written to dist/main.js",
       "Watching for changes...",
+      "Starting app...",
       "Hello Lee!",
     ]);
 
@@ -42,12 +42,13 @@ describe("start-watch", () => {
 
     // Printed info to stdout
     expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.js",
+      "Written to dist/main.js",
       "Watching for changes...",
+      "Starting app...",
       "Hello Lee!",
-      "src/main.ts ⮕  dist/main.js",
+      "Written to dist/main.js",
       "Watching for changes...",
+      "Restarting app...",
       "new content",
     ]);
 
@@ -65,9 +66,9 @@ describe("start-watch", () => {
 
     // Printed info to stdout
     expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.js",
+      "Written to dist/main.js",
       "Watching for changes...",
+      "Starting app...",
       "Hello Lee!",
     ]);
 
@@ -88,12 +89,13 @@ describe("start-watch", () => {
 
     // Printed info to stdout
     expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.js",
+      "Written to dist/main.js",
       "Watching for changes...",
+      "Starting app...",
       "Hello Lee!",
-      "src/main.ts ⮕  dist/main.js",
+      "Written to dist/main.js",
       "Watching for changes...",
+      "Restarting app...",
       "new content",
     ]);
 

@@ -11,9 +11,6 @@ describe("lint", () => {
     expect(statusCode).toBe(0);
 
     // Printed help to stdout
-    expect(runner.stdoutLines).toContainInOrder([
-      "Linting with ESLint",
-      "No issues found",
-    ]);
+    expect(runner.stdoutLines).toContainInOrder(["✓ No issues found"]);
   });
 });

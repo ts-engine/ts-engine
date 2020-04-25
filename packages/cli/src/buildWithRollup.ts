@@ -1,8 +1,9 @@
 import { spawn, spawnSync, ChildProcess } from "child_process";
 import * as rollup from "rollup";
 import chalk from "chalk";
+import ora from "ora";
 import type { RollupConfig } from "./types";
-import { print, printError } from "./utils/print";
+import { print, printError, printProgress } from "./utils/print";
 
 export interface BuildWithRollupOptions {
   watch?: boolean;
@@ -27,28 +28,34 @@ export const buildWithRollup = async (
     const watcher = rollup.watch({ ...(config as any) });
 
     return new Promise(() => {
+      const spinner = ora();
       watcher.on("event", (event) => {
         switch (event.code) {
           case "START": {
-            for (let output of config.output) {
-              print(
-                `${chalk.greenBright(config.input)} ${chalk.blueBright(
-                  "⮕"
-                )}  ${chalk.greenBright(output.file)}`
-              );
-            }
+            console.clear();
+            spinner.start(chalk.greenBright("Building bundle"));
 
             break;
           }
           case "END": {
+            spinner.stop();
+            for (let output of config.output) {
+              print(chalk.greenBright(`Written to ${output.file}`));
+            }
+
             print(chalk.grey("Watching for changes..."));
 
             if (options.runPostBuild) {
+              print(
+                chalk.blueBright(
+                  postBuildRunner ? "Restarting app..." : "Starting app..."
+                )
+              );
               killPostBuildRunner();
 
               postBuildRunner = spawn(
                 "node",
-                ["dist/main.js", ...(options.runArgs ?? [])],
+                [config.output[0].file, ...(options.runArgs ?? [])],
                 {
                   stdio: "inherit",
                 }
@@ -61,8 +68,9 @@ export const buildWithRollup = async (
             break;
           }
           case "ERROR": {
-            printError(event.error);
-            printError();
+            spinner.stop();
+            printError(chalk.redBright(event.error));
+            print(chalk.grey("Watching for changes..."));
 
             break;
           }
@@ -74,19 +82,23 @@ export const buildWithRollup = async (
     });
   } else {
     // Perform single build and write it out
-    const bundle = await rollup.rollup(config as any);
+    const bundle = await printProgress(
+      rollup.rollup(config as any),
+      chalk.greenBright("Building bundle"),
+      "build"
+    );
+
     for (let output of config.output) {
-      await bundle.write(output as any);
-      print(
-        `${chalk.greenBright(config.input)} ${chalk.blueBright(
-          "⮕"
-        )}  ${chalk.greenBright(output.file)}`
+      await printProgress(
+        bundle.write(output as any),
+        chalk.greenBright(`Writing to ${output.file}`),
+        "build-write"
       );
     }
-    print();
 
     if (options.runPostBuild) {
-      spawnSync("node", ["dist/main.js", ...(options.runArgs ?? [])], {
+      print(chalk.blueBright("Starting app..."));
+      spawnSync("node", [config.output[0].file, ...(options.runArgs ?? [])], {
         encoding: "utf8",
         stdio: "inherit",
       });

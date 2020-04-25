@@ -17,8 +17,6 @@ describe("start-watch", () => {
 
     // Printed info to stdout which included printed args
     expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.js",
       `[\"--one=value\",\"--two\",\"two-value\",\"final\"]`,
     ]);
 

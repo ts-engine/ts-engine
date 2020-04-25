@@ -16,13 +16,6 @@ describe("build", () => {
     // Should exit successfully
     expect(statusCode).toBe(0);
 
-    // Printed info to stdout
-    expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.cjs.js",
-      "src/main.ts ⮕  dist/main.esm.js",
-    ]);
-
     // Built file is written to file system
     expect(await fileSystem.fileExists("dist/main.cjs.js")).toBe(true);
     expect(await fileSystem.fileExists("dist/main.esm.js")).toBe(true);
