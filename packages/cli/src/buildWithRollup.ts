@@ -71,6 +71,7 @@ export const buildWithRollup = async (
           case "ERROR": {
             spinner.stop();
             printError(chalk.redBright(event.error));
+            print(chalk.grey("Watching for changes..."));
 
             break;
           }
@@ -95,6 +96,7 @@ export const buildWithRollup = async (
     }
 
     if (options.runPostBuild) {
+      print(chalk.blueBright("Starting app..."));
       spawnSync("node", [config.output[0].file, ...(options.runArgs ?? [])], {
         encoding: "utf8",
         stdio: "inherit",

@@ -12,8 +12,8 @@ describe("unknown", () => {
 
     // Printed help to stderr
     expect(runner.stderrLines).toContainInOrder([
-      "Command 'unknown' does not exist",
-      "Run 'ts-engine --help' to see available commands",
+      "Command unknown does not exist",
+      "Run ts-engine --help to see available commands",
     ]);
   });
 });

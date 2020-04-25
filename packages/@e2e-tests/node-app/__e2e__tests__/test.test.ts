@@ -10,9 +10,6 @@ describe("test", () => {
     // Should exit successfully
     expect(statusCode).toBe(0);
 
-    // Printed info to stdout
-    expect(runner.stdoutLines).toContainInOrder(["Running tests with Jest"]);
-
     // Printed info to stderr (jest prints test output to stderr for some reason)
     expect(runner.stderrLines).toContainInOrder([
       "Test Suites: 1 passed, 1 total",

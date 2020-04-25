@@ -13,8 +13,7 @@ describe("start", () => {
 
     // Printed info to stdout
     expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.js",
+      "Starting app...",
       "starting server",
     ]);
 

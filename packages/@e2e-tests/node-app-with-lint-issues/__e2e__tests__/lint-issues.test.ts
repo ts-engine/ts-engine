@@ -11,12 +11,11 @@ describe("lint-issues", () => {
     expect(statusCode).toBe(1);
 
     // Printed errors and warnings to stderr
-    expect(runner.stdoutLines).toContainInOrder(["Linting with ESLint"]);
     expect(runner.stderrLines).toContainInOrder([
       "Found 1 errors (1 fixable) and 0 warnings (0 fixable)",
       "src/main.ts",
-      "Error (1:1) Unexpected var, use let or const instead. (no-var)",
-      "Rerun with --fix to fix fixable issues",
+      "Error (1:1) Unexpected var, use let or const instead. (no-var) (fixable)",
+      "Rerun with --fix option to fix fixable issues",
     ]);
   });
 });

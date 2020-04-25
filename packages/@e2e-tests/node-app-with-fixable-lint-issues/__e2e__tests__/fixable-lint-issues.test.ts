@@ -27,8 +27,8 @@ export const getA = () => {
     expect(runner.stderrLines).toContainInOrder([
       "Found 1 errors (1 fixable) and 0 warnings (0 fixable)",
       "src/main.ts",
-      "Error (1:1) Unexpected var, use let or const instead. (no-var)",
-      "Rerun with --fix to fix fixable issues",
+      "Error (1:1) Unexpected var, use let or const instead. (no-var) (fixable)",
+      "Rerun with --fix option to fix fixable issues",
     ]);
   });
 
@@ -42,9 +42,6 @@ export const getA = () => {
     expect(statusCode).toBe(0);
 
     // Printed info to stdout
-    expect(runner.stdoutLines).toContainInOrder([
-      "Linting with ESLint",
-      "No issues found",
-    ]);
+    expect(runner.stdoutLines).toContainInOrder(["✓ No issues found"]);
   });
 });

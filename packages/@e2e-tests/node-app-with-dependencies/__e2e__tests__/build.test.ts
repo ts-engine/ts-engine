@@ -26,12 +26,6 @@ describe("build", () => {
     // Should exit successfully
     expect(toolStatusCode).toBe(0);
 
-    // Printed info to stdout
-    expect(runner.stdoutLines).toContainInOrder([
-      "Building code with Rollup",
-      "src/main.ts ⮕  dist/main.js",
-    ]);
-
     // Run the app from the package dist
     const appRunner = runCliCommand(`node ${path.resolve("dist/main.js")}`);
 

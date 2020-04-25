@@ -14,7 +14,6 @@ describe("--help", () => {
     // Printed help to stdout
     expect(runner.stdoutLines).toContainInOrder([
       `${packageJson.name} (${packageJson.repository.url})`,
-      `${packageJson.description}`,
       "--version                Print version",
       "build                    Build code using Rollup",
       "--watch                  Watch for changes and build on changes",
@@ -24,7 +23,7 @@ describe("--help", () => {
       "start                    Build package as a Node.js application and run it",
       "--watch                  Build and run the app on changes",
       "--bundle-dependencies    Compile dependencies into final output file",
-      "--args                   Splits ts-engine's args from args to be forwarded onto the Node.js application",
+      "--args                   Provide arguments to be forwarded onto the Node.js application",
       "test                     Run tests using Jest",
       "--<jest_options>         Accepts all Jest options except --config",
       "typecheck                Typecheck code with TypeScript",

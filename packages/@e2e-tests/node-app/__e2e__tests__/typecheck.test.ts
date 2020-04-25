@@ -11,10 +11,7 @@ describe("typecheck", () => {
     expect(statusCode).toBe(0);
 
     // Printed help to stdout
-    expect(runner.stdoutLines).toContainInOrder([
-      "Typechecking code with TypeScript",
-      "No issues found",
-    ]);
+    expect(runner.stdoutLines).toContainInOrder(["✓ No issues found"]);
   });
 
   it("type declaration files when run in emit mode", async () => {
@@ -27,10 +24,7 @@ describe("typecheck", () => {
     expect(statusCode).toBe(0);
 
     // Printed help to stdout
-    expect(runner.stdoutLines).toContainInOrder([
-      "Typechecking code with TypeScript",
-      "No issues found",
-    ]);
+    expect(runner.stdoutLines).toContainInOrder(["✓ No issues found"]);
 
     // Files should be written
     expect(await fileSystem.readFile("dist/main.d.ts")).toMatchSnapshot(
