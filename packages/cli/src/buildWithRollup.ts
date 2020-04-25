@@ -1,4 +1,3 @@
-import path from "path";
 import { spawn, spawnSync, ChildProcess } from "child_process";
 import * as rollup from "rollup";
 import chalk from "chalk";

@@ -1,6 +1,4 @@
-import chalk from "chalk";
 import type { Command } from "../types";
-import { print } from "../utils/print";
 
 const createConfig = () => {
   return {

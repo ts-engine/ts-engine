@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import eslint from "eslint";
 import chalk from "chalk";
 import type { Command } from "../types";
-import { print, printError, printProgress, printSuccess } from "../utils/print";
+import { printError, printProgress, printSuccess } from "../utils/print";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getConsumerPackage } from "../utils/package";
 import eslintConfig from "@ts-engine/eslint-config";
@@ -33,36 +33,29 @@ export const lint: Command<LintCommandOptions> = {
 
     // Setup linting engine
     const consumerPackage = getConsumerPackage();
+
     const cli = new eslint.CLIEngine({
       fix: parsedOptions.fix,
       baseConfig: eslintConfig,
       cwd: consumerPackage.dir,
     });
 
-    const report = await printProgress(
-      new Promise<eslint.CLIEngine.LintReport>((resolve) => {
-        const result = cli.executeOnFiles(consumerPackage.srcFilepaths);
-        resolve(result);
-      }),
-      "Linting source code"
-    );
+    printSuccess("Linting source code...");
+    const report = cli.executeOnFiles(consumerPackage.srcFilepaths);
 
     if (parsedOptions.fix) {
+      const writeFiles = async () => {
+        const files = report.results.filter((r) => r.output);
+
+        for (const file of files) {
+          await fs.writeFile(file.filePath, file.output, {
+            encoding: "utf8",
+          });
+        }
+      };
+
       // Immediately write fixes to file
-      await printProgress(
-        new Promise(async (resolve) => {
-          const files = report.results.filter((r) => r.output);
-
-          for (const file of files) {
-            await fs.writeFile(file.filePath, file.output, {
-              encoding: "utf8",
-            });
-          }
-
-          resolve();
-        }),
-        "Patching files"
-      );
+      await printProgress(writeFiles(), "Patching files");
     }
 
     if (report.errorCount === 0 && report.warningCount === 0) {
@@ -74,18 +67,16 @@ export const lint: Command<LintCommandOptions> = {
 
     // Print summary of issues eg:
     // Found 9 errors (4 fixable) and 4 warnings (2 fixable)
-    const errors = `${chalk.redBright(report.errorCount)} errors`;
-    const warnings = `${chalk.yellowBright(report.warningCount)} warnings`;
-    const fixableErrors = `(${chalk.redBright(
-      report.fixableErrorCount
-    )} fixable)`;
-    const fixableWarnings = `(${chalk.yellowBright(
-      report.fixableWarningCount
-    )} fixable)`;
+    const errors = `${report.errorCount} errors`;
+    const warnings = `${report.warningCount} warnings`;
+    const fixableErrors = `(${report.fixableErrorCount} fixable)`;
+    const fixableWarnings = `(${report.fixableWarningCount} fixable)`;
 
     printError();
     printError(
-      `Found ${errors} ${fixableErrors} and ${warnings} ${fixableWarnings}`
+      (report.errorCount > 0 ? chalk.redBright : chalk.yellowBright)(
+        `Found ${errors} ${fixableErrors} and ${warnings} ${fixableWarnings}`
+      )
     );
 
     // Print out file summaries

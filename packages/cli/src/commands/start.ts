@@ -1,6 +1,5 @@
-import chalk from "chalk";
 import type { Command } from "../types";
-import { print, printError } from "../utils/print";
+import { printError } from "../utils/print";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { createRollupConfig } from "../createRollupConfig";
 import { buildWithRollup } from "../buildWithRollup";

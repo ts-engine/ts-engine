@@ -1,7 +1,7 @@
 import ts from "typescript";
 import chalk from "chalk";
 import type { Command } from "../types";
-import { print, printError, printProgress, printSuccess } from "../utils/print";
+import { printError, printProgress, printSuccess } from "../utils/print";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getConsumerPackage } from "../utils/package";
 import { getTsEngineConfig } from "../getTsEngineConfig";
@@ -52,7 +52,7 @@ export const typecheck: Command<TypecheckCommandOptions> = {
 
     // Setup TypeScript compiler
     const consumerPackage = getConsumerPackage();
-    let program = ts.createProgram(
+    const program = ts.createProgram(
       consumerPackage.srcFilepaths.filter((f) => !f.includes("__tests__")),
       createConfig({
         emitDeclarationOnly: parsedOptions.emit,
@@ -61,7 +61,7 @@ export const typecheck: Command<TypecheckCommandOptions> = {
     );
 
     // Obtain diagnostics
-    let emitResult = await printProgress(
+    const emitResult = await printProgress(
       new Promise<ts.EmitResult>((resolve) => {
         const result = program.emit();
         resolve(result);
@@ -71,7 +71,7 @@ export const typecheck: Command<TypecheckCommandOptions> = {
         : "Typechecking source code"
     );
 
-    let allDiagnostics = ts
+    const allDiagnostics = ts
       .getPreEmitDiagnostics(program)
       .concat(emitResult.diagnostics);
 
