@@ -40,8 +40,22 @@ export const lint: Command<LintCommandOptions> = {
       cwd: consumerPackage.dir,
     });
 
-    printSuccess("Linting source code...");
-    const report = cli.executeOnFiles(consumerPackage.srcFilepaths);
+    const generateReport = () => {
+      return new Promise<eslint.CLIEngine.LintReport>((resolve) => {
+        // Defer the start of execution as it blocks output
+        // being written to the console and we want
+        // progress-estimator to do an initial print
+        setTimeout(() => {
+          resolve(cli.executeOnFiles(consumerPackage.srcFilepaths));
+        }, 1000);
+      });
+    };
+
+    const report = await printProgress(
+      generateReport(),
+      "Linting source code",
+      "lint"
+    );
 
     if (parsedOptions.fix) {
       const writeFiles = async () => {
@@ -55,7 +69,7 @@ export const lint: Command<LintCommandOptions> = {
       };
 
       // Immediately write fixes to file
-      await printProgress(writeFiles(), "Patching files");
+      await printProgress(writeFiles(), "Patching files", "lint-patch");
     }
 
     if (report.errorCount === 0 && report.warningCount === 0) {

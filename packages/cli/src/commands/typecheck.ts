@@ -68,7 +68,8 @@ export const typecheck: Command<TypecheckCommandOptions> = {
       }),
       parsedOptions.emit
         ? `Writing type definitions to ${tsEngineConfig.outputDir}/`
-        : "Typechecking source code"
+        : "Typechecking source code",
+      "typecheck"
     );
 
     const allDiagnostics = ts

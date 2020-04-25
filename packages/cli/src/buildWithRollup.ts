@@ -84,13 +84,15 @@ export const buildWithRollup = async (
     // Perform single build and write it out
     const bundle = await printProgress(
       rollup.rollup(config as any),
-      chalk.greenBright("Building bundle")
+      chalk.greenBright("Building bundle"),
+      "build"
     );
 
     for (let output of config.output) {
       await printProgress(
         bundle.write(output as any),
-        chalk.greenBright(`Writing to ${output.file}`)
+        chalk.greenBright(`Writing to ${output.file}`),
+        "build-write"
       );
     }
 
