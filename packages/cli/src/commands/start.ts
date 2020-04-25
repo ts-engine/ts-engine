@@ -21,7 +21,7 @@ const options = [
   createBooleanOption({
     name: "args",
     description:
-      "Splits ts-engine's args from args to be forwarded onto the Node.js application",
+      "Provide arguments to be forwarded onto the Node.js application",
     isRequired: false,
     defaultValue: false,
   }),
@@ -43,10 +43,6 @@ export const start: Command<StartCommandOptions> = {
     const parsedOptions = argsToOptions<StartCommandOptions>(args, options);
 
     const argsToForward = args.slice(args.findIndex((a) => a === "--args") + 1);
-
-    // Announce tool
-    print(`Building code with ${chalk.blueBright("Rollup")}`);
-    print();
 
     try {
       // Run the build

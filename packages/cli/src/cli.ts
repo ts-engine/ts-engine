@@ -31,7 +31,7 @@ const run = async (): Promise<void> => {
     );
     print();
 
-    print(toolPackage.json.description);
+    print(`Usage ${chalk.yellowBright("ts-engine <command> <options>")}`);
     print();
 
     const nameColumnWidth = 25;
@@ -39,11 +39,12 @@ const run = async (): Promise<void> => {
     const versionName = chalk.bold("--version".padEnd(nameColumnWidth));
     const versionDesc = "Print version";
     print(`${versionName}${versionDesc}`);
-    print();
 
     for (let command of commands) {
+      print();
+
       const commandName = chalk.bold(command.name.padEnd(nameColumnWidth));
-      const commandDesc = command.description;
+      const commandDesc = chalk.bold(command.description);
       print(`${commandName}${commandDesc}`);
 
       for (let option of command.options) {
@@ -51,21 +52,21 @@ const run = async (): Promise<void> => {
         const optionDesc = option.description;
         print(`${optionName}${optionDesc}`);
       }
-
-      print();
     }
 
     return Promise.resolve();
   }
 
   const command = commands.find((c) => c.name === commandArg);
+
   if (!command) {
     // Notify command doesn't exist via stderr logs
-    printError(`Command '${commandArg}' does not exist`);
-    print();
+    printError(`Command ${chalk.yellowBright(commandArg)} does not exist`);
+    printError();
 
-    printError("Run 'ts-engine --help' to see available commands");
-    print();
+    printError(
+      `Run ${chalk.blueBright("ts-engine --help")} to see available commands`
+    );
 
     // Reject to ensure the project exits with status 1
     return Promise.reject();
@@ -75,12 +76,21 @@ const run = async (): Promise<void> => {
   try {
     await command.run(args);
   } catch (error) {
-    printError(error);
+    if (error) {
+      printError(chalk.redBright(error));
+      printError();
+    }
     return Promise.reject();
   }
 };
 
 // Run immediately
 run()
-  .then(() => process.exit(0))
-  .catch(() => process.exit(1));
+  .then(() => {
+    print();
+    process.exit(0);
+  })
+  .catch(() => {
+    printError();
+    process.exit(1);
+  });

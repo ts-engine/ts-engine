@@ -1,7 +1,7 @@
 import ts from "typescript";
 import chalk from "chalk";
 import type { Command } from "../types";
-import { print, printError } from "../utils/print";
+import { print, printError, printProgress, printSuccess } from "../utils/print";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getConsumerPackage } from "../utils/package";
 import { getTsEngineConfig } from "../getTsEngineConfig";
@@ -42,17 +42,13 @@ export interface TypecheckCommandOptions {
 
 export const typecheck: Command<TypecheckCommandOptions> = {
   name: "typecheck",
-  description: `Typecheck code with ${chalk.blueBright("TypeScript")}`,
+  description: "Typecheck code with TypeScript",
   options,
   run: async (args: string[]) => {
     // Ensure envs are set
     process.env.TS_ENGINE_COMMAND = "typecheck";
 
     const parsedOptions = argsToOptions<TypecheckCommandOptions>(args, options);
-
-    // Announce tool
-    print(`Typechecking code with ${chalk.blueBright("TypeScript")}`);
-    print();
 
     // Setup TypeScript compiler
     const consumerPackage = getConsumerPackage();
@@ -64,33 +60,31 @@ export const typecheck: Command<TypecheckCommandOptions> = {
       })
     );
 
-    if (parsedOptions.emit) {
-      // Notify where types will be written to
-      print(
-        `Writing type definitions to ${chalk.greenBright(
-          tsEngineConfig.outputDir
-        )}`
-      );
-      print();
-    }
-
     // Obtain diagnostics
-    let emitResult = program.emit();
+    let emitResult = await printProgress(
+      new Promise<ts.EmitResult>((resolve) => {
+        const result = program.emit();
+        resolve(result);
+      }),
+      parsedOptions.emit
+        ? `Writing type definitions to ${tsEngineConfig.outputDir}/`
+        : "Typechecking source code"
+    );
+
     let allDiagnostics = ts
       .getPreEmitDiagnostics(program)
       .concat(emitResult.diagnostics);
 
     if (allDiagnostics.length === 0) {
       // Early escape if no issues
-      print("No issues found");
-      print();
+      printSuccess("✓ No issues found");
 
       return Promise.resolve();
     }
 
     // Print out diagnostic summary
-    printError(`Found ${chalk.redBright(allDiagnostics.length)} type errors:`);
     printError();
+    printError(`Found ${chalk.redBright(allDiagnostics.length)} type errors:`);
 
     // Compile list of files with their error messages
     type DiagnosticFile = { filePath: string; messages: string[] };
@@ -116,7 +110,7 @@ export const typecheck: Command<TypecheckCommandOptions> = {
 
       const composedMessage = `${chalk.redBright(
         `(${lineAndCharacter!.line + 1},${lineAndCharacter!.character + 1})`
-      )}: ${message}`;
+      )} ${message} ${chalk.magentaBright(`(TS${diagnostic.code})`)}`;
 
       // Push message
       const file: DiagnosticFile = files.find(
@@ -127,20 +121,19 @@ export const typecheck: Command<TypecheckCommandOptions> = {
 
     // Print file errors
     for (let file of files) {
+      printError();
       printError(chalk.greenBright(file.filePath));
 
       for (let message of file.messages) {
         printError(message);
       }
-
-      printError();
     }
 
-    // Print out generalk diagnostic error not related to a file
+    // Print out general diagnostic error not related to a file
     const generalDiagnostics = allDiagnostics.filter((d) => !d.file);
     for (let diagnostic of generalDiagnostics) {
-      printError(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
       printError();
+      printError(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
     }
 
     return Promise.reject();

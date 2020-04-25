@@ -1,6 +1,6 @@
 import chalk from "chalk";
 import type { Command, OutputType } from "../types";
-import { print, printError } from "../utils/print";
+import { printError } from "../utils/print";
 import {
   getConsumerPackage,
   getLibraryPackageJsonReport,
@@ -45,7 +45,7 @@ export interface BuildCommandOptions {
 
 export const build: Command<BuildCommandOptions> = {
   name: "build",
-  description: `Build code using ${chalk.blueBright("Rollup")}`,
+  description: "Build code using Rollup",
   options,
   run: async (args: string[]) => {
     // Ensure envs are set
@@ -59,7 +59,6 @@ export const build: Command<BuildCommandOptions> = {
       const libraryOption = chalk.yellowBright("--library");
 
       printError(`Must specify either ${nodeAppOption} or ${libraryOption}`);
-      printError();
       return Promise.reject();
     }
 
@@ -70,7 +69,6 @@ export const build: Command<BuildCommandOptions> = {
       printError(
         `Cannot specify both ${nodeAppOption} and ${libraryOption}, please provide one`
       );
-      printError();
       return Promise.reject();
     }
 
@@ -84,19 +82,15 @@ export const build: Command<BuildCommandOptions> = {
       const report = getLibraryPackageJsonReport(getConsumerPackage().json);
       if (report.messages.length > 0) {
         printError(`Found issues with ${chalk.greenBright("package.json")}:`);
+        printError();
 
         for (let message of report.messages) {
           printError(message);
         }
 
-        printError();
         return Promise.reject();
       }
     }
-
-    // Announce tool
-    print(`Building code with ${chalk.blueBright("Rollup")}`);
-    print();
 
     try {
       // Run the build
@@ -109,8 +103,7 @@ export const build: Command<BuildCommandOptions> = {
         watch: parsedOptions.watch,
       });
     } catch (error) {
-      printError(error);
-      printError();
+      printError(chalk.redBright(error));
       return Promise.reject();
     }
   },

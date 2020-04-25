@@ -3,7 +3,7 @@ import fs from "fs-extra";
 import eslint from "eslint";
 import chalk from "chalk";
 import type { Command } from "../types";
-import { print, printError } from "../utils/print";
+import { print, printError, printProgress, printSuccess } from "../utils/print";
 import { createBooleanOption, argsToOptions } from "../utils/options";
 import { getConsumerPackage } from "../utils/package";
 import eslintConfig from "@ts-engine/eslint-config";
@@ -23,17 +23,13 @@ export interface LintCommandOptions {
 
 export const lint: Command<LintCommandOptions> = {
   name: "lint",
-  description: `Lint with ${chalk.blueBright("ESLint")}`,
+  description: "Lint with ESLint",
   options,
   run: async (args: string[]) => {
     // Ensure envs are set
     process.env.TS_ENGINE_COMMAND = "lint";
 
     const parsedOptions = argsToOptions<LintCommandOptions>(args, options);
-
-    // Announce tool
-    print(`Linting with ${chalk.blueBright("ESLint")}`);
-    print();
 
     // Setup linting engine
     const consumerPackage = getConsumerPackage();
@@ -43,21 +39,35 @@ export const lint: Command<LintCommandOptions> = {
       cwd: consumerPackage.dir,
     });
 
-    const report = cli.executeOnFiles(consumerPackage.srcFilepaths);
+    const report = await printProgress(
+      new Promise<eslint.CLIEngine.LintReport>((resolve) => {
+        const result = cli.executeOnFiles(consumerPackage.srcFilepaths);
+        resolve(result);
+      }),
+      "Linting source code"
+    );
 
     if (parsedOptions.fix) {
       // Immediately write fixes to file
-      const files = report.results.filter((r) => r.output);
+      await printProgress(
+        new Promise(async (resolve) => {
+          const files = report.results.filter((r) => r.output);
 
-      for (const file of files) {
-        await fs.writeFile(file.filePath, file.output, { encoding: "utf8" });
-      }
+          for (const file of files) {
+            await fs.writeFile(file.filePath, file.output, {
+              encoding: "utf8",
+            });
+          }
+
+          resolve();
+        }),
+        "Patching files"
+      );
     }
 
     if (report.errorCount === 0 && report.warningCount === 0) {
       // Early escape if there are no issues found
-      print("No issues found");
-      print();
+      printSuccess("✓ No issues found");
 
       return Promise.resolve();
     }
@@ -73,10 +83,10 @@ export const lint: Command<LintCommandOptions> = {
       report.fixableWarningCount
     )} fixable)`;
 
+    printError();
     printError(
       `Found ${errors} ${fixableErrors} and ${warnings} ${fixableWarnings}`
     );
-    printError();
 
     // Print out file summaries
     const files = report.results.filter(
@@ -84,6 +94,8 @@ export const lint: Command<LintCommandOptions> = {
     );
 
     for (let file of files) {
+      printError();
+
       printError(
         chalk.greenBright(path.relative(consumerPackage.dir, file.filePath))
       );
@@ -94,20 +106,19 @@ export const lint: Command<LintCommandOptions> = {
             ? chalk.redBright(`Error (${message.line}:${message.column})`)
             : chalk.yellowBright(`Warning (${message.line}:${message.column})`);
 
-        printError(
-          `${prefix} ${message.message} (${chalk.grey(message.ruleId)})`
-        );
-      }
+        const fixableAffix = message.fix ? chalk.greenBright("(fixable)") : "";
+        const ruleAffix = chalk.magentaBright(`(${message.ruleId})`);
 
-      printError();
+        printError(`${prefix} ${message.message} ${ruleAffix} ${fixableAffix}`);
+      }
     }
 
     // If anything is fixable mention --fix option
     if (report.fixableErrorCount + report.fixableWarningCount > 0) {
-      printError(
-        `Rerun with ${chalk.blueBright("--fix")} to fix fixable issues`
-      );
       printError();
+      printError(
+        `Rerun with ${chalk.yellowBright("--fix")} option to fix fixable issues`
+      );
     }
 
     // Don't fail if we only have warnings
