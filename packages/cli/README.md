@@ -136,7 +136,7 @@ ts-engine start --watch --args --one --two three
 
 ### Test
 
-Unit tests are run using [Jest](https://jestjs.io/).
+Unit tests are run using [Jest](https://jestjs.io/). The default jest config can be extended by using a standard `jest.config.js` file. **Updating the `transform` option may lead to compilation issues when running tests.**
 
 ```sh
 # Run tests once
