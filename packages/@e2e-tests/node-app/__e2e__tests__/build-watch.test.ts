@@ -47,9 +47,9 @@ describe("build-watch", () => {
     ]);
 
     // Built file is written to file system
-    expect(await fileSystem.readFile("dist/main.js")).toMatchSnapshot(
-      "updated"
-    );
+    expect(
+      (await fileSystem.readFile("dist/main.js")).includes("new content")
+    ).toBe(true);
 
     // Kill watching tool
     runner.kill();

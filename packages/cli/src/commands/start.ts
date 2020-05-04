@@ -24,11 +24,18 @@ const options = [
     isRequired: false,
     defaultValue: false,
   }),
+  createBooleanOption({
+    name: "minify",
+    description: "Minify the compiled output",
+    isRequired: false,
+    defaultValue: false,
+  }),
 ];
 
 export interface StartCommandOptions {
   watch: boolean;
   "bundle-dependencies": boolean;
+  minify: boolean;
 }
 
 export const start: Command<StartCommandOptions> = {
@@ -40,15 +47,17 @@ export const start: Command<StartCommandOptions> = {
     process.env.TS_ENGINE_COMMAND = "start";
 
     const parsedOptions = argsToOptions<StartCommandOptions>(args, options);
+    console.log(parsedOptions);
 
     const argsToForward = args.slice(args.findIndex((a) => a === "--args") + 1);
 
     try {
       // Run the build
-      const config = createRollupConfig(
-        "node-app",
-        parsedOptions["bundle-dependencies"]
-      );
+      const config = createRollupConfig({
+        outputType: "node-app",
+        bundleDependencies: parsedOptions["bundle-dependencies"],
+        minify: parsedOptions.minify,
+      });
 
       await buildWithRollup(config, {
         watch: parsedOptions.watch,

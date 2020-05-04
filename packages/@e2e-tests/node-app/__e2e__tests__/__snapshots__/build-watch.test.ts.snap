@@ -1,6 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`build-watch should rebuild on changes: updated 1`] = `
-"\\"use strict\\";console.log(\\"new content\\");
-"
-`;

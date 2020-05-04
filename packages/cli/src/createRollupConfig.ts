@@ -10,9 +10,14 @@ import { getBabelConfigFilename } from "./getBabelConfigFilename";
 import { getConsumerPackage } from "./utils/package";
 import type { RollupConfig, OutputType } from "./types";
 
+interface CreateRollupConfigOptions {
+  outputType: OutputType;
+  bundleDependencies: boolean;
+  minify: boolean;
+}
+
 export const createRollupConfig = (
-  outputType: OutputType,
-  bundleDependencies: boolean
+  options: CreateRollupConfigOptions
 ): RollupConfig => {
   const tsEngineConfig = getTsEngineConfig();
   const extensions = tsEngineConfig.extensions.map((x) => `.${x}`);
@@ -20,22 +25,25 @@ export const createRollupConfig = (
     {
       file: tsEngineConfig.outputLibraryCjsFilename,
       format: "cjs",
+      sourcemap: true,
     },
     {
       file: tsEngineConfig.outputLibraryEsmFilename,
       format: "es",
+      sourcemap: true,
     },
   ];
   const nodeAppOutput = [
     {
       file: tsEngineConfig.outputNodeAppFilename,
       format: "cjs",
+      sourcemap: true,
     },
   ];
 
-  return {
+  const config = {
     input: tsEngineConfig.entryFilename,
-    output: outputType === "library" ? libraryOutput : nodeAppOutput,
+    output: options.outputType === "library" ? libraryOutput : nodeAppOutput,
     plugins: [
       preserveShebangs(),
       json(),
@@ -50,15 +58,22 @@ export const createRollupConfig = (
         configFile: getBabelConfigFilename(),
         runtimeHelpers: true,
       }),
-      terser(),
     ],
     external: [
       // don't try and bundle in native built in node modules like 'path' and 'fs'
       ...builtInModules,
-      // only include dependencies if option provided to do so
-      ...(bundleDependencies
-        ? []
-        : Object.keys(getConsumerPackage().json?.dependencies ?? {})),
     ],
   };
+
+  if (options.minify) {
+    config.plugins.push(terser({ sourcemap: true }));
+  }
+
+  if (!options.bundleDependencies) {
+    config.external.push(
+      ...Object.keys(getConsumerPackage().json?.dependencies ?? {})
+    );
+  }
+
+  return config;
 };
