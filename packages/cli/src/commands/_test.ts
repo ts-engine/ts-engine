@@ -1,12 +1,20 @@
 import type { Command } from "../types";
+import { getJestConfigFilename } from "../getJestConfigFilename";
 
 const createConfig = () => {
+  const userJestConfigFilename = getJestConfigFilename();
+
+  const userJestConfig = userJestConfigFilename
+    ? require(userJestConfigFilename)
+    : {};
+
   return {
     testRegex: "src/.*.test.(js|jsx|ts|tsx)$",
     testURL: "http://localhost",
     transform: {
       ".(js|jsx|ts|tsx)$": require.resolve("../tool-files/jestPreprocessor"),
     },
+    ...userJestConfig,
   };
 };
 
