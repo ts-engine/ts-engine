@@ -1,6 +1,6 @@
 {
   "name": "@e2e-tests/library-with-no-externals",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "An e2e test package",
   "license": "MIT",
   "repository": {
@@ -15,8 +15,8 @@
     "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__"
   },
   "devDependencies": {
-    "@helpers/test-utils": "1.3.1",
-    "@ts-engine/babel-preset": "1.3.1",
-    "@ts-engine/cli": "1.3.1"
+    "@helpers/test-utils": "1.4.0",
+    "@ts-engine/babel-preset": "1.4.0",
+    "@ts-engine/cli": "1.4.0"
   }
 }
