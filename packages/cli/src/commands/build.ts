@@ -34,6 +34,12 @@ const options = [
     isRequired: false,
     defaultValue: false,
   }),
+  createBooleanOption({
+    name: "minify",
+    description: "Minify the compiled output",
+    isRequired: false,
+    defaultValue: false,
+  }),
 ];
 
 export interface BuildCommandOptions {
@@ -41,6 +47,7 @@ export interface BuildCommandOptions {
   "node-app": boolean;
   library: boolean;
   "bundle-dependencies": boolean;
+  minify: boolean;
 }
 
 export const build: Command<BuildCommandOptions> = {
@@ -94,10 +101,11 @@ export const build: Command<BuildCommandOptions> = {
 
     try {
       // Run the build
-      const config = createRollupConfig(
+      const config = createRollupConfig({
         outputType,
-        parsedOptions["bundle-dependencies"]
-      );
+        bundleDependencies: parsedOptions["bundle-dependencies"],
+        minify: parsedOptions.minify,
+      });
 
       await buildWithRollup(config, {
         watch: parsedOptions.watch,

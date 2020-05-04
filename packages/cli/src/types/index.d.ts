@@ -36,5 +36,5 @@ export interface RollupConfig {
     format: string;
   }[];
   plugins: any[];
-  external: string[];
+  external: string[] | ((id: string) => boolean);
 }
