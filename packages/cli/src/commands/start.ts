@@ -47,7 +47,6 @@ export const start: Command<StartCommandOptions> = {
     process.env.TS_ENGINE_COMMAND = "start";
 
     const parsedOptions = argsToOptions<StartCommandOptions>(args, options);
-    console.log(parsedOptions);
 
     const argsToForward = args.slice(args.findIndex((a) => a === "--args") + 1);
 
