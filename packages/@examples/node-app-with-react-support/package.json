@@ -1,6 +1,6 @@
 {
   "name": "@examples/node-app-with-react-support",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -11,8 +11,8 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/babel-preset-react": "1.4.0",
-    "@ts-engine/cli": "1.4.0"
+    "@ts-engine/babel-preset-react": "1.4.1",
+    "@ts-engine/cli": "1.4.1"
   },
   "dependencies": {
     "react": "^16.13.1",
