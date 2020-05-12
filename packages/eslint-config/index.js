@@ -12,7 +12,10 @@ module.exports = {
     "plugin:import/warnings",
     "plugin:jest/recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/recommended",
   ],
   globals: {
     console: "readonly",
@@ -34,6 +37,8 @@ module.exports = {
     "react",
     "react-hooks",
     "jsx-a11y",
+    "jest-dom",
+    "testing-library",
   ],
   rules: {
     "prettier/prettier": "error",
