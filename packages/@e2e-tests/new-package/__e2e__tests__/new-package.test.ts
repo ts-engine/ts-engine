@@ -1,7 +1,13 @@
+import { spawnSync } from "child_process";
 import { fileSystem, runCliCommand } from "@helpers/test-utils";
-import packageJson from "../package.json";
 
 describe("new-package", () => {
+  const tsEngineCliVersion = spawnSync(
+    "npm",
+    ["show", "@ts-engine/cli", "version"],
+    { encoding: "utf8" }
+  ).stdout.replace("\n", "");
+
   beforeEach(async () => {
     await fileSystem.deleteDir("new-package");
   });
@@ -36,7 +42,7 @@ describe("new-package", () => {
         typecheck: "ts-engine typecheck",
       },
       devDependencies: {
-        "@ts-engine/cli": `^${packageJson.version}`,
+        "@ts-engine/cli": `^${tsEngineCliVersion}`,
       },
     });
 
@@ -81,7 +87,7 @@ describe("new-package", () => {
         typecheck: "ts-engine typecheck --emit",
       },
       devDependencies: {
-        "@ts-engine/cli": `^${packageJson.version}`,
+        "@ts-engine/cli": `^${tsEngineCliVersion}`,
       },
     });
 
@@ -124,7 +130,7 @@ describe("new-package", () => {
         typecheck: "ts-engine typecheck --emit",
       },
       devDependencies: {
-        "@ts-engine/cli": `^${packageJson.version}`,
+        "@ts-engine/cli": `^${tsEngineCliVersion}`,
       },
     });
 
@@ -167,7 +173,7 @@ describe("new-package", () => {
         typecheck: "ts-engine typecheck --emit",
       },
       devDependencies: {
-        "@ts-engine/cli": `^${packageJson.version}`,
+        "@ts-engine/cli": `^${tsEngineCliVersion}`,
       },
     });
   });
