@@ -15,6 +15,7 @@ export const printProgress = <TPromiseResult>(
   message: string,
   cacheName: string
 ): Promise<TPromiseResult> => {
+  console.log("inner env", process.env);
   if (process.env.CI === "true") {
     const logEstimate = createLogger({
       storagePath: path.join(__dirname, `.progress-estimator-${cacheName}`),
