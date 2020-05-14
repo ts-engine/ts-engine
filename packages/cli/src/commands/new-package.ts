@@ -99,45 +99,72 @@ export const newPackage: Command<NewPackageCommandOptions> = {
       ? "node-app"
       : "library";
 
-    // Write files
+    // Obtain latest version of @ts-engine/cli from NPM
     const tsEngineCliVersion = spawnSync(
       "npm",
       ["show", "@ts-engine/cli", "version"],
       { encoding: "utf8" }
     ).stdout.replace("\n", "");
+
     const writeFiles = async () => {
       await fs.ensureDir(newPackageDir);
+
+      // Write package.json
+      const libraryPackageJson = {
+        name: parsedOptions.name,
+        version: "1.0.0",
+        license: parsedOptions.license,
+        private: false,
+        main: "dist/main.cjs.js",
+        module: "dist/main.esm.js",
+        types: "dist/main.d.ts",
+        sideEffects: false,
+        scripts: {
+          build: "ts-engine build --library",
+          lint: "ts-engine lint",
+          test: "ts-engine test",
+          typecheck: "ts-engine typecheck --emit",
+        },
+        devDependencies: {
+          "@ts-engine/cli": `^${tsEngineCliVersion}`,
+        },
+      };
+
+      const nodeAppPackageJson = {
+        name: parsedOptions.name,
+        version: "1.0.0",
+        license: parsedOptions.license,
+        private: true,
+        scripts: {
+          build: "ts-engine build --node-app",
+          lint: "ts-engine lint",
+          test: "ts-engine test",
+          typecheck: "ts-engine typecheck",
+        },
+        devDependencies: {
+          "@ts-engine/cli": `^${tsEngineCliVersion}`,
+        },
+      };
+
       await fs.writeJSON(
         path.resolve(newPackageDir, "package.json"),
-        {
-          name: parsedOptions.name,
-          version: "1.0.0",
-          license: parsedOptions.license,
-          private: outputType === "node-app",
-          scripts: {
-            build:
-              outputType === "node-app"
-                ? "ts-engine build --node-app"
-                : "ts-engine build --library",
-            lint: "ts-engine lint",
-            test: "ts-engine test",
-            typecheck:
-              outputType === "node-app"
-                ? "ts-engine typecheck"
-                : "ts-engine typecheck --emit",
-          },
-          devDependencies: {
-            "@ts-engine/cli": `^${tsEngineCliVersion}`,
-          },
-        },
+        outputType === "node-app" ? nodeAppPackageJson : libraryPackageJson,
         { encoding: "utf8", spaces: 2 }
       );
+
+      // Write src file
       await fs.ensureFile(path.resolve(newPackageDir, "src/main.ts"));
+
+      const librarySrc = `export const printHelloWorld = () => {
+  console.log("hello world");
+};
+`;
+      const nodeAppSrc = `console.log("hello world");
+`;
+
       await fs.writeFile(
         path.resolve(newPackageDir, "src/main.ts"),
-        outputType === "node-app"
-          ? 'console.log("hello world");'
-          : 'export const printHelloWorld = () => console.log("hello world");',
+        outputType === "node-app" ? nodeAppSrc : librarySrc,
         { encoding: "utf8" }
       );
     };

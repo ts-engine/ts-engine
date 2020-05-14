@@ -42,7 +42,8 @@ describe("new-package", () => {
 
     // source code correct
     expect(await fileSystem.readFile("new-package/src/main.ts")).toBe(
-      'console.log("hello world");'
+      `console.log("hello world");
+`
     );
   });
 
@@ -69,6 +70,10 @@ describe("new-package", () => {
       version: "1.0.0",
       license: "MIT",
       private: false,
+      main: "dist/main.cjs.js",
+      module: "dist/main.esm.js",
+      types: "dist/main.d.ts",
+      sideEffects: false,
       scripts: {
         build: "ts-engine build --library",
         lint: "ts-engine lint",
@@ -82,7 +87,10 @@ describe("new-package", () => {
 
     // source code correct
     expect(await fileSystem.readFile("new-package/src/main.ts")).toBe(
-      'export const printHelloWorld = () => console.log("hello world");'
+      `export const printHelloWorld = () => {
+  console.log("hello world");
+};
+`
     );
   });
 
@@ -122,7 +130,10 @@ describe("new-package", () => {
 
     // source code correct
     expect(await fileSystem.readFile("new-package/src/main.ts")).toBe(
-      'export const printHelloWorld = () => console.log("hello world");'
+      `export const printHelloWorld = () => {
+  console.log("hello world");
+};
+`
     );
   });
 
