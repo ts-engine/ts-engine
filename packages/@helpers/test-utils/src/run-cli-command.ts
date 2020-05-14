@@ -4,17 +4,19 @@ import stripAnsi from "strip-ansi";
 
 export interface RunCliCommandOptions {
   cwd?: string;
+  env: NodeJS.ProcessEnv;
 }
 
 export const runCliCommand = (
   command: string,
-  options: RunCliCommandOptions = { cwd: process.cwd() }
+  options: RunCliCommandOptions = { cwd: process.cwd(), env: {} }
 ) => {
   // Setup runner
   const [tool, ...args] = command.split(" ");
   const runner = spawn(tool, args, {
     cwd: options.cwd,
     stdio: "pipe",
+    env: { ...process.env, ...options.env },
   });
 
   // Set readable encoding
