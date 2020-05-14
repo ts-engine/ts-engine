@@ -161,6 +161,25 @@ ts-engine test
 ts-engine test <jest_cli_args>
 ```
 
+### New package
+
+Create new Node.js application and library packages using the following command.
+
+```sh
+# Create Node.js application package
+ts-engine new-package --node-app --name my-app
+
+# Create a library package
+ts-engine new-package --library --name my-library
+```
+
+The license will be `UNDEFINED` by default but you can set it with the `--license` option.
+
+```sh
+# Set the license
+ts-engine new-package --library --license MIT --name my-library
+```
+
 ## Example package setup
 
 ### Minimal Node.js application package:
