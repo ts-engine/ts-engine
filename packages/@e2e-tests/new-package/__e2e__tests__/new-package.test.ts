@@ -250,6 +250,32 @@ describe("new-package", () => {
     );
   });
 
+  it("should inform the user if the folder already exists and not create the package (scoped name)", async () => {
+    const runner = runCliCommand(
+      "yarn run ts-engine new-package --library --name @new/existing-package"
+    );
+
+    // Wait for tool to complete
+    const statusCode = await runner.waitForStatusCode();
+
+    // Should exit successfully
+    expect(statusCode).toBe(1);
+
+    // Should inform the user
+    // Printed info to stderr
+    expect(runner.stderrLines).toContainInOrder([
+      "Folder existing-package already exists",
+    ]);
+
+    // Files not written to file system
+    expect(await fileSystem.fileExists("existing-package/package.json")).toBe(
+      false
+    );
+    expect(await fileSystem.fileExists("existing-package/src/main.ts")).toBe(
+      false
+    );
+  });
+
   it("should enforce valid package name", async () => {
     const runner = runCliCommand(
       "yarn run ts-engine new-package --node-app --name 123"
