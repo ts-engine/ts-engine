@@ -5,6 +5,7 @@ import type { Command } from "./types";
 import { getToolPackage } from "./utils/package";
 import { print, printError } from "./utils/print";
 import { build } from "./commands/build";
+import { newPackage } from "./commands/new-package";
 import { lint } from "./commands/lint";
 import { start } from "./commands/start";
 import { test } from "./commands/_test";
@@ -13,7 +14,14 @@ import { typecheck } from "./commands/typecheck";
 const run = async (): Promise<void> => {
   const [, , commandArg, ...args] = process.argv;
   const toolPackage = getToolPackage();
-  const commands: Command<unknown>[] = [build, lint, start, test, typecheck];
+  const commands: Command<unknown>[] = [
+    build,
+    newPackage,
+    lint,
+    start,
+    test,
+    typecheck,
+  ];
 
   if (commandArg === "--version") {
     // Handle top level tool options
@@ -77,8 +85,14 @@ const run = async (): Promise<void> => {
     await command.run(args);
   } catch (error) {
     if (error) {
-      printError(chalk.redBright(error));
-      printError();
+      if (error.message && error.stack) {
+        printError(chalk.redBright(error.message));
+        printError(chalk.redBright(error.stack));
+        printError();
+      } else {
+        printError(chalk.redBright(error));
+        printError();
+      }
     }
     return Promise.reject();
   }
