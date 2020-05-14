@@ -15,6 +15,12 @@ export const printProgress = <TPromiseResult>(
   message: string,
   cacheName: string
 ): Promise<TPromiseResult> => {
+  if (process.env.CI === "true") {
+    // If in CI then don't use the progress-estimator as it muddies the logs
+    console.log(chalk.greenBright(message));
+    return promise;
+  }
+
   const logEstimate = createLogger({
     storagePath: path.join(__dirname, `.progress-estimator-${cacheName}`),
   });
