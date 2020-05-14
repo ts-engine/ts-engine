@@ -77,14 +77,14 @@ export const newPackage: Command<NewPackageCommandOptions> = {
       return Promise.reject();
     }
 
-    // TODO - provide npm package name validation and also only use
-    // the second part of a scoped name for the folder name
+    // Determine if the package name is valid
     const isNameValid = validatePackageName(parsedOptions.name);
     if (!isNameValid.validForNewPackages) {
       printError("Invalid package name provided");
       return Promise.reject();
     }
 
+    // Determine the new package's dir, support scoped package names
     const newPackageDir = parsedOptions.name.startsWith("@")
       ? parsedOptions.name.split("/")[1]
       : parsedOptions.name;
