@@ -2,6 +2,7 @@ import { spawnSync } from "child_process";
 import path from "path";
 import chalk from "chalk";
 import fs from "fs-extra";
+import validatePackageName from "validate-npm-package-name";
 import { printError, printProgress } from "../utils/print";
 import type { Command, OutputType } from "../types";
 import {
@@ -78,9 +79,17 @@ export const newPackage: Command<NewPackageCommandOptions> = {
 
     // TODO - provide npm package name validation and also only use
     // the second part of a scoped name for the folder name
-    const newPackageDir = parsedOptions.name;
+    const isNameValid = validatePackageName(parsedOptions.name);
+    if (!isNameValid.validForNewPackages) {
+      printError("Invalid package name provided");
+      return Promise.reject();
+    }
 
-    if (await fs.pathExists(path.resolve(process.cwd(), parsedOptions.name))) {
+    const newPackageDir = parsedOptions.name.startsWith("@")
+      ? parsedOptions.name.split("/")[1]
+      : parsedOptions.name;
+
+    if (await fs.pathExists(newPackageDir)) {
       printError(`Folder ${newPackageDir} already exists`);
       return Promise.reject();
     }

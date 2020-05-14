@@ -86,6 +86,46 @@ describe("new-package", () => {
     );
   });
 
+  it("should create a new package with scoped name in correct folder", async () => {
+    const runner = runCliCommand(
+      "yarn run ts-engine new-package --library --name @new/new-package"
+    );
+
+    // Wait for tool to complete
+    const statusCode = await runner.waitForStatusCode();
+
+    // Should exit successfully
+    expect(statusCode).toBe(0);
+
+    // New package files are present
+    expect(await fileSystem.fileExists("new-package/package.json")).toBe(true);
+    expect(await fileSystem.fileExists("new-package/src/main.ts")).toBe(true);
+
+    // Package filled in correctly
+    expect(
+      JSON.parse(await fileSystem.readFile("new-package/package.json"))
+    ).toMatchObject({
+      name: "@new/new-package",
+      version: "1.0.0",
+      license: "UNLICENSED",
+      private: false,
+      scripts: {
+        build: "ts-engine build --library",
+        lint: "ts-engine lint",
+        test: "ts-engine test",
+        typecheck: "ts-engine typecheck --emit",
+      },
+      devDependencies: {
+        "@ts-engine/cli": `^${packageJson.version}`,
+      },
+    });
+
+    // source code correct
+    expect(await fileSystem.readFile("new-package/src/main.ts")).toBe(
+      'export const printHelloWorld = () => console.log("hello world");'
+    );
+  });
+
   it("should default license if not provided", async () => {
     const runner = runCliCommand(
       "yarn run ts-engine new-package --library --name new-package"
@@ -208,5 +248,26 @@ describe("new-package", () => {
     expect(await fileSystem.fileExists("existing-package/src/main.ts")).toBe(
       false
     );
+  });
+
+  it("should enforce valid package name", async () => {
+    const runner = runCliCommand(
+      "yarn run ts-engine new-package --node-app --name 123"
+    );
+
+    // Wait for tool to complete
+    const statusCode = await runner.waitForStatusCode();
+
+    // Should exit in failure
+    expect(statusCode).toBe(1);
+
+    // Printed info to stderr
+    expect(runner.stderrLines).toContainInOrder([
+      "Invalid package name provided",
+    ]);
+
+    // Files not written to file system
+    expect(await fileSystem.fileExists("new-package/package.json")).toBe(false);
+    expect(await fileSystem.fileExists("new-package/src/main.ts")).toBe(false);
   });
 });

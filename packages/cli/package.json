@@ -55,9 +55,11 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-preserve-shebangs": "^0.2.0",
     "rollup-plugin-terser": "^5.3.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
-    "@types/ora": "^3.2.0"
+    "@types/ora": "^3.2.0",
+    "@types/validate-npm-package-name": "^3.0.0"
   }
 }
