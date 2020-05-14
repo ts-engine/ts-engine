@@ -15,7 +15,8 @@ export const printProgress = <TPromiseResult>(
   message: string,
   cacheName: string
 ): Promise<TPromiseResult> => {
-  if (process.env.CI === "true") {
+  // @ts-ignore in GitHub Actions this resolvs to a boolean not a string
+  if (process.env.CI === "true" || process.env.CI === true) {
     const logEstimate = createLogger({
       storagePath: path.join(__dirname, `.progress-estimator-${cacheName}`),
     });
