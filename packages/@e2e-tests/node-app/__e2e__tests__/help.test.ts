@@ -21,7 +21,7 @@ describe("--help", () => {
       "--library                Outputs a JavaScript library",
       "--bundle-dependencies    Compile dependencies into final output file",
       "--minify                 Minify the compiled output",
-      "--new-package              Create a new package",
+      "new-package              Create a new package",
       "--node-app               Outputs a Node.js application",
       "--library                Outputs a JavaScript library",
       "--license                The new package's license",
