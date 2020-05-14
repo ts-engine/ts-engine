@@ -1,18 +1,18 @@
-import { fileSystem, runCliCommand } from "@helpers/test-utils";
+import { runCliCommand } from "@helpers/test-utils";
 
 describe("ci", () => {
   const originalCi = process.env.CI;
 
-  beforeEach(async () => {
-    await fileSystem.deleteDir("dist");
-    process.env.CI = "true";
-  });
+  beforeEach(async () => {});
 
   afterEach(() => {
     process.env.CI = originalCi;
   });
 
   it("should not use the progress estimator when in CI mode", async () => {
+    console.log(process.env);
+    process.env.CI = "true";
+
     const runner = runCliCommand("yarn run ts-engine build --node-app");
 
     // Wait for tool to complete
