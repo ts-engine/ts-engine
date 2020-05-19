@@ -1,6 +1,6 @@
 {
   "name": "@e2e-tests/node-app-with-dependencies",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "An e2e test package",
   "license": "MIT",
   "repository": {
@@ -11,9 +11,9 @@
     "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__"
   },
   "devDependencies": {
-    "@helpers/test-utils": "1.5.1",
-    "@ts-engine/babel-preset-react": "1.5.1",
-    "@ts-engine/cli": "1.5.1",
+    "@helpers/test-utils": "1.5.2",
+    "@ts-engine/babel-preset-react": "1.5.2",
+    "@ts-engine/cli": "1.5.2",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6"
   },
