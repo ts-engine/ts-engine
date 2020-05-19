@@ -103,7 +103,7 @@ export const newPackage: Command<NewPackageCommandOptions> = {
     const tsEngineCliVersion = spawnSync(
       "npm",
       ["show", "@ts-engine/cli", "version"],
-      { encoding: "utf8" }
+      { encoding: "utf8", shell: true }
     ).stdout.replace("\n", "");
 
     const writeFiles = async () => {
