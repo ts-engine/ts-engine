@@ -1,6 +1,6 @@
 {
   "name": "@examples/node-app",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -11,6 +11,6 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.5.0"
+    "@ts-engine/cli": "1.5.1"
   }
 }
