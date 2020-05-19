@@ -179,6 +179,7 @@ export const newPackage: Command<NewPackageCommandOptions> = {
     spawnSync("yarn", {
       cwd: newPackageDir,
       stdio: "inherit",
+      shell: true,
     });
   },
 };
