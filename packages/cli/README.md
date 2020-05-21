@@ -11,7 +11,7 @@
   <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine" />
 </p>
 
-Command line tool to get TypeScript packages up and running faster. It removes a lot of the config overhead.
+Write TypeScript packages with optionally zero configuration. Build, lint, start, test and typecheck without any configuration. Whilst ts-engine works out the box without any configuration it is open to extension. You can provide custom Babel, ESLint and Jest configuration.
 
 ## Documentation
 
