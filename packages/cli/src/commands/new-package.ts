@@ -138,6 +138,7 @@ export const newPackage: Command<NewPackageCommandOptions> = {
         scripts: {
           build: "ts-engine build --node-app",
           lint: "ts-engine lint",
+          start: "ts-engine start",
           test: "ts-engine test",
           typecheck: "ts-engine typecheck",
         },
