@@ -38,6 +38,7 @@ describe("new-package", () => {
       scripts: {
         build: "ts-engine build --node-app",
         lint: "ts-engine lint",
+        start: "ts-engine start",
         test: "ts-engine test",
         typecheck: "ts-engine typecheck",
       },
