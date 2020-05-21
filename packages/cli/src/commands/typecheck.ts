@@ -85,7 +85,7 @@ export const typecheck: Command<TypecheckCommandOptions> = {
 
     // Print out diagnostic summary
     printError();
-    printError(`Found ${chalk.redBright(allDiagnostics.length)} type errors:`);
+    printError(chalk.redBright(`Found ${allDiagnostics.length} type errors`));
 
     // Compile list of files with their error messages
     type DiagnosticFile = { filePath: string; messages: string[] };
