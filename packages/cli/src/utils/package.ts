@@ -17,6 +17,9 @@ export interface PackageJson {
   dependencies?: {
     [key: string]: string;
   };
+  peerDependencies?: {
+    [key: string]: string;
+  };
   main?: string;
   module?: string;
   types?: string;

@@ -9,6 +9,8 @@
   "private": true,
   "dependencies": {
     "@e2e-tests/library-with-externals": "1.5.2",
-    "@ts-engine/cli": "1.5.2"
+    "@ts-engine/cli": "1.5.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

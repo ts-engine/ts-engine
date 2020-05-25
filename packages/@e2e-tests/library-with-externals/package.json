@@ -18,5 +18,9 @@
     "@helpers/test-utils": "1.5.2",
     "@ts-engine/babel-preset-react": "1.5.2",
     "@ts-engine/cli": "1.5.2"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
