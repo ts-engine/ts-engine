@@ -1,6 +1,6 @@
 {
   "name": "@helpers/test-utils",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "license": "MIT",
   "private": true,
   "main": "dist/main.cjs.js",
@@ -12,7 +12,7 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.5.2"
+    "@ts-engine/cli": "1.5.3"
   },
   "dependencies": {
     "chalk": "^4.0.0",

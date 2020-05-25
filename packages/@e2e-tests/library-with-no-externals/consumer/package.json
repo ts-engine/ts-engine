@@ -1,6 +1,6 @@
 {
   "name": "@e2e-tests/library-with-no-externals-consumer",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "An e2e test package",
   "license": "MIT",
   "repository": {
@@ -8,7 +8,7 @@
   },
   "private": true,
   "dependencies": {
-    "@e2e-tests/library-with-no-externals": "1.5.2",
-    "@ts-engine/cli": "1.5.2"
+    "@e2e-tests/library-with-no-externals": "1.5.3",
+    "@ts-engine/cli": "1.5.3"
   }
 }
