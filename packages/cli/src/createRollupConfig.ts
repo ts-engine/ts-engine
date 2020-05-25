@@ -71,7 +71,8 @@ export const createRollupConfig = (
 
   if (!options.bundleDependencies) {
     config.external.push(
-      ...Object.keys(getConsumerPackage().json?.dependencies ?? {})
+      ...Object.keys(getConsumerPackage().json?.dependencies ?? {}),
+      ...Object.keys(getConsumerPackage().json?.peerDependencies ?? {})
     );
   }
 
