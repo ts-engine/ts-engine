@@ -1,6 +1,6 @@
 {
   "name": "@helpers/edit-version",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Publish packages",
   "license": "MIT",
   "repository": {
@@ -15,7 +15,7 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.5.2"
+    "@ts-engine/cli": "1.5.3"
   },
   "dependencies": {
     "@types/semver": "^7.1.0",

@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/babel-preset",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "@ts-engine's core Babel preset.",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"

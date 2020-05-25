@@ -1,6 +1,6 @@
 {
   "name": "@e2e-tests/library-with-package-json-missing-types",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "An e2e test package",
   "license": "MIT",
   "repository": {
@@ -14,8 +14,8 @@
     "test:e2e": "jest --runInBand --testTimeout 15000 __e2e__tests__"
   },
   "devDependencies": {
-    "@helpers/test-utils": "1.5.2",
-    "@ts-engine/babel-preset": "1.5.2",
-    "@ts-engine/cli": "1.5.2"
+    "@helpers/test-utils": "1.5.3",
+    "@ts-engine/babel-preset": "1.5.3",
+    "@ts-engine/cli": "1.5.3"
   }
 }
