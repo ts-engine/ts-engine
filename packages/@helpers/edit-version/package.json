@@ -18,6 +18,7 @@
     "@ts-engine/cli": "1.5.3"
   },
   "dependencies": {
+    "@mono-repo/utils": "^1.1.0",
     "@types/semver": "^7.1.0",
     "chalk": "^4.0.0",
     "fs-extra": "^9.0.0",

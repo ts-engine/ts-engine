@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
+import path from "path";
 import chalk from "chalk";
 import minimist from "minimist";
 import semver from "semver";
 import fs from "fs-extra";
-import { getMonoRepo, getPackages } from "./mono-repo";
+import { findMonoRepo, findPackages } from "@mono-repo/utils";
 
 interface Options {
   version: string;
@@ -20,39 +21,47 @@ const run = async () => {
     process.exit(1);
   }
 
-  const monoRepo = await getMonoRepo(process.cwd());
-  const packages = await getPackages(monoRepo.dir);
+  const monoRepo = await findMonoRepo();
+  const packages = await findPackages(monoRepo);
 
   // Update public package versions
   for (let pkg of packages) {
-    const pkgNameVersion = chalk.greenBright(`${pkg.name}@${pkg.version}`);
+    const pkgNameVersion = chalk.greenBright(
+      `${pkg.json.name}@${pkg.json.version}`
+    );
     const pkgNewVersion = chalk.yellowBright(options.version);
     console.log(`${pkgNameVersion} ⮕  ${pkgNewVersion}...`);
 
     // Update package version
-    const publicPkgJson = await fs.readJson(pkg.filepath);
+    const packageJsonFilepath = path.join(pkg.dir, "package.json");
+    const publicPkgJson = await fs.readJson(packageJsonFilepath);
     publicPkgJson.version = options.version;
-    await fs.writeJson(pkg.filepath, publicPkgJson, { spaces: 2 });
+    await fs.writeJson(packageJsonFilepath, publicPkgJson, { spaces: 2 });
 
     // Update consumers versions of this dependency
     for (let consumerPkg of packages) {
-      const consumerPkgJson = await fs.readJson(consumerPkg.filepath);
+      const consumerPackageJsonFilepath = path.join(
+        consumerPkg.dir,
+        "package.json"
+      );
+
+      const consumerPkgJson = await fs.readJson(consumerPackageJsonFilepath);
 
       if (
         consumerPkgJson.dependencies &&
-        consumerPkgJson.dependencies[pkg.name]
+        consumerPkgJson.dependencies[pkg.json.name]
       ) {
-        consumerPkgJson.dependencies[pkg.name] = options.version;
+        consumerPkgJson.dependencies[pkg.json.name] = options.version;
       }
 
       if (
         consumerPkgJson.devDependencies &&
-        consumerPkgJson.devDependencies[pkg.name]
+        consumerPkgJson.devDependencies[pkg.json.name]
       ) {
-        consumerPkgJson.devDependencies[pkg.name] = options.version;
+        consumerPkgJson.devDependencies[pkg.json.name] = options.version;
       }
 
-      await fs.writeJson(consumerPkg.filepath, consumerPkgJson, {
+      await fs.writeJson(consumerPackageJsonFilepath, consumerPkgJson, {
         spaces: 2,
       });
     }
