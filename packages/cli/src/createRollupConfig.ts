@@ -6,7 +6,7 @@ import { terser } from "rollup-plugin-terser";
 import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
 import builtInModules from "builtin-modules";
 import { getTsEngineConfig } from "./getTsEngineConfig";
-import { getBabelConfigFilename } from "./getBabelConfigFilename";
+import { getBabelConfig } from "./getBabelConfig";
 import { getConsumerPackage } from "./utils/package";
 import type { RollupConfig, OutputType } from "./types";
 
@@ -14,6 +14,7 @@ interface CreateRollupConfigOptions {
   outputType: OutputType;
   bundleDependencies: boolean;
   minify: boolean;
+  react: boolean;
 }
 
 export const createRollupConfig = (
@@ -55,8 +56,8 @@ export const createRollupConfig = (
       babel({
         exclude: "node_modules/**",
         extensions,
-        configFile: getBabelConfigFilename(),
         runtimeHelpers: true,
+        ...getBabelConfig({ react: options.react }),
       }),
     ],
     external: [

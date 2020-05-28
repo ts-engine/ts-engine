@@ -30,12 +30,19 @@ const options = [
     isRequired: false,
     defaultValue: false,
   }),
+  createBooleanOption({
+    name: "config-react",
+    description: "Include React babel config",
+    isRequired: false,
+    defaultValue: false,
+  }),
 ];
 
 export interface StartCommandOptions {
   watch: boolean;
   "bundle-dependencies": boolean;
   minify: boolean;
+  "config-react": boolean;
 }
 
 export const start: Command<StartCommandOptions> = {
@@ -56,6 +63,7 @@ export const start: Command<StartCommandOptions> = {
         outputType: "node-app",
         bundleDependencies: parsedOptions["bundle-dependencies"],
         minify: parsedOptions.minify,
+        react: parsedOptions["config-react"],
       });
 
       await buildWithRollup(config, {

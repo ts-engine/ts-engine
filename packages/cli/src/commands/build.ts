@@ -40,6 +40,12 @@ const options = [
     isRequired: false,
     defaultValue: false,
   }),
+  createBooleanOption({
+    name: "config-react",
+    description: "Include React babel config",
+    isRequired: false,
+    defaultValue: false,
+  }),
 ];
 
 export interface BuildCommandOptions {
@@ -48,6 +54,7 @@ export interface BuildCommandOptions {
   library: boolean;
   "bundle-dependencies": boolean;
   minify: boolean;
+  "config-react": boolean;
 }
 
 export const build: Command<BuildCommandOptions> = {
@@ -55,10 +62,10 @@ export const build: Command<BuildCommandOptions> = {
   description: "Build code using Rollup",
   options,
   run: async (args: string[]) => {
+    const parsedOptions = argsToOptions<BuildCommandOptions>(args, options);
+
     // Ensure envs are set
     process.env.TS_ENGINE_COMMAND = "build";
-
-    const parsedOptions = argsToOptions<BuildCommandOptions>(args, options);
 
     // Required to specify whether building an Node.js app or a JavaScript library
     if (!parsedOptions["node-app"] && !parsedOptions.library) {
@@ -105,6 +112,7 @@ export const build: Command<BuildCommandOptions> = {
         outputType,
         bundleDependencies: parsedOptions["bundle-dependencies"],
         minify: parsedOptions.minify,
+        react: parsedOptions["config-react"],
       });
 
       await buildWithRollup(config, {

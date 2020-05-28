@@ -64,6 +64,17 @@ Checkout the official docs over at https://ts-engine.dev.
       </a>
     </td>
   </tr>
+  <tr>
+    <td>
+      <a href="./packages/eslint-config-react/README.md">@ts-engine/eslint-config-react</a>
+    </td>
+    <td>The React ESLint config for ts-engine.</td>
+    <td>
+      <a href="https://www.npmjs.com/package/@ts-engine/eslint-config-react" rel="noopener noreferrer" target="_blank">
+        <img src="https://badgen.net/npm/v/@ts-engine/eslint-config-react">
+      </a>
+    </td>
+  </tr>
 </table>
 
 ## Examples

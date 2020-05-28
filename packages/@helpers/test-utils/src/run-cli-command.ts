@@ -4,7 +4,7 @@ import stripAnsi from "strip-ansi";
 
 export interface RunCliCommandOptions {
   cwd?: string;
-  env: NodeJS.ProcessEnv;
+  env?: NodeJS.ProcessEnv;
 }
 
 export const runCliCommand = (
@@ -16,7 +16,7 @@ export const runCliCommand = (
   const runner = spawn(tool, args, {
     cwd: options.cwd,
     stdio: "pipe",
-    env: { ...process.env, ...options.env },
+    env: { ...process.env, ...(options?.env ?? {}) },
   });
 
   // Set readable encoding

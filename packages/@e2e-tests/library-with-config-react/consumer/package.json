@@ -1,0 +1,16 @@
+{
+  "name": "@e2e-tests/library-with-config-react-consumer",
+  "version": "1.5.3",
+  "description": "An e2e test package",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/ts-engine/ts-engine"
+  },
+  "private": true,
+  "dependencies": {
+    "@e2e-tests/library-with-externals": "1.5.3",
+    "@ts-engine/cli": "1.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
