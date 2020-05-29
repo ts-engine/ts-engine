@@ -22,7 +22,7 @@ Checkout the official docs over at https://ts-engine.dev.
 Install the package
 
 ```sh
-yarn add --dev @ts-engine/babel-preset-react
+yarn add --dev @ts-engine/babel-preset @ts-engine/babel-preset-react
 ```
 
 Create a babel config file
@@ -30,6 +30,6 @@ Create a babel config file
 ```js
 // .babel.config.js
 module.exports = {
-  presets: ["@ts-engine/babel-preset-react"],
+  presets: ["@ts-engine/babel-preset-react", "@ts-engine/babel-preset"],
 };
 ```
