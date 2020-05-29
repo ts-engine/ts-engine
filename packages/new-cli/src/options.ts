@@ -8,8 +8,6 @@ const createOption = (option: YargsOption): YargsOption => option;
 
 export const options = {
   args: createOption({
-    type: "boolean",
-    default: false,
     describe: "Capture args to forward",
   }),
   emit: createOption({

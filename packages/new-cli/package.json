@@ -18,7 +18,8 @@
   "dependencies": {
     "@ts-engine/babel-preset": "1.5.3",
     "@ts-engine/babel-preset-react": "^1.5.3",
-    "jest": "^25.2.4",
+    "@types/jest": "^25.2.3",
+    "jest": "^26.0.1",
     "yargs": "^15.3.1"
   }
 }
