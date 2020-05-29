@@ -7,5 +7,20 @@ interface BuildOptions {
 }
 
 export const build = (options: BuildOptions) => {
-  console.log(options);
+  // TODO - add package json checks if its a library
+  // try {
+  //   // Run the build
+  //   const config = createRollupConfig({
+  //     outputType,
+  //     bundleDependencies: parsedOptions["bundle-dependencies"],
+  //     minify: parsedOptions.minify,
+  //     react: parsedOptions["config-react"],
+  //   });
+  //   await buildWithRollup(config, {
+  //     watch: parsedOptions.watch,
+  //   });
+  // } catch (error) {
+  //   printError(chalk.redBright(error));
+  //   return Promise.reject();
+  // }
 };

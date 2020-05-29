@@ -1,7 +1,18 @@
 import path from "path";
 import fs from "fs-extra";
 import mockFs from "mock-fs";
-import { ConfigFactory } from "../config";
+import builtInModules from "builtin-modules";
+import {
+  entryFilepath,
+  cjsOutputFilepath,
+  esmOutputFilepath,
+  outputFilepath,
+} from "../constants";
+import {
+  createBabelConfig,
+  createJestConfig,
+  createRollupConfig,
+} from "../config";
 
 describe("config", () => {
   afterEach(() => {
@@ -10,18 +21,14 @@ describe("config", () => {
 
   describe("createBabelConfig", () => {
     it("should supply default babel config", () => {
-      const configFactory = new ConfigFactory({ react: false });
-
-      expect(configFactory.createBabelConfig()).toEqual({
+      expect(createBabelConfig({ react: false })).toEqual({
         configFile: false,
         presets: ["@ts-engine/babel-preset"],
       });
     });
 
     it("should supply react babel config", () => {
-      const configFactory = new ConfigFactory({ react: true });
-
-      expect(configFactory.createBabelConfig()).toEqual({
+      expect(createBabelConfig({ react: true })).toEqual({
         configFile: false,
         presets: ["@ts-engine/babel-preset-react", "@ts-engine/babel-preset"],
       });
@@ -31,9 +38,8 @@ describe("config", () => {
       mockFs({
         "babel.config.js": "module.exports = {}",
       });
-      const configFactory = new ConfigFactory({ react: true });
 
-      expect(configFactory.createBabelConfig()).toEqual({
+      expect(createBabelConfig({ react: false })).toEqual({
         configFile: path.resolve(process.cwd(), "babel.config.js"),
       });
     });
@@ -47,15 +53,13 @@ describe("config", () => {
     });
 
     it("should supply default jest config", () => {
-      const configFactory = new ConfigFactory({ react: false });
-
-      expect(configFactory.createJestConfig()).toEqual({
+      expect(createJestConfig({ react: false })).toEqual({
         testRegex: "src/.*.test.(js|jsx|ts|tsx)$",
         testURL: "http://localhost",
         transform: {
           ".(js|jsx|ts|tsx)$": [
             "babel-jest",
-            configFactory.createBabelConfig(),
+            createBabelConfig({ react: false }),
           ],
         },
       });
@@ -63,18 +67,107 @@ describe("config", () => {
 
     it("should merge jest.config.js if found", () => {
       fs.writeFileSync("jest.config.js", "module.exports = { coverage: 90}");
-      const configFactory = new ConfigFactory({ react: false });
 
-      expect(configFactory.createJestConfig()).toEqual({
+      expect(createJestConfig({ react: false })).toEqual({
         testRegex: "src/.*.test.(js|jsx|ts|tsx)$",
         testURL: "http://localhost",
         transform: {
           ".(js|jsx|ts|tsx)$": [
             "babel-jest",
-            configFactory.createBabelConfig(),
+            createBabelConfig({ react: false }),
           ],
         },
         coverage: 90,
+      });
+    });
+  });
+
+  describe("createRollupConfig", () => {
+    beforeEach(() => {
+      const packageJson = {
+        dependencies: {
+          react: "16.0.0",
+        },
+        peerDependencies: {
+          "react-dom": "16.0.0",
+        },
+      };
+      mockFs({
+        "package.json": JSON.stringify(packageJson),
+      });
+    });
+
+    it("should be configured for library output", () => {
+      const config = createRollupConfig({
+        buildType: "library",
+        bundleDependencies: false,
+        minify: false,
+        react: false,
+      });
+
+      expect(config).toMatchObject({
+        input: entryFilepath,
+        output: [
+          {
+            file: cjsOutputFilepath,
+            format: "cjs",
+            sourcemap: true,
+          },
+          {
+            file: esmOutputFilepath,
+            format: "es",
+            sourcemap: true,
+          },
+        ],
+        external: [...builtInModules, "react", "react-dom"],
+      });
+      expect(config.plugins).toHaveLength(5);
+    });
+
+    it("should be configured for node-app output", () => {
+      const config = createRollupConfig({
+        buildType: "node-app",
+        bundleDependencies: false,
+        minify: false,
+        react: false,
+      });
+
+      expect(config).toMatchObject({
+        input: entryFilepath,
+        output: [
+          {
+            file: outputFilepath,
+            format: "cjs",
+            sourcemap: true,
+          },
+        ],
+        external: [...builtInModules, "react", "react-dom"],
+      });
+      expect(config.plugins).toHaveLength(5);
+    });
+
+    it("should add terser plugin for minification", () => {
+      const config = createRollupConfig({
+        buildType: "node-app",
+        bundleDependencies: false,
+        minify: true,
+        react: false,
+      });
+
+      // not sure how else to test this
+      expect(config.plugins).toHaveLength(6);
+    });
+
+    it("should NOT add dependencies and peerDependencies to externals when bundling dependencies", () => {
+      const config = createRollupConfig({
+        buildType: "node-app",
+        bundleDependencies: true,
+        minify: false,
+        react: false,
+      });
+
+      expect(config).toMatchObject({
+        external: [...builtInModules],
       });
     });
   });
