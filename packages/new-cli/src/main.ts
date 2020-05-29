@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import yargs from "yargs";
 import { options } from "./options";
 import { checkBuildTypeOptions, checkNpmPackageName } from "./checks";

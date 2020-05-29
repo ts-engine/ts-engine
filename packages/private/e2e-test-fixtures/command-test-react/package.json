@@ -1,0 +1,13 @@
+{
+  "name": "@e2e-test/command-test-react",
+  "version": "1.5.3",
+  "private": true,
+  "scripts": {
+    "test": "ts-engine-new test --react"
+  },
+  "dependencies": {
+    "@ts-engine/cli-new": "1.5.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

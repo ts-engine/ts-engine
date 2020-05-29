@@ -1,3 +1,4 @@
+// @ts-ignore
 import jest from "jest";
 import { ConfigFactory } from "../config";
 
@@ -14,9 +15,8 @@ export const test = (options: TestOptions) => {
   });
 
   const [, , , ...args] = process.argv;
-
   jest.run([
-    ...args.filter((a) => a !== "--react"),
+    ...args.filter((a) => !["--react"].includes(a)),
     "--config",
     JSON.stringify(configFactory.createJestConfig()),
   ]);
