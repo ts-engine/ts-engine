@@ -3,12 +3,12 @@ import { extractArgsOptionArgs, extractBuildType } from "../middleware";
 describe("middleware", () => {
   describe("extractBuildType", () => {
     it("should set the build type", () => {
-      expect(extractBuildType({ nodeApp: true })).toMatchObject({
+      expect(extractBuildType({ nodeApp: true })).toEqual({
         nodeApp: true,
         buildType: "node-app",
       });
 
-      expect(extractBuildType({ library: true })).toMatchObject({
+      expect(extractBuildType({ library: true })).toEqual({
         library: true,
         buildType: "library",
       });
@@ -25,7 +25,7 @@ describe("middleware", () => {
     it("should set args", () => {
       process.argv = ["ts-engine", "start", "--args", "--one", "-two", "three"];
 
-      expect(extractArgsOptionArgs({})).toMatchObject({
+      expect(extractArgsOptionArgs({})).toEqual({
         args: ["--one", "-two", "three"],
       });
     });
@@ -40,7 +40,7 @@ describe("middleware", () => {
         "three",
       ];
 
-      expect(extractArgsOptionArgs({})).toMatchObject({});
+      expect(extractArgsOptionArgs({})).toEqual({});
     });
   });
 });

@@ -1,3 +1,6 @@
+import path from "path";
+import fs from "fs-extra";
+
 interface ConfigFactoryOptions {
   react: boolean;
 }
@@ -10,10 +13,16 @@ export class ConfigFactory {
   }
 
   createBabelConfig = () => {
+    const babelConfigFilename = path.resolve(process.cwd(), "babel.config.js");
+    const babelConfigExists = fs.existsSync(babelConfigFilename);
+
+    if (babelConfigExists) {
+      return {
+        configFile: babelConfigFilename,
+      };
+    }
+
     const config = {
-      // TODO - if there is a babel config file in the user's
-      // package directory then need to update this
-      // https://babeljs.io/docs/en/options#configfile
       configFile: false,
       presets: ["@ts-engine/babel-preset"],
     };
@@ -26,12 +35,18 @@ export class ConfigFactory {
   };
 
   createJestConfig = () => {
+    const jestConfigFilename = path.resolve(process.cwd(), "jest.config.js");
+    const jestConfigExists = fs.existsSync(jestConfigFilename);
+
+    const jestConfig = jestConfigExists ? require(jestConfigFilename) : {};
+
     return {
       testRegex: "src/.*.test.(js|jsx|ts|tsx)$",
       testURL: "http://localhost",
       transform: {
         ".(js|jsx|ts|tsx)$": ["babel-jest", this.createBabelConfig()],
       },
+      ...jestConfig,
     };
   };
 }
