@@ -14,7 +14,6 @@ import {
   esmOutputFilepath,
   outputFilepath,
 } from "./constants";
-import { getPackage } from "./get-package";
 
 interface CreateBabelConfigOptions {
   react: boolean;
@@ -142,4 +141,20 @@ export const createRollupConfig = (
   }
 
   return config;
+};
+
+interface CreateESLintConfigOptions {
+  react: boolean;
+}
+
+export const createESLintConfig = (options: CreateESLintConfigOptions) => {
+  if (options.react) {
+    return {
+      extends: ["@ts-engine/eslint-config", "@ts-engine/eslint-config-react"],
+    };
+  }
+
+  return {
+    extends: ["@ts-engine/eslint-config"],
+  };
 };

@@ -40,9 +40,9 @@ yargs
         react: options.react,
       });
     },
-    (argv) => {
+    async (argv) => {
       // @ts-ignore
-      lint(argv);
+      await lint(argv);
     }
   )
   .command(
@@ -76,9 +76,9 @@ yargs
         watch: options.watch,
       });
     },
-    (argv) => {
+    async (argv) => {
       // @ts-ignore
-      start(argv);
+      await start(argv);
     }
   )
   .command(

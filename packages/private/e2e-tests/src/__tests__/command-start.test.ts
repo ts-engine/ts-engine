@@ -1,4 +1,3 @@
-import os from "os";
 import path from "path";
 import fs from "fs-extra";
 import { runCliCommand } from "../run-cli-command";

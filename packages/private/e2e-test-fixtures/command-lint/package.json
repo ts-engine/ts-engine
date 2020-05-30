@@ -1,0 +1,11 @@
+{
+  "name": "@e2e-test/command-lint",
+  "version": "1.5.3",
+  "private": true,
+  "scripts": {
+    "lint": "ts-engine-new lint"
+  },
+  "devDependencies": {
+    "@ts-engine/cli-new": "1.5.3"
+  }
+}

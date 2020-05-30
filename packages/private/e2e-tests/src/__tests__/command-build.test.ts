@@ -11,6 +11,7 @@ describe("command-build", () => {
   let consumerDir = "";
   let consumerDistDir = "";
   let isolatedDir = "";
+  let failurePackageDir = "";
   let reactPackageDir = "";
   let reactConsumerDir = "";
   let reactConsumerDistDir = "";
@@ -21,14 +22,17 @@ describe("command-build", () => {
     packageDistDir = path.resolve(packageDir, "dist");
     consumerDir = path.resolve(packageDir, "consumer");
     consumerDistDir = path.resolve(consumerDir, "dist");
+    isolatedDir = path.resolve(
+      os.tmpdir(),
+      ".ts-engine/temp/command-build/dist"
+    );
     reactPackageDir = await getPackageDirectory(
       "@e2e-test/command-build-react"
     );
     reactConsumerDir = path.resolve(reactPackageDir, "consumer");
     reactConsumerDistDir = path.resolve(reactConsumerDir, "dist");
-    isolatedDir = path.resolve(
-      os.tmpdir(),
-      ".ts-engine/temp/command-build/dist"
+    failurePackageDir = await getPackageDirectory(
+      "@e2e-test/command-build-failure"
     );
 
     await fs.ensureDir(isolatedDir);
@@ -101,6 +105,15 @@ describe("command-build", () => {
 
     expect(await runRunner.waitForStatusCode()).toBe(0);
     expect(runRunner.stdoutLines).toContainInOrder(["1 + 2 = 3"]);
+  });
+
+  it("should exit with status code 1 on failure", async () => {
+    // Build app
+    const buildRunner = runCliCommand("yarn build --node-app", {
+      cwd: failurePackageDir,
+    });
+
+    expect(await buildRunner.waitForStatusCode()).toBe(1);
   });
 
   it("should minify", async () => {

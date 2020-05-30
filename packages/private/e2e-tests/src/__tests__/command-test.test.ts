@@ -14,7 +14,7 @@ describe("command-test", () => {
     ]);
   });
 
-  it("should run tests", async () => {
+  it("should run tests (react)", async () => {
     const runner = runCliCommand("yarn test", {
       cwd: await getPackageDirectory("@e2e-test/command-test-react"),
     });

@@ -10,6 +10,7 @@ import {
 } from "../constants";
 import {
   createBabelConfig,
+  createESLintConfig,
   createJestConfig,
   createRollupConfig,
 } from "../config";
@@ -175,6 +176,24 @@ describe("config", () => {
       });
       ["react", "react-dom"].forEach((id) => {
         expect(config.external(id)).toBe(false);
+      });
+    });
+  });
+
+  describe("createESLintConfig", () => {
+    it("should supply default eslint config", () => {
+      const config = createESLintConfig({ react: false });
+
+      expect(config).toEqual({
+        extends: ["@ts-engine/eslint-config"],
+      });
+    });
+
+    it("should supply react eslint config", () => {
+      const config = createESLintConfig({ react: true });
+
+      expect(config).toEqual({
+        extends: ["@ts-engine/eslint-config", "@ts-engine/eslint-config-react"],
       });
     });
   });
