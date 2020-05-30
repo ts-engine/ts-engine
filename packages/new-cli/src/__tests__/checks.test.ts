@@ -1,8 +1,10 @@
+import chalk from "chalk";
 import mockFs from "mock-fs";
 import {
   checkBuildTypeOptions,
-  checkNpmPackageName,
   checkLibraryNpmPackageJson,
+  checkNewPackageFolderIsAvailable,
+  checkNpmPackageName,
 } from "../checks";
 
 describe("checks", () => {
@@ -50,7 +52,7 @@ describe("checks", () => {
     it("should enforce valid npm package names", () => {
       expect(() => {
         checkNpmPackageName({ name: "]]]" });
-      }).toThrow("]]] is not a valid npm package name");
+      }).toThrow("']]]' is not a valid npm package name");
     });
 
     it("should accept valid npm package names", () => {
@@ -124,6 +126,30 @@ describe("checks", () => {
       expect(() => checkLibraryNpmPackageJson({ library: true })).toThrowError(
         "Incorrectly configured package.json, set 'types' to 'dist/main.d.ts'"
       );
+    });
+  });
+
+  describe("checkNewPackageFolderIsAvailable", () => {
+    it("should pass if the folder is available", () => {
+      expect(checkNewPackageFolderIsAvailable({ name: "new-package" })).toBe(
+        true
+      );
+      expect(
+        checkNewPackageFolderIsAvailable({ name: "@scoped/new-package" })
+      ).toBe(true);
+    });
+
+    it("should enforce the folder must be available", () => {
+      mockFs({
+        "new-package": {},
+      });
+
+      expect(() =>
+        checkNewPackageFolderIsAvailable({ name: "new-package" })
+      ).toThrowError("Folder 'new-package' already exists");
+      expect(() =>
+        checkNewPackageFolderIsAvailable({ name: "@scoped/new-package" })
+      ).toThrowError("Folder 'new-package' already exists");
     });
   });
 });

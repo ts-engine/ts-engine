@@ -116,6 +116,7 @@ dist
 
 # temp test package directories
 @temp
+temp
 
 # MacOS
 .DS_Store

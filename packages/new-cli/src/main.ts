@@ -2,10 +2,12 @@
 
 import yargs from "yargs";
 import { options } from "./options";
+import { handleFailure } from "./handle-failure";
 import {
   checkBuildTypeOptions,
   checkNpmPackageName,
   checkLibraryNpmPackageJson,
+  checkNewPackageFolderIsAvailable,
 } from "./checks";
 import { extractArgsOptionArgs, extractBuildType } from "./middleware";
 import { build, lint, newPackage, start, test, typecheck } from "./commands";
@@ -14,6 +16,7 @@ yargs
   .scriptName("ts-engine")
   .middleware(extractBuildType)
   .middleware(extractArgsOptionArgs)
+  .fail(handleFailure)
   .command(
     "build",
     "Compile src/main.ts",
@@ -29,7 +32,6 @@ yargs
         })
         .check(checkBuildTypeOptions)
         .check(checkLibraryNpmPackageJson);
-      // TODO - add package json checks if its a library
     },
     async (argv) => {
       // @ts-ignore
@@ -59,9 +61,11 @@ yargs
           library: options.library,
           name: options.name,
           "node-app": options["node-app"],
+          react: options.react,
         })
         .check(checkBuildTypeOptions)
         .check(checkNpmPackageName)
+        .check(checkNewPackageFolderIsAvailable)
         .demandOption("name");
     },
     (argv) => {

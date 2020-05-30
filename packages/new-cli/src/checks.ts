@@ -1,3 +1,5 @@
+import chalk from "chalk";
+import fs from "fs-extra";
 import validatePackageName from "validate-npm-package-name";
 import { getPackage } from "./get-package";
 
@@ -15,7 +17,7 @@ export const checkNpmPackageName = (argv) => {
   const result = validatePackageName(argv.name);
 
   if (!result.validForNewPackages) {
-    throw new Error(`${argv.name} is not a valid npm package name`);
+    throw new Error(`'${argv.name}' is not a valid npm package name`);
   }
 
   return true;
@@ -49,4 +51,14 @@ export const checkLibraryNpmPackageJson = (argv) => {
   return true;
 };
 
-// TODO - add package json checks if its a library
+export const checkNewPackageFolderIsAvailable = (argv) => {
+  const newPackageDir = argv.name.startsWith("@")
+    ? argv.name.split("/")[1]
+    : argv.name;
+
+  if (fs.pathExistsSync(newPackageDir)) {
+    throw new Error(`Folder '${newPackageDir}' already exists`);
+  }
+
+  return true;
+};
