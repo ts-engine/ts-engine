@@ -1,7 +1,7 @@
 declare module "eslint" {
   export interface ESLintOptions {
     fix: boolean;
-    baseConfig: string;
+    baseConfig: string | any;
     cwd: string;
   }
 

@@ -95,7 +95,6 @@ export const lint = async (options: LintOptions) => {
     }
   }
 
-  console.log(counts);
   if (counts.fixableErrorCount + counts.fixableWarningCount > 0) {
     console.error(`\nRerun with --fix argument to fix fixable issues`);
   }
