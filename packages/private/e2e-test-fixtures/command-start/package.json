@@ -1,0 +1,11 @@
+{
+  "name": "@e2e-test/command-start",
+  "version": "1.5.3",
+  "private": true,
+  "scripts": {
+    "start": "ts-engine-new start"
+  },
+  "devDependencies": {
+    "@ts-engine/cli-new": "1.5.3"
+  }
+}

@@ -1,3 +1,5 @@
+import type { ChildProcess } from "child_process";
+import { spawn, spawnSync } from "child_process";
 import chalk from "chalk";
 import ora from "ora";
 import rollup from "rollup";
@@ -6,12 +8,22 @@ import { logProgress } from "./logger";
 
 interface BuildWithRollupOptions {
   watch: boolean;
+  run: boolean;
+  runArgs?: string[];
 }
 
 export const buildWithRollup = async (
   rollupConfig: RollupConfig,
   options: BuildWithRollupOptions
 ) => {
+  let postBuildRunner: ChildProcess | null = null;
+  const killPostBuildRunner = () => {
+    if (postBuildRunner) {
+      postBuildRunner.kill("SIGTERM");
+      postBuildRunner = null;
+    }
+  };
+
   if (options.watch) {
     const watcher = rollup.watch(rollupConfig as any);
 
@@ -33,25 +45,25 @@ export const buildWithRollup = async (
 
             console.log(chalk.grey("Watching for changes..."));
 
-            // if (options.runPostBuild) {
-            //   print(
-            //     chalk.blueBright(
-            //       postBuildRunner ? "Restarting app..." : "Starting app..."
-            //     )
-            //   );
-            //   killPostBuildRunner();
+            if (options.run) {
+              console.log(
+                chalk.blueBright(
+                  postBuildRunner ? "Restarting app..." : "Starting app..."
+                )
+              );
+              killPostBuildRunner();
 
-            //   postBuildRunner = spawn(
-            //     "node",
-            //     [config.output[0].file, ...(options.runArgs ?? [])],
-            //     {
-            //       stdio: "inherit",
-            //     }
-            //   );
+              postBuildRunner = spawn(
+                "node",
+                [rollupConfig.output[0].file, ...(options.runArgs ?? [])],
+                {
+                  stdio: "inherit",
+                }
+              );
 
-            //   postBuildRunner.stdout?.setEncoding("utf8");
-            //   postBuildRunner.stderr?.setEncoding("utf8");
-            // }
+              postBuildRunner.stdout?.setEncoding("utf8");
+              postBuildRunner.stderr?.setEncoding("utf8");
+            }
 
             break;
           }
@@ -71,15 +83,27 @@ export const buildWithRollup = async (
   } else {
     const bundle = await logProgress(
       rollup.rollup(rollupConfig as any),
-      "Building bundle",
+      chalk.greenBright("Building bundle"),
       "build"
     );
 
     for (let output of rollupConfig.output) {
       await logProgress(
         bundle.write(output as any),
-        `Writing to ${output.file}`,
+        chalk.greenBright(`Writing to ${output.file}`),
         "build-write"
+      );
+    }
+
+    if (options.run) {
+      console.log(chalk.blueBright("Starting app..."));
+      spawnSync(
+        "node",
+        [rollupConfig.output[0].file, ...(options.runArgs ?? [])],
+        {
+          encoding: "utf8",
+          stdio: "inherit",
+        }
       );
     }
   }

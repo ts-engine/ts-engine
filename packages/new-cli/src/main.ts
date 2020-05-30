@@ -75,7 +75,6 @@ yargs
         react: options.react,
         watch: options.watch,
       });
-      // TODO - add package json checks if its a library
     },
     (argv) => {
       // @ts-ignore

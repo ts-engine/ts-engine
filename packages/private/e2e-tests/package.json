@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "pretest": "cd ../../new-cli && yarn build",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "devDependencies": {
     "@mono-repo/utils": "^1.1.0",

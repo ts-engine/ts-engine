@@ -19,5 +19,6 @@ export const build = async (options: BuildOptions) => {
 
   await buildWithRollup(rollupConfig, {
     watch: options.watch,
+    run: false,
   });
 };
