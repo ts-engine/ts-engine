@@ -19,3 +19,5 @@ export const checkNpmPackageName = (argv) => {
 
   return true;
 };
+
+// TODO - add package json checks if its a library

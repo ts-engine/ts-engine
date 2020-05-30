@@ -57,7 +57,6 @@ const containsInOrder = (
   };
 };
 
-// export const extendExpect = () => {
 expect.extend({
   toContainInOrder: (received: string[], expected: string[]) => {
     const recievedStr = chalk.red(JSON.stringify(received, null, 2));
@@ -80,4 +79,3 @@ expect.extend({
     }
   },
 });
-// };

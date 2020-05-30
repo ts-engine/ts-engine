@@ -119,9 +119,11 @@ describe("config", () => {
             sourcemap: true,
           },
         ],
-        external: [...builtInModules, "react", "react-dom"],
       });
       expect(config.plugins).toHaveLength(5);
+      [...builtInModules, "react", "react-dom"].forEach((id) => {
+        expect(config.external(id)).toBe(true);
+      });
     });
 
     it("should be configured for node-app output", () => {
@@ -141,9 +143,11 @@ describe("config", () => {
             sourcemap: true,
           },
         ],
-        external: [...builtInModules, "react", "react-dom"],
       });
       expect(config.plugins).toHaveLength(5);
+      [...builtInModules, "react", "react-dom"].forEach((id) => {
+        expect(config.external(id)).toBe(true);
+      });
     });
 
     it("should add terser plugin for minification", () => {
@@ -166,8 +170,11 @@ describe("config", () => {
         react: false,
       });
 
-      expect(config).toMatchObject({
-        external: [...builtInModules],
+      [...builtInModules].forEach((id) => {
+        expect(config.external(id)).toBe(true);
+      });
+      ["react", "react-dom"].forEach((id) => {
+        expect(config.external(id)).toBe(false);
       });
     });
   });

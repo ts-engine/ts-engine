@@ -72,7 +72,20 @@ interface CreateRollupConfigOptions {
   react: boolean;
 }
 
-export const createRollupConfig = (options: CreateRollupConfigOptions) => {
+type ExternalFn = (id: string) => boolean;
+export interface RollupConfig {
+  input: string;
+  output: {
+    file: string;
+    format: string;
+  }[];
+  plugins: any[];
+  external: ExternalFn;
+}
+
+export const createRollupConfig = (
+  options: CreateRollupConfigOptions
+): RollupConfig => {
   const libraryOutput = [
     {
       file: cjsOutputFilepath,
@@ -112,19 +125,20 @@ export const createRollupConfig = (options: CreateRollupConfigOptions) => {
         ...createBabelConfig({ react: options.react }),
       }),
     ],
-    external: [...builtInModules],
+    external: (id: string) => {
+      if (options.bundleDependencies) {
+        return builtInModules.includes(id);
+      }
+
+      return (
+        builtInModules.includes(id) ||
+        (!id.startsWith(".") && !path.isAbsolute(id))
+      );
+    },
   };
 
   if (options.minify) {
     config.plugins.push(terser());
-  }
-
-  if (!options.bundleDependencies) {
-    const pkg = getPackage();
-    config.external.push(
-      ...Object.keys(pkg.json?.dependencies ?? {}),
-      ...Object.keys(pkg.json?.peerDependencies ?? {})
-    );
   }
 
   return config;

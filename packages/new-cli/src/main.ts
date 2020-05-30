@@ -24,10 +24,11 @@ yargs
           watch: options.watch,
         })
         .check(checkBuildTypeOptions);
+      // TODO - add package json checks if its a library
     },
-    (argv) => {
+    async (argv) => {
       // @ts-ignore
-      build(argv);
+      return build(argv);
     }
   )
   .command(
@@ -74,6 +75,7 @@ yargs
         react: options.react,
         watch: options.watch,
       });
+      // TODO - add package json checks if its a library
     },
     (argv) => {
       // @ts-ignore

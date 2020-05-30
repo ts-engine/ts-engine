@@ -5,7 +5,7 @@
   "scripts": {
     "test": "ts-engine-new test"
   },
-  "dependencies": {
+  "devDependencies": {
     "@ts-engine/cli-new": "1.5.3"
   }
 }

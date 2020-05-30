@@ -1,14 +1,15 @@
 {
-  "name": "@e2e-test/command-test-react",
+  "name": "@e2e-test/command-build-react-consumer",
   "version": "1.5.3",
   "private": true,
   "scripts": {
-    "test": "ts-engine-new test --react"
+    "build": "ts-engine-new build --node-app --react"
   },
   "devDependencies": {
     "@ts-engine/cli-new": "1.5.3"
   },
   "dependencies": {
+    "@e2e-test/command-build": "1.5.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

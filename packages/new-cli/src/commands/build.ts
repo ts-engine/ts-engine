@@ -1,3 +1,6 @@
+import { createRollupConfig } from "../config";
+import { buildWithRollup } from "../build-with-rollup";
+
 interface BuildOptions {
   buildType: "library" | "node-app";
   bundleDependencies: boolean;
@@ -6,21 +9,15 @@ interface BuildOptions {
   watch: boolean;
 }
 
-export const build = (options: BuildOptions) => {
-  // TODO - add package json checks if its a library
-  // try {
-  //   // Run the build
-  //   const config = createRollupConfig({
-  //     outputType,
-  //     bundleDependencies: parsedOptions["bundle-dependencies"],
-  //     minify: parsedOptions.minify,
-  //     react: parsedOptions["config-react"],
-  //   });
-  //   await buildWithRollup(config, {
-  //     watch: parsedOptions.watch,
-  //   });
-  // } catch (error) {
-  //   printError(chalk.redBright(error));
-  //   return Promise.reject();
-  // }
+export const build = async (options: BuildOptions) => {
+  const rollupConfig = createRollupConfig({
+    buildType: options.buildType,
+    bundleDependencies: options.bundleDependencies,
+    minify: options.minify,
+    react: options.react,
+  });
+
+  await buildWithRollup(rollupConfig, {
+    watch: options.watch,
+  });
 };

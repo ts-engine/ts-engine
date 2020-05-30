@@ -1,0 +1,19 @@
+{
+  "name": "@e2e-test/command-build-react",
+  "version": "1.5.3",
+  "private": true,
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
+  "types": "dist/main.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "ts-engine-new build --library --react"
+  },
+  "devDependencies": {
+    "@ts-engine/cli-new": "1.5.3"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
