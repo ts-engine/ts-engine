@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs-extra";
 import { runCliCommand } from "../run-cli-command";
 import { getPackageDirectory } from "../get-package-directory";
+import { editFileTemporarily } from "../edit-file-temporarily";
 
 describe("command-build", () => {
   let packageDir = "";
@@ -13,6 +14,7 @@ describe("command-build", () => {
   let reactPackageDir = "";
   let reactConsumerDir = "";
   let reactConsumerDistDir = "";
+  let revertFileEdit = () => Promise.resolve();
 
   beforeAll(async () => {
     packageDir = await getPackageDirectory("@e2e-test/command-build");
@@ -36,6 +38,10 @@ describe("command-build", () => {
     await fs.remove(packageDistDir);
     await fs.remove(consumerDistDir);
     await fs.remove(isolatedDir);
+  });
+
+  afterEach(async () => {
+    await revertFileEdit();
   });
 
   it("should build a library", async () => {
@@ -181,5 +187,31 @@ describe("command-build", () => {
 
     expect(await runRunner.waitForStatusCode()).toBe(0);
     expect(runRunner.stdoutLines).toContainInOrder(["<span>3</span>"]);
+  });
+
+  it("should watch for changes", async () => {
+    // Build library
+    const buildRunner = runCliCommand("yarn build --node-app --watch", {
+      cwd: packageDir,
+    });
+    await buildRunner.waitUntilStdoutLine("Watching for changes...");
+
+    // Edit package
+    revertFileEdit = await editFileTemporarily(
+      path.resolve(packageDir, "src/main.ts"),
+      "console.log('editted');"
+    );
+    await buildRunner.waitUntilStdoutLine("Watching for changes...");
+
+    // Run editted package
+    const runRunner = runCliCommand("node main.js", {
+      cwd: packageDistDir,
+    });
+
+    expect(await runRunner.waitForStatusCode()).toBe(0);
+    expect(runRunner.stdoutLines).toContainInOrder(["editted"]);
+
+    // Kill watching tool
+    buildRunner.kill();
   });
 });
