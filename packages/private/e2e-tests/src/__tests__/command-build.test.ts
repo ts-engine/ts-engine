@@ -54,6 +54,8 @@ describe("command-build", () => {
       cwd: packageDir,
     });
 
+    await buildRunner.waitForStatusCode();
+
     expect(await buildRunner.waitForStatusCode()).toBe(0);
     expect(
       await fs.pathExists(path.resolve(packageDistDir, "main.cjs.js"))

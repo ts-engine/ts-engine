@@ -1,4 +1,5 @@
 import validatePackageName from "validate-npm-package-name";
+import { getPackage } from "./get-package";
 
 export const checkBuildTypeOptions = (argv) => {
   if (argv.library && argv.nodeApp) {
@@ -15,6 +16,34 @@ export const checkNpmPackageName = (argv) => {
 
   if (!result.validForNewPackages) {
     throw new Error(`${argv.name} is not a valid npm package name`);
+  }
+
+  return true;
+};
+
+export const checkLibraryNpmPackageJson = (argv) => {
+  if (!argv.library) {
+    return true;
+  }
+
+  const pkg = getPackage();
+
+  if (pkg.json.main !== "dist/main.cjs.js") {
+    throw new Error(
+      "Incorrectly configured package.json, set 'main' to 'dist/main.cjs.js'"
+    );
+  }
+
+  if (pkg.json.module !== "dist/main.esm.js") {
+    throw new Error(
+      "Incorrectly configured package.json, set 'module' to 'dist/main.esm.js'"
+    );
+  }
+
+  if (pkg.json.types !== "dist/main.d.ts") {
+    throw new Error(
+      "Incorrectly configured package.json, set 'types' to 'dist/main.d.ts'"
+    );
   }
 
   return true;

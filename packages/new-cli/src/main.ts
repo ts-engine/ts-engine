@@ -2,7 +2,11 @@
 
 import yargs from "yargs";
 import { options } from "./options";
-import { checkBuildTypeOptions, checkNpmPackageName } from "./checks";
+import {
+  checkBuildTypeOptions,
+  checkNpmPackageName,
+  checkLibraryNpmPackageJson,
+} from "./checks";
 import { extractArgsOptionArgs, extractBuildType } from "./middleware";
 import { build, lint, newPackage, start, test, typecheck } from "./commands";
 
@@ -23,7 +27,8 @@ yargs
           react: options.react,
           watch: options.watch,
         })
-        .check(checkBuildTypeOptions);
+        .check(checkBuildTypeOptions)
+        .check(checkLibraryNpmPackageJson);
       // TODO - add package json checks if its a library
     },
     async (argv) => {
