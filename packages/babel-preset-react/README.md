@@ -33,3 +33,5 @@ module.exports = {
   presets: ["@ts-engine/babel-preset-react", "@ts-engine/babel-preset"],
 };
 ```
+
+This is applied automatically so you don't need to create this config file when you use the `--react` option.

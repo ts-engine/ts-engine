@@ -33,3 +33,5 @@ Create an ESLint config file
   "extends": ["@ts-engine/eslint-config", "@ts-engine/eslint-config-react"]
 }
 ```
+
+This is applied automatically so you don't need to create this config file when you use the `--react` option.
