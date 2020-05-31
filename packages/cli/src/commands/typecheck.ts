@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import typescript from "typescript"; // eslint-disable-line
+import typescript from "typescript";
 import { createTypeScriptConfig } from "../config";
 import { getPackage } from "../get-package";
 import { logProgress } from "../log-progress";

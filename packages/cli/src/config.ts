@@ -1,5 +1,5 @@
 import path from "path";
-import typescript from "typescript"; // eslint-disable-line
+import typescript from "typescript";
 import fs from "fs-extra";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
