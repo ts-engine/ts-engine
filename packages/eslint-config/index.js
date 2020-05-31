@@ -54,5 +54,7 @@ module.exports = {
         ],
       },
     },
+    // Always ignore typescript as it adds about 90 seconds to the runtime of the import plugin
+    "import/ignore": ["typescript"],
   },
 };
