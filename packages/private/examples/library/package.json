@@ -1,19 +1,18 @@
 {
-  "name": "@e2e-test/command-build-react",
+  "name": "@ts-engine-examples/library",
   "version": "1.6.0",
-  "private": true,
+  "private": false,
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "ts-engine build --library --react"
+    "build": "ts-engine build --library",
+    "lint": "ts-engine lint",
+    "test": "ts-engine test",
+    "typecheck": "ts-engine typecheck --emit"
   },
   "devDependencies": {
     "@ts-engine/cli": "1.6.0"
-  },
-  "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   }
 }

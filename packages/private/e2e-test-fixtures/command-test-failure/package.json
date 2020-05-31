@@ -1,11 +1,11 @@
 {
   "name": "@e2e-test/command-test-failure",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
-    "test": "ts-engine-new test"
+    "test": "ts-engine test"
   },
   "devDependencies": {
-    "@ts-engine/cli-new": "1.5.3"
+    "@ts-engine/cli": "1.6.0"
   }
 }

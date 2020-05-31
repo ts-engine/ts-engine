@@ -1,12 +1,12 @@
 {
   "name": "@e2e-test/command-lint-react",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
-    "lint": "ts-engine-new lint"
+    "lint": "ts-engine lint"
   },
   "devDependencies": {
-    "@ts-engine/cli-new": "1.5.3"
+    "@ts-engine/cli": "1.6.0"
   },
   "dependencies": {
     "react": "^16.13.1"

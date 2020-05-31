@@ -79,4 +79,4 @@ Checkout the official docs over at https://ts-engine.dev.
 
 ## Examples
 
-Example Node.js applications and libraries can be found [here](./packages/@examples).
+Example Node.js applications and libraries can be found [here](./packages/private/examples).

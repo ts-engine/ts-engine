@@ -1,14 +1,14 @@
 {
   "name": "@e2e-test/command-build-consumer",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
-    "build": "ts-engine-new build --node-app"
+    "build": "ts-engine build --node-app"
   },
   "devDependencies": {
-    "@ts-engine/cli-new": "1.5.3"
+    "@ts-engine/cli": "1.6.0"
   },
   "dependencies": {
-    "@e2e-test/command-build": "1.5.3"
+    "@e2e-test/command-build": "1.6.0"
   }
 }

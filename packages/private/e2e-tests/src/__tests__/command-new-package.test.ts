@@ -23,7 +23,7 @@ describe("command-new-package", () => {
 
   it("should create a node app package", async () => {
     const runner = runCliCommand(
-      "yarn run ts-engine-new new-package --node-app --name temp"
+      "yarn run ts-engine new-package --node-app --name temp"
     );
 
     expect(await runner.waitForStatusCode()).toBe(0);
@@ -50,7 +50,7 @@ describe("command-new-package", () => {
 
   it("should create a node app package (react)", async () => {
     const runner = runCliCommand(
-      "yarn run ts-engine-new new-package --node-app --name temp --react"
+      "yarn run ts-engine new-package --node-app --name temp --react"
     );
 
     expect(await runner.waitForStatusCode()).toBe(0);
@@ -77,7 +77,7 @@ describe("command-new-package", () => {
 
   it("should create a library package", async () => {
     const runner = runCliCommand(
-      "yarn run ts-engine-new new-package --library --name temp"
+      "yarn run ts-engine new-package --library --name temp"
     );
 
     expect(await runner.waitForStatusCode()).toBe(0);
@@ -109,7 +109,7 @@ describe("command-new-package", () => {
 
   it("should create a library package (react)", async () => {
     const runner = runCliCommand(
-      "yarn run ts-engine-new new-package --library --name temp --react"
+      "yarn run ts-engine new-package --library --name temp --react"
     );
 
     expect(await runner.waitForStatusCode()).toBe(0);

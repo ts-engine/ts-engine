@@ -1,9 +1,9 @@
 {
   "name": "@ts-engine/e2e-tests",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
-    "pretest": "cd ../../new-cli && yarn build",
+    "pretest": "cd ../../cli && yarn build",
     "test": "jest --runInBand"
   },
   "devDependencies": {
@@ -13,6 +13,6 @@
     "terminate": "^2.1.2"
   },
   "dependencies": {
-    "@ts-engine/babel-preset": "^1.5.3"
+    "@ts-engine/babel-preset": "1.6.0"
   }
 }
