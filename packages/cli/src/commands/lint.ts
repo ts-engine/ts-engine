@@ -34,7 +34,7 @@ export const lint = async (options: LintOptions) => {
 
   const rawResults: LintResult[][] = await logProgress(
     lint(),
-    chalk.greenBright("Linting source code"),
+    "Linting source code",
     "lint"
   );
 

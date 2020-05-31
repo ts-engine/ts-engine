@@ -38,7 +38,8 @@ There is a helper package that will bump all the `@ts-engine/*` package versions
 cd packages/cli
 yarn build
 cd ../private/edit-version
-yarn start --version M.m.p
+yarn build
+node dist/main.js --version M.m.p
 ```
 
 ### Publishing

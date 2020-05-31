@@ -1,5 +1,6 @@
 import os from "os";
 import path from "path";
+import chalk from "chalk";
 import createLogger from "progress-estimator";
 
 export const logProgress = <TPromiseResult>(
@@ -9,7 +10,7 @@ export const logProgress = <TPromiseResult>(
 ): Promise<TPromiseResult> => {
   if (process.env.CI === "true") {
     // If in CI then don't use the progress-estimator as it muddies the logs
-    console.log(message);
+    console.log(chalk.greenBright(message));
     return promise;
   }
 
@@ -19,5 +20,5 @@ export const logProgress = <TPromiseResult>(
   });
 
   // @ts-ignore - the official type def is wrong :face_palm:
-  return logEstimate(promise, message, { id: action });
+  return logEstimate(promise, chalk.greenBright(message), { id: action });
 };
