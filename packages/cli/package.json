@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/cli",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Power TypeScript packages and reduce your config overhead.",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
@@ -42,14 +42,15 @@
     "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-json": "^4.0.3",
     "@rollup/plugin-node-resolve": "^8.0.0",
-    "@ts-engine/babel-preset": "1.6.1",
-    "@ts-engine/babel-preset-react": "1.6.1",
-    "@ts-engine/eslint-config": "1.6.1",
-    "@ts-engine/eslint-config-react": "1.6.1",
+    "@ts-engine/babel-preset": "1.6.2",
+    "@ts-engine/babel-preset-react": "1.6.2",
+    "@ts-engine/eslint-config": "1.6.2",
+    "@ts-engine/eslint-config-react": "1.6.2",
     "@types/jest": "^25.2.3",
     "builtin-modules": "^3.1.0",
     "chalk": "^4.0.0",
     "eslint": "^7.1.0",
+    "fs-extra": "^9.0.0",
     "glob": "^7.1.6",
     "glob-promise": "^3.4.0",
     "jest": "^26.0.1",
