@@ -19,6 +19,11 @@ jobs:
         working-directory: packages/cli
         run: yarn build
 
+      - name: Reinstall
+        run: |
+          find . -name node_modules | xargs rm -rf
+          yarn
+
       - name: Typecheck
         working-directory: packages/cli
         run: yarn typecheck
