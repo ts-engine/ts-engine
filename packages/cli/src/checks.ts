@@ -6,9 +6,11 @@ export const checkBuildTypeOptions = (argv: any) => {
   if (argv.library && argv.nodeApp) {
     throw new Error("Arguments library and node-app are mutually exclusive");
   }
+
   if (!argv.library && !argv.nodeApp) {
     throw new Error("Missing one of required arguments: library, node-app");
   }
+
   return true;
 };
 

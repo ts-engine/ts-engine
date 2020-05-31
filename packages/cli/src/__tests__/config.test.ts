@@ -1,4 +1,5 @@
 import path from "path";
+import typescript from "typescript"; // eslint-disable-line
 import fs from "fs-extra";
 import mockFs from "mock-fs";
 import builtInModules from "builtin-modules";
@@ -7,12 +8,14 @@ import {
   cjsOutputFilepath,
   esmOutputFilepath,
   outputFilepath,
+  outputDir,
 } from "../constants";
 import {
   createBabelConfig,
   createESLintConfig,
   createJestConfig,
   createRollupConfig,
+  createTypeScriptConfig,
 } from "../config";
 
 describe("config", () => {
@@ -194,6 +197,40 @@ describe("config", () => {
 
       expect(config).toEqual({
         extends: ["@ts-engine/eslint-config", "@ts-engine/eslint-config-react"],
+      });
+    });
+  });
+
+  describe("createTypeScriptConfig", () => {
+    it("should return emitting config", () => {
+      expect(createTypeScriptConfig({ emit: true })).toEqual({
+        noEmit: false,
+        declaration: true,
+        emitDeclarationOnly: true,
+        esModuleInterop: true,
+        jsx: typescript.JsxEmit.React,
+        lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
+        resolveJsonModule: true,
+        skipLibCheck: true,
+        strict: true,
+        outDir: outputDir,
+        allowJs: true,
+      });
+    });
+
+    it("should return non-emitting config", () => {
+      expect(createTypeScriptConfig({ emit: false })).toEqual({
+        noEmit: true,
+        declaration: true,
+        emitDeclarationOnly: false,
+        esModuleInterop: true,
+        jsx: typescript.JsxEmit.React,
+        lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
+        resolveJsonModule: true,
+        skipLibCheck: true,
+        strict: true,
+        outDir: outputDir,
+        allowJs: true,
       });
     });
   });

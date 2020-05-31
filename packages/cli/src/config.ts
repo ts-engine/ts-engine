@@ -1,4 +1,5 @@
 import path from "path";
+import typescript from "typescript"; // eslint-disable-line
 import fs from "fs-extra";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
@@ -13,6 +14,7 @@ import {
   cjsOutputFilepath,
   esmOutputFilepath,
   outputFilepath,
+  outputDir,
 } from "./constants";
 
 interface CreateBabelConfigOptions {
@@ -156,5 +158,27 @@ export const createESLintConfig = (options: CreateESLintConfigOptions) => {
 
   return {
     extends: ["@ts-engine/eslint-config"],
+  };
+};
+
+interface CreateTypeScriptConfigOptions {
+  emit: boolean;
+}
+
+export const createTypeScriptConfig = (
+  options: CreateTypeScriptConfigOptions
+) => {
+  return {
+    noEmit: !options.emit,
+    declaration: true,
+    emitDeclarationOnly: options.emit,
+    esModuleInterop: true,
+    jsx: typescript.JsxEmit.React,
+    lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
+    resolveJsonModule: true,
+    skipLibCheck: true,
+    strict: true,
+    outDir: outputDir,
+    allowJs: true,
   };
 };

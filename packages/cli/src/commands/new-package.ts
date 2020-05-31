@@ -1,7 +1,7 @@
 import { spawnSync } from "child_process";
 import path from "path";
 import fs from "fs-extra";
-import { logProgress } from "../logger";
+import { logProgress } from "../log-progress";
 
 interface NewPackageOptions {
   buildType: "library" | "node-app";

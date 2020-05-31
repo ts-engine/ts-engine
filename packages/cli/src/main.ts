@@ -37,7 +37,7 @@ yargs
     },
     async (argv) => {
       // @ts-ignore
-      return build(argv);
+      await build(argv);
     }
   )
   .command(
@@ -70,9 +70,9 @@ yargs
         .check(checkNewPackageFolderIsAvailable)
         .demandOption("name");
     },
-    (argv) => {
+    async (argv) => {
       // @ts-ignore
-      newPackage(argv);
+      await newPackage(argv);
     }
   )
   .command(
@@ -114,8 +114,8 @@ yargs
         emit: options.emit,
       });
     },
-    (argv) => {
+    async (argv) => {
       // @ts-ignore
-      typecheck(argv);
+      await typecheck(argv);
     }
   ).argv;

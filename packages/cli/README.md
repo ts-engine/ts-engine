@@ -196,6 +196,10 @@ ts-engine lint --react
 
 # Test react code
 ts-engine test --react
+
+# Create new React packages
+ts-engine new-package --library --react --name my-react-lib
+ts-engine new-package --node-app --react --name my-react-app
 ```
 
 ## Example package setup

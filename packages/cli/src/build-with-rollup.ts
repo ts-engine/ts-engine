@@ -4,7 +4,7 @@ import chalk from "chalk";
 import ora from "ora";
 import rollup from "rollup";
 import type { RollupConfig } from "./config";
-import { logProgress } from "./logger";
+import { logProgress } from "./log-progress";
 
 interface BuildWithRollupOptions {
   watch: boolean;

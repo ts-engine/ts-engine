@@ -5,7 +5,7 @@ import { ESLint } from "eslint";
 import fs from "fs-extra";
 import { createESLintConfig } from "../config";
 import { getPackage } from "../get-package";
-import { logProgress } from "../logger";
+import { logProgress } from "../log-progress";
 import { flattenLintResults, getCounts } from "../lint-results";
 
 interface LintOptions {
