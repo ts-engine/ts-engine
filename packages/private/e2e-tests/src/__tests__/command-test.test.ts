@@ -3,7 +3,7 @@ import { getPackageDirectory } from "../get-package-directory";
 
 describe("command-test", () => {
   it("should run tests", async () => {
-    const runner = runCliCommand("yarn test", {
+    const runner = runCliCommand("yarn run ts-engine test", {
       cwd: await getPackageDirectory("@e2e-test/command-test"),
     });
 
@@ -15,7 +15,7 @@ describe("command-test", () => {
   });
 
   it("should run tests (react)", async () => {
-    const runner = runCliCommand("yarn test", {
+    const runner = runCliCommand("yarn run ts-engine test --react", {
       cwd: await getPackageDirectory("@e2e-test/command-test-react"),
     });
 
@@ -27,7 +27,7 @@ describe("command-test", () => {
   });
 
   it("should run tests and forward jest status code", async () => {
-    const runner = runCliCommand("yarn test", {
+    const runner = runCliCommand("yarn run ts-engine test", {
       cwd: await getPackageDirectory("@e2e-test/command-test-failure"),
     });
 
@@ -40,7 +40,7 @@ describe("command-test", () => {
 
   it("should forward args onto jest excluding ts-engine args", async () => {
     const runner = runCliCommand(
-      "yarn test --react --passWithNoTests src/add.ts",
+      "yarn run ts-engine test --react --passWithNoTests src/add.ts",
       {
         cwd: await getPackageDirectory("@e2e-test/command-test"),
       }

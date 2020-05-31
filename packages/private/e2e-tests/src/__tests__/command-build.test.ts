@@ -50,7 +50,7 @@ describe("command-build", () => {
 
   it("should build a library", async () => {
     // Build library
-    const buildRunner = runCliCommand("yarn build --library", {
+    const buildRunner = runCliCommand("yarn run ts-engine build --library", {
       cwd: packageDir,
     });
 
@@ -71,9 +71,12 @@ describe("command-build", () => {
     ).toBe(true);
 
     // Build consumer
-    const buildConsumerRunner = runCliCommand("yarn build --node-app", {
-      cwd: consumerDir,
-    });
+    const buildConsumerRunner = runCliCommand(
+      "yarn run ts-engine build --node-app",
+      {
+        cwd: consumerDir,
+      }
+    );
 
     expect(await buildConsumerRunner.waitForStatusCode()).toBe(0);
 
@@ -88,7 +91,7 @@ describe("command-build", () => {
 
   it("should build a node app", async () => {
     // Build app
-    const buildRunner = runCliCommand("yarn build --node-app", {
+    const buildRunner = runCliCommand("yarn run ts-engine build --node-app", {
       cwd: packageDir,
     });
 
@@ -111,7 +114,7 @@ describe("command-build", () => {
 
   it("should exit with status code 1 on failure", async () => {
     // Build app
-    const buildRunner = runCliCommand("yarn build --node-app", {
+    const buildRunner = runCliCommand("yarn run ts-engine build --node-app", {
       cwd: failurePackageDir,
     });
 
@@ -120,9 +123,12 @@ describe("command-build", () => {
 
   it("should minify", async () => {
     // Build unminified
-    const unminifiedBuildRunner = runCliCommand("yarn build --node-app", {
-      cwd: packageDir,
-    });
+    const unminifiedBuildRunner = runCliCommand(
+      "yarn run ts-engine build --node-app",
+      {
+        cwd: packageDir,
+      }
+    );
 
     expect(await unminifiedBuildRunner.waitForStatusCode()).toBe(0);
     const unminifiedLength = (
@@ -133,7 +139,7 @@ describe("command-build", () => {
 
     // Build minified
     const minifiedBuildRunner = runCliCommand(
-      "yarn build --node-app --minify",
+      "yarn run ts-engine build --node-app --minify",
       {
         cwd: packageDir,
       }
@@ -151,7 +157,7 @@ describe("command-build", () => {
 
   it("should bundle dependencies", async () => {
     // Build library
-    const buildRunner = runCliCommand("yarn build --library", {
+    const buildRunner = runCliCommand("yarn run ts-engine build --library", {
       cwd: packageDir,
     });
 
@@ -159,7 +165,7 @@ describe("command-build", () => {
 
     // Build consumer
     const buildConsumerRunner = runCliCommand(
-      "yarn build --node-app --bundle-dependencies",
+      "yarn run ts-engine build --node-app --bundle-dependencies",
       {
         cwd: consumerDir,
       }
@@ -182,16 +188,22 @@ describe("command-build", () => {
 
   it("should build react code", async () => {
     // Build library
-    const buildRunner = runCliCommand("yarn build", {
-      cwd: reactPackageDir,
-    });
+    const buildRunner = runCliCommand(
+      "yarn run ts-engine build --library --react",
+      {
+        cwd: reactPackageDir,
+      }
+    );
 
     expect(await buildRunner.waitForStatusCode()).toBe(0);
 
     // Build consumer
-    const buildConsumerRunner = runCliCommand("yarn build", {
-      cwd: reactConsumerDir,
-    });
+    const buildConsumerRunner = runCliCommand(
+      "yarn run ts-engine build --node-app --react",
+      {
+        cwd: reactConsumerDir,
+      }
+    );
 
     expect(await buildConsumerRunner.waitForStatusCode()).toBe(0);
 
@@ -206,9 +218,12 @@ describe("command-build", () => {
 
   it("should watch for changes", async () => {
     // Build library
-    const buildRunner = runCliCommand("yarn build --node-app --watch", {
-      cwd: packageDir,
-    });
+    const buildRunner = runCliCommand(
+      "yarn run ts-engine build --node-app --watch",
+      {
+        cwd: packageDir,
+      }
+    );
     await buildRunner.waitUntilStdoutLine("Watching for changes...");
 
     // Edit package

@@ -20,7 +20,7 @@ describe("command-lint", () => {
   });
 
   it("should lint code", async () => {
-    const runner = runCliCommand("yarn lint", {
+    const runner = runCliCommand("yarn run ts-engine lint", {
       cwd: await getPackageDirectory("@e2e-test/command-lint"),
     });
 
@@ -28,7 +28,7 @@ describe("command-lint", () => {
   });
 
   it("should present lint errors", async () => {
-    const runner = runCliCommand("yarn lint", {
+    const runner = runCliCommand("yarn run ts-engine lint", {
       cwd: await getPackageDirectory("@e2e-test/command-lint-error"),
     });
 
@@ -41,7 +41,7 @@ describe("command-lint", () => {
   });
 
   it("should present fixable issues", async () => {
-    const runner = runCliCommand("yarn lint", {
+    const runner = runCliCommand("yarn run ts-engine lint", {
       cwd: await getPackageDirectory("@e2e-test/command-lint-fixable"),
     });
 
@@ -55,7 +55,7 @@ describe("command-lint", () => {
   });
 
   it("should fix files", async () => {
-    const runner = runCliCommand("yarn lint --fix", {
+    const runner = runCliCommand("yarn run ts-engine lint --fix", {
       cwd: await getPackageDirectory("@e2e-test/command-lint-fixable"),
     });
 
@@ -66,7 +66,7 @@ describe("command-lint", () => {
   });
 
   it("should be unable to lint react by default", async () => {
-    const runner = runCliCommand("yarn lint", {
+    const runner = runCliCommand("yarn run ts-engine lint", {
       cwd: await getPackageDirectory("@e2e-test/command-lint-react"),
     });
 
@@ -79,7 +79,7 @@ describe("command-lint", () => {
   });
 
   it("should lint react when --react argument is provided", async () => {
-    const runner = runCliCommand("yarn lint --react", {
+    const runner = runCliCommand("yarn run ts-engine lint --react", {
       cwd: await getPackageDirectory("@e2e-test/command-lint-react"),
     });
 

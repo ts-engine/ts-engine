@@ -6,9 +6,6 @@
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "sideEffects": false,
-  "scripts": {
-    "build": "ts-engine build"
-  },
   "devDependencies": {
     "@ts-engine/cli": "1.6.0"
   }

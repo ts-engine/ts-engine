@@ -2,9 +2,6 @@
   "name": "@e2e-test/command-lint-error",
   "version": "1.6.0",
   "private": true,
-  "scripts": {
-    "lint": "ts-engine lint"
-  },
   "devDependencies": {
     "@ts-engine/cli": "1.6.0"
   }

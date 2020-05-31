@@ -23,7 +23,7 @@ describe("command-start", () => {
   });
 
   it("should build a node app and start", async () => {
-    const buildRunner = runCliCommand("yarn start", {
+    const buildRunner = runCliCommand("yarn run ts-engine start", {
       cwd: packageDir,
     });
 
@@ -38,7 +38,7 @@ describe("command-start", () => {
   });
 
   it("should watch for changes", async () => {
-    const buildRunner = runCliCommand("yarn start --watch", {
+    const buildRunner = runCliCommand("yarn run ts-engine start --watch", {
       cwd: packageDir,
     });
     await buildRunner.waitUntilStdoutLine("lee");

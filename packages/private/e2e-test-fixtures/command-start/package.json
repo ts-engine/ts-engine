@@ -2,9 +2,6 @@
   "name": "@e2e-test/command-start",
   "version": "1.6.0",
   "private": true,
-  "scripts": {
-    "start": "ts-engine start"
-  },
   "devDependencies": {
     "@ts-engine/cli": "1.6.0"
   }
