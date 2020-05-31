@@ -22,11 +22,9 @@ export const typecheck = async (options: TypecheckOptions) => {
       const result = program.emit();
       resolve(result);
     }),
-    chalk.greenBright(
-      options.emit
-        ? `Writing type definitions to ${tsConfig.outDir}/`
-        : "Typechecking source code"
-    ),
+    options.emit
+      ? `Writing type definitions to ${tsConfig.outDir}/`
+      : "Typechecking source code",
     "typecheck"
   );
 
