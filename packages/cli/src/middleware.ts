@@ -1,4 +1,6 @@
-export const extractBuildType = (argv) => {
+import yargs from "yargs";
+
+export const extractBuildType = (argv: any) => {
   if (argv.library) {
     argv.buildType = "library";
   }
@@ -10,7 +12,7 @@ export const extractBuildType = (argv) => {
   return argv;
 };
 
-export const extractArgsOptionArgs = (argv) => {
+export const extractArgsOptionArgs = (argv: any) => {
   const argsIndex = process.argv.indexOf("--args");
   if (argsIndex !== -1) {
     argv.args = process.argv.slice(argsIndex + 1);

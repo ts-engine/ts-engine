@@ -22,7 +22,7 @@ describe("logger", () => {
   describe("logProgress", () => {
     it("should return the result of the promise", async () => {
       const promise = Promise.resolve("hello world");
-      expect(logProgress(promise, "test", "test-return")).resolves.toBe(
+      await expect(logProgress(promise, "test", "test-return")).resolves.toBe(
         "hello world"
       );
     });
@@ -30,7 +30,7 @@ describe("logger", () => {
     it("should not use progress-estimator when run in CI", async () => {
       process.env.CI = "true";
       const promise = Promise.resolve("hello world");
-      expect(logProgress(promise, "test", "test-return")).resolves.toBe(
+      await expect(logProgress(promise, "test", "test-return")).resolves.toBe(
         "hello world"
       );
       expect(createLogger).not.toHaveBeenCalled();

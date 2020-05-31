@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import mockFs from "mock-fs";
 import {
   checkBuildTypeOptions,

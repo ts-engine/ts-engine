@@ -1,9 +1,8 @@
-import chalk from "chalk";
 import fs from "fs-extra";
 import validatePackageName from "validate-npm-package-name";
 import { getPackage } from "./get-package";
 
-export const checkBuildTypeOptions = (argv) => {
+export const checkBuildTypeOptions = (argv: any) => {
   if (argv.library && argv.nodeApp) {
     throw new Error("Arguments library and node-app are mutually exclusive");
   }
@@ -13,7 +12,7 @@ export const checkBuildTypeOptions = (argv) => {
   return true;
 };
 
-export const checkNpmPackageName = (argv) => {
+export const checkNpmPackageName = (argv: any) => {
   const result = validatePackageName(argv.name);
 
   if (!result.validForNewPackages) {
@@ -23,7 +22,7 @@ export const checkNpmPackageName = (argv) => {
   return true;
 };
 
-export const checkLibraryNpmPackageJson = (argv) => {
+export const checkLibraryNpmPackageJson = (argv: any) => {
   if (!argv.library) {
     return true;
   }
@@ -51,7 +50,7 @@ export const checkLibraryNpmPackageJson = (argv) => {
   return true;
 };
 
-export const checkNewPackageFolderIsAvailable = (argv) => {
+export const checkNewPackageFolderIsAvailable = (argv: any) => {
   const newPackageDir = argv.name.startsWith("@")
     ? argv.name.split("/")[1]
     : argv.name;

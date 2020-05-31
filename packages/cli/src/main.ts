@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable jest/no-disabled-tests */
+
 import yargs from "yargs";
 import { options } from "./options";
 import { handleFailure } from "./handle-failure";
