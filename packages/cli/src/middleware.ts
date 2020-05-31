@@ -1,5 +1,3 @@
-import yargs from "yargs";
-
 export const extractBuildType = (argv: any) => {
   if (argv.library) {
     argv.buildType = "library";
