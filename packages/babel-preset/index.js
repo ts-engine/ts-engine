@@ -1,18 +1,9 @@
 const getEnvOptions = () => {
-  switch (process.env.TS_ENGINE_COMMAND) {
-    case "test": {
-      return { useBuiltIns: "usage", corejs: { version: 3 } };
-      break;
-    }
-    case "build":
-    case "start": {
-      return { modules: false };
-      break;
-    }
-    default: {
-      return {};
-    }
+  if (process.env.NODE_ENV === "test" || process.env.BABEL_ENV === "test") {
+    return { useBuiltIns: "usage", corejs: { version: 3 } };
   }
+
+  return { modules: false };
 };
 
 module.exports = () => {

@@ -102,7 +102,7 @@ Code is typechecked using [TypeScript](https://www.typescriptlang.org/).
 # Check types only
 ts-engine typecheck
 
-# Check types and emit type declaration files
+# Check types and emit type declaration files
 ts-engine typecheck --emit
 ```
 
@@ -178,6 +178,28 @@ The license will be `UNDEFINED` by default but you can set it with the `--licens
 ```sh
 # Set the license
 ts-engine new-package --library --license MIT --name my-library
+```
+
+## First class React support
+
+React is supported as a first class citizen with zero configuration required via the `--react` option.
+
+```sh
+# Compile React code
+ts-engine build --library --react
+ts-engine build --node-app --react
+ts-engine start --react
+
+# Lint React code, applies best practice React linting
+# as well as adding a11y linting
+ts-engine lint --react
+
+# Test react code
+ts-engine test --react
+
+# Create new React packages
+ts-engine new-package --library --react --name my-react-lib
+ts-engine new-package --node-app --react --name my-react-app
 ```
 
 ## Example package setup

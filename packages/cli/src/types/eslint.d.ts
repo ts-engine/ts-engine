@@ -1,7 +1,7 @@
 declare module "eslint" {
   export interface ESLintOptions {
     fix: boolean;
-    baseConfig: string;
+    baseConfig: string | any;
     cwd: string;
   }
 
@@ -50,7 +50,7 @@ declare module "eslint" {
 
   export class ESLint {
     constructor(options: ESLintOptions);
-    lintFiles: (files: string[]) => Promise<ESLintResult[]>;
+    lintFiles: (files: string[]) => Promise<LintResult[]>;
     lintText: (code: string, options: LintTextOptions) => Promise<LintResult[]>;
   }
 }

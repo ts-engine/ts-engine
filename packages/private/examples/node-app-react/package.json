@@ -1,0 +1,21 @@
+{
+  "name": "@ts-engine-examples/node-app-react",
+  "version": "1.6.0",
+  "private": true,
+  "scripts": {
+    "build": "ts-engine build --node-app --react",
+    "lint": "ts-engine lint --react",
+    "start": "ts-engine start --react",
+    "test": "ts-engine test --react",
+    "typecheck": "ts-engine typecheck"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "1.6.0",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}

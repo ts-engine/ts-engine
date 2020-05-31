@@ -11,11 +11,6 @@ module.exports = {
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:jest/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:jest-dom/recommended",
-    "plugin:testing-library/recommended",
   ],
   globals: {
     console: "readonly",
@@ -26,20 +21,9 @@ module.exports = {
   },
   parser: "@typescript-eslint/parser",
   parserOptions: {
-    jsx: true,
     sourceType: "module",
   },
-  plugins: [
-    "prettier",
-    "@typescript-eslint",
-    "import",
-    "jest",
-    "react",
-    "react-hooks",
-    "jsx-a11y",
-    "jest-dom",
-    "testing-library",
-  ],
+  plugins: ["prettier", "@typescript-eslint", "import", "jest"],
   rules: {
     "prettier/prettier": "error",
     "no-var": "error",
@@ -70,8 +54,7 @@ module.exports = {
         ],
       },
     },
-    react: {
-      version: "detect",
-    },
+    // Always ignore typescript as it adds about 90 seconds to the runtime of the import plugin
+    "import/ignore": ["typescript"],
   },
 };

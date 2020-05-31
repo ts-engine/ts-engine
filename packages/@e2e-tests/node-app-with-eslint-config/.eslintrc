@@ -1,6 +1,0 @@
-{
-  "extends": "@ts-engine/eslint-config",
-  "rules": {
-    "no-var": "off"
-  }
-}
