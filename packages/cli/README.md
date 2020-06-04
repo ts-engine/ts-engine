@@ -104,6 +104,10 @@ ts-engine typecheck
 
 # Check types and emit type declaration files
 ts-engine typecheck --emit
+
+# Watch for changes
+ts-engine typecheck --watch
+ts-engine typecheck --emit --watch
 ```
 
 ### Lint
@@ -171,13 +175,6 @@ ts-engine new-package --node-app --name my-app
 
 # Create a library package
 ts-engine new-package --library --name my-library
-```
-
-The license will be `UNDEFINED` by default but you can set it with the `--license` option.
-
-```sh
-# Set the license
-ts-engine new-package --library --license MIT --name my-library
 ```
 
 ## First class React support
