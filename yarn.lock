@@ -1271,19 +1271,19 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@ts-engine/babel-preset-react@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@ts-engine/babel-preset-react/-/babel-preset-react-1.6.0.tgz#40470d6317d3844e200b170c5f808e8507276408"
-  integrity sha512-WQv5g0XcD2Y3RVQKKkbVPmMWWc4L9ihd8PIAYJcdFGwNxrUhMOx9Ja3BNsF2IuL1akWHf1W6Ow+wOBut5bRkHQ==
+"@ts-engine/babel-preset-react@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@ts-engine/babel-preset-react/-/babel-preset-react-1.6.2.tgz#3b5f3471aff45628c9041a4985a8b884d9afb0ed"
+  integrity sha512-/3Nzis6uV+hatAjE73bLmHb744W5Hv5l+FX0zosqcXQsH/dQ47rUHn7BoTTga/S8juuqvtkSj2Piifl4S3KwaA==
   dependencies:
     "@babel/core" "^7.9.0"
     "@babel/preset-react" "^7.9.4"
-    "@ts-engine/babel-preset" "1.6.0"
+    "@ts-engine/babel-preset" "1.6.2"
 
-"@ts-engine/babel-preset@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@ts-engine/babel-preset/-/babel-preset-1.6.0.tgz#a17d71ddad192c2197dfa6113852123ba27c2407"
-  integrity sha512-tM7sYO20vJR0XUMapk67ZzKdsG47lzBqJfblcgnA9MMVu74PfTqRzUTJ2ZcpBmo1oaekYK9EzBcItf9UezlTTA==
+"@ts-engine/babel-preset@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@ts-engine/babel-preset/-/babel-preset-1.6.2.tgz#85e061495bb8bfa873dc0738ca032ffc83c83f35"
+  integrity sha512-M6oGu7CPNl7qHE0QSTtSomLIfBwunUWjKaPFufx1Ia/3yZVeZrJlM/pcU+F56hhvZBWlmvXDm4NJ2al8qUqZCw==
   dependencies:
     "@babel/cli" "^7.8.4"
     "@babel/core" "^7.9.0"
@@ -1296,22 +1296,23 @@
     "@babel/preset-typescript" "^7.9.0"
     core-js "^3.6.4"
 
-"@ts-engine/cli@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@ts-engine/cli/-/cli-1.6.0.tgz#1a81a9d95df3d56e71289719fc456bd463b9a62f"
-  integrity sha512-MzPkA7JMJ7K6+Oy1lwSyWBso4H2PhsyEs80tqrPPNRaColA3vcDoeNhLXFzhKrZsY/qR/+UHMufGBKflhyaR2g==
+"@ts-engine/cli@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@ts-engine/cli/-/cli-1.6.2.tgz#8912233b47ca5fe32a1134af4c52c57c4cad0e59"
+  integrity sha512-p1cawqSd3zG0UlIQNTy/0fm0ibuqjgg3pXv7J/Y1EjQJx3XCxwXolP3w+PdoTGNMULUnD+FUfUy5Jp++FxpAkA==
   dependencies:
     "@rollup/plugin-commonjs" "^12.0.0"
     "@rollup/plugin-json" "^4.0.3"
     "@rollup/plugin-node-resolve" "^8.0.0"
-    "@ts-engine/babel-preset" "1.6.0"
-    "@ts-engine/babel-preset-react" "1.6.0"
-    "@ts-engine/eslint-config" "1.6.0"
-    "@ts-engine/eslint-config-react" "1.6.0"
+    "@ts-engine/babel-preset" "1.6.2"
+    "@ts-engine/babel-preset-react" "1.6.2"
+    "@ts-engine/eslint-config" "1.6.2"
+    "@ts-engine/eslint-config-react" "1.6.2"
     "@types/jest" "^25.2.3"
     builtin-modules "^3.1.0"
     chalk "^4.0.0"
     eslint "^7.1.0"
+    fs-extra "^9.0.0"
     glob "^7.1.6"
     glob-promise "^3.4.0"
     jest "^26.0.1"
@@ -1322,12 +1323,13 @@
     rollup-plugin-preserve-shebangs "^0.2.0"
     rollup-plugin-terser "^6.1.0"
     typescript "^3.9.3"
+    validate-npm-package-name "^3.0.0"
     yargs "^15.3.1"
 
-"@ts-engine/eslint-config-react@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@ts-engine/eslint-config-react/-/eslint-config-react-1.6.0.tgz#0a18dab9af220dedbe14c0a8b9202ac4a5d597d3"
-  integrity sha512-Ah40NumEEqXKDK1UKej0g/Ff/OzPdIBLcnCpcdmBgrzqJitdbUsCUGrUHuRafVerOVlr+ke2g8siGURhGW4rVw==
+"@ts-engine/eslint-config-react@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@ts-engine/eslint-config-react/-/eslint-config-react-1.6.2.tgz#3eb5005d94465da44f90700b94f08c00f3030c97"
+  integrity sha512-aFy4/fDDbmOK3P3+O9lSehamVg36O8rwfizg8CVHhhj22jPUqiLLSzBKikt1CAcf/PhuIfP2s4rzaqMPcqhY9Q==
   dependencies:
     eslint "^7.0.0"
     eslint-plugin-jest-dom "^2.1.0"
@@ -1337,10 +1339,10 @@
     eslint-plugin-react-hooks "^4.0.0"
     eslint-plugin-testing-library "^3.1.2"
 
-"@ts-engine/eslint-config@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@ts-engine/eslint-config/-/eslint-config-1.6.0.tgz#3a852c4116a02b10bf16a7464893af409a27a81d"
-  integrity sha512-u7xDDJgbcPiiQFVSQq+Sixv3FXCACESrlryRpbMw/yXCplrUqsAwqch2Ox6zBbBjRmeP2bLiLhrtkOT16N7Fkw==
+"@ts-engine/eslint-config@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@ts-engine/eslint-config/-/eslint-config-1.6.2.tgz#8683759ab526f705fb20b4dd0a9c3f0b7961bf0f"
+  integrity sha512-MAX+S6lXSrNcUxFt0HnsyzzQWGmdG4902gAqEs89noMFhKGXSBr9WkkuTOu/jln9zJ8yQMZOytiQU1v/ce4p9Q==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.26.0"
     "@typescript-eslint/parser" "^2.26.0"
