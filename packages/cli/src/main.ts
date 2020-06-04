@@ -112,6 +112,7 @@ yargs
     (yargs) => {
       return yargs.options({
         emit: options.emit,
+        watch: options.watch,
       });
     },
     async (argv) => {
