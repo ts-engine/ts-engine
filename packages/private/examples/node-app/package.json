@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine-examples/node-app",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "scripts": {
     "build": "ts-engine build --node-app",
@@ -10,6 +10,6 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.7.0"
+    "@ts-engine/cli": "1.7.1"
   }
 }
