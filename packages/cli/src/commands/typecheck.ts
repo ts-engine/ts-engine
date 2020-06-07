@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import typescript from "typescript";
 import chokidar from "chokidar";
+import { debounce } from "debounce";
 import { createTypeScriptConfig } from "../config";
 import { getPackage } from "../get-package";
 import { logProgress } from "../log-progress";
@@ -114,11 +115,27 @@ export const typecheck = async (options: TypecheckOptions) => {
 
   if (options.watch) {
     const watcher = chokidar.watch(srcFileGlob, { cwd: pkg.dir });
-    watcher.on("all", async () => {
-      console.clear();
+    watcher.on("ready", async () => {
+      // Run initial typecheck
       await work(false);
+
+      // Then on each change typecheck again, we debounce this in order
+      // to try and accomodate saving multiple files in once go
+      watcher.on(
+        "all",
+        debounce(
+          async () => {
+            console.clear();
+            await work(false);
+            console.log(chalk.grey("Watching for changes..."));
+          },
+          350,
+          false
+        )
+      );
       console.log(chalk.grey("Watching for changes..."));
     });
+
     await new Promise(() => {});
   } else {
     await work(true);

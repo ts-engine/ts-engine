@@ -1,12 +1,12 @@
 {
   "name": "@e2e-test/command-typecheck-error",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "sideEffects": false,
   "devDependencies": {
-    "@ts-engine/cli": "1.7.0"
+    "@ts-engine/cli": "1.7.1"
   }
 }
