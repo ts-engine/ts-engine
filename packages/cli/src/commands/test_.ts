@@ -1,4 +1,5 @@
 // @ts-ignore
+/* eslint-disable jest/no-jest-import */
 import jest from "jest";
 import { createJestConfig } from "../config";
 

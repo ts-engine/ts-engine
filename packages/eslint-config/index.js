@@ -34,10 +34,6 @@ module.exports = {
     "no-unused-vars": "off",
     "import/named": "off",
     "import/no-unresolved": "off",
-    // Advanced users are fine importing jest
-    "jest/no-jest-import": "off",
-    // Not always true, when using libraries like RTL you don't always need expect calls
-    "jest/expect-expect": "off",
   },
   settings: {
     "import/resolver": {

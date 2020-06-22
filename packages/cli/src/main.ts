@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* eslint-disable jest/no-disabled-tests */
+/* eslint-disable jest/no-disabled-tests,jest/expect-expect */
 
 import yargs from "yargs";
 import { options } from "./options";
