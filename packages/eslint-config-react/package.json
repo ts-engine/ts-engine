@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/eslint-config-react",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "description": "@ts-engine's React ESLint config.",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"

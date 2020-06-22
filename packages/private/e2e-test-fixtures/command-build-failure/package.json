@@ -1,12 +1,12 @@
 {
   "name": "@e2e-test/command-build-failure",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "private": true,
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "sideEffects": false,
   "devDependencies": {
-    "@ts-engine/cli": "1.7.1"
+    "@ts-engine/cli": "1.8.0"
   }
 }
