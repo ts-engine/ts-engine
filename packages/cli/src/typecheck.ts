@@ -5,12 +5,13 @@ import { createTypeScriptConfig } from "./config";
 import type { Package } from "./get-package";
 
 interface TypecheckOptions {
-  exitOnComplete: boolean;
   emit: boolean;
   package: Package;
 }
 
-export const typecheck = async (options: TypecheckOptions) => {
+export const typecheck = async (
+  options: TypecheckOptions
+): Promise<boolean> => {
   const tsConfig = createTypeScriptConfig({ emit: options.emit });
 
   const program = typescript.createProgram(
@@ -38,11 +39,7 @@ export const typecheck = async (options: TypecheckOptions) => {
     // Early escape if no issues
     console.log(chalk.greenBright("✓ No issues found"));
 
-    if (options.exitOnComplete) {
-      process.exit(0);
-    }
-
-    return;
+    return Promise.resolve(true);
   }
 
   // Print out diagnostic summary
@@ -101,7 +98,5 @@ export const typecheck = async (options: TypecheckOptions) => {
     );
   }
 
-  if (options.exitOnComplete) {
-    process.exit(1);
-  }
+  return Promise.resolve(false);
 };

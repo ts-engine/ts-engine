@@ -18,7 +18,6 @@ export const typecheck = async (options: TypecheckOptions) => {
     watcher.on("ready", async () => {
       const typecheckOptions = {
         emit: options.emit,
-        exitOnComplete: false,
         package: pkg,
       };
 
@@ -44,10 +43,11 @@ export const typecheck = async (options: TypecheckOptions) => {
 
     await new Promise(() => {});
   } else {
-    await doTypecheck({
+    const result = await doTypecheck({
       emit: options.emit,
-      exitOnComplete: true,
       package: pkg,
     });
+
+    process.exit(result ? 0 : 1);
   }
 };
