@@ -84,8 +84,10 @@ yargs
       return yargs.options({
         args: options.args,
         ["bundle-dependencies"]: options["bundle-dependencies"],
+        emit: options.emit,
         minify: options.minify,
         react: options.react,
+        typecheck: options.typecheck,
         watch: options.watch,
       });
     },
