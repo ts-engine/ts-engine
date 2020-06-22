@@ -52,6 +52,11 @@ export const options = {
     default: false,
     describe: "Support react",
   }),
+  typecheck: createOption({
+    type: "boolean",
+    default: false,
+    describe: "Perform typechecking",
+  }),
   watch: createOption({
     type: "boolean",
     default: false,

@@ -4,8 +4,10 @@ import { buildWithRollup } from "../build-with-rollup";
 interface BuildOptions {
   buildType: "library" | "node-app";
   bundleDependencies: boolean;
+  emit: boolean;
   minify: boolean;
   react: boolean;
+  typecheck: boolean;
   watch: boolean;
 }
 
@@ -18,7 +20,9 @@ export const build = async (options: BuildOptions) => {
   });
 
   await buildWithRollup(rollupConfig, {
-    watch: options.watch,
+    emit: options.emit,
     run: false,
+    typecheck: options.typecheck,
+    watch: options.watch,
   });
 };

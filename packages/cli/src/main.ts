@@ -26,10 +26,12 @@ yargs
       return yargs
         .options({
           ["bundle-dependencies"]: options["bundle-dependencies"],
+          emit: options.emit,
           library: options.library,
           minify: options.minify,
           "node-app": options["node-app"],
           react: options.react,
+          typecheck: options.typecheck,
           watch: options.watch,
         })
         .check(checkBuildTypeOptions)
@@ -82,8 +84,10 @@ yargs
       return yargs.options({
         args: options.args,
         ["bundle-dependencies"]: options["bundle-dependencies"],
+        emit: options.emit,
         minify: options.minify,
         react: options.react,
+        typecheck: options.typecheck,
         watch: options.watch,
       });
     },

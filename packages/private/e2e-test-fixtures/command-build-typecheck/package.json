@@ -1,5 +1,5 @@
 {
-  "name": "@e2e-test/command-build-react",
+  "name": "@e2e-test/command-build-typecheck",
   "version": "1.8.0",
   "private": true,
   "main": "dist/main.cjs.js",
@@ -8,9 +8,5 @@
   "sideEffects": false,
   "devDependencies": {
     "@ts-engine/cli": "1.8.0"
-  },
-  "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   }
 }

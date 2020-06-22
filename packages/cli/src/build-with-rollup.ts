@@ -5,11 +5,15 @@ import ora from "ora";
 import rollup from "rollup";
 import type { RollupConfig } from "./config";
 import { logProgress } from "./log-progress";
+import { typecheck } from "./typecheck";
+import { getPackage } from "./get-package";
 
 interface BuildWithRollupOptions {
-  watch: boolean;
+  emit: boolean;
   run: boolean;
   runArgs?: string[];
+  typecheck: boolean;
+  watch: boolean;
 }
 
 export const buildWithRollup = async (
@@ -29,7 +33,7 @@ export const buildWithRollup = async (
 
     return new Promise(() => {
       const spinner = ora();
-      watcher.on("event", (event) => {
+      watcher.on("event", async (event) => {
         switch (event.code) {
           case "START": {
             console.clear();
@@ -41,6 +45,13 @@ export const buildWithRollup = async (
             spinner.stop();
             for (let output of rollupConfig.output) {
               console.log(chalk.greenBright(`Written to ${output.file}`));
+            }
+
+            if (options.typecheck) {
+              await typecheck({
+                emit: options.emit,
+                package: getPackage(),
+              });
             }
 
             console.log(chalk.grey("Watching for changes..."));
@@ -93,6 +104,17 @@ export const buildWithRollup = async (
         `Writing to ${output.file}`,
         "build-write"
       );
+    }
+
+    if (options.typecheck) {
+      const result = await typecheck({
+        emit: options.emit,
+        package: getPackage(),
+      });
+
+      if (!result) {
+        process.exit(1);
+      }
     }
 
     if (options.run) {
