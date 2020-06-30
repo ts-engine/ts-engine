@@ -1,11 +1,11 @@
 {
   "name": "@e2e-test/command-build-consumer",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "private": true,
   "devDependencies": {
-    "@ts-engine/cli": "1.9.1"
+    "@ts-engine/cli": "1.9.2"
   },
   "dependencies": {
-    "@e2e-test/command-build": "1.9.1"
+    "@e2e-test/command-build": "1.9.2"
   }
 }

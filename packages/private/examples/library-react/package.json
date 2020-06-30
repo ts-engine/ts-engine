@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine-examples/library-react",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "private": false,
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
@@ -13,7 +13,7 @@
     "typecheck": "ts-engine typecheck --emit"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.9.1"
+    "@ts-engine/cli": "1.9.2"
   },
   "peerDependencies": {
     "react": "^16.13.1",
