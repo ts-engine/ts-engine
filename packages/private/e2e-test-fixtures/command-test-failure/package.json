@@ -1,8 +1,8 @@
 {
   "name": "@e2e-test/command-test-failure",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
   "devDependencies": {
-    "@ts-engine/cli": "1.8.0"
+    "@ts-engine/cli": "1.9.0"
   }
 }
