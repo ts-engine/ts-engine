@@ -1,6 +1,6 @@
 {
   "name": "@helpers/edit-version",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Publish packages",
   "license": "MIT",
   "repository": {
@@ -15,7 +15,7 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.9.0"
+    "@ts-engine/cli": "1.9.1"
   },
   "dependencies": {
     "@mono-repo/utils": "^1.1.0",
