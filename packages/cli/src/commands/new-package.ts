@@ -57,6 +57,9 @@ export const newPackage = async (options: NewPackageOptions) => {
         test: `ts-engine test${reactOption}`,
         typecheck: "ts-engine typecheck",
       },
+      dependencies: {
+        "@ts-engine/runtime": `^${tsEngineCliVersion}`,
+      },
       devDependencies: {
         "@ts-engine/cli": `^${tsEngineCliVersion}`,
       },
