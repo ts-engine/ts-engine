@@ -38,6 +38,9 @@ describe("command-new-package", () => {
         test: "ts-engine test",
         typecheck: "ts-engine typecheck",
       },
+      dependencies: {
+        "@ts-engine/runtime": `^${tsEngineCliVersion}`,
+      },
       devDependencies: {
         "@ts-engine/cli": `^${tsEngineCliVersion}`,
       },
@@ -64,6 +67,9 @@ describe("command-new-package", () => {
         start: "ts-engine start --react",
         test: "ts-engine test --react",
         typecheck: "ts-engine typecheck",
+      },
+      dependencies: {
+        "@ts-engine/runtime": `^${tsEngineCliVersion}`,
       },
       devDependencies: {
         "@ts-engine/cli": `^${tsEngineCliVersion}`,

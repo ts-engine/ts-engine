@@ -1,0 +1,18 @@
+{
+  "name": "@ts-engine/runtime",
+  "version": "1.9.0",
+  "description": "@ts-engine's runtime dependency for Node.js applications.",
+  "repository": {
+    "url": "https://github.com/ts-engine/ts-engine"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ts-engine",
+    "babel",
+    "typescript",
+    "runtime"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.10.4"
+  }
+}
