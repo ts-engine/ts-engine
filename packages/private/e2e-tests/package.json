@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/e2e-tests",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "private": true,
   "scripts": {
     "pretest": "cd ../../cli && yarn build",
@@ -13,6 +13,6 @@
     "terminate": "^2.1.2"
   },
   "dependencies": {
-    "@ts-engine/babel-preset": "1.9.1"
+    "@ts-engine/babel-preset": "1.9.2"
   }
 }

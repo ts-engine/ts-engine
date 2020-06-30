@@ -22,5 +22,5 @@ Checkout the official docs over at https://ts-engine.dev.
 Install the package.
 
 ```sh
-yarn add @ts-engine/babel-runtime
+yarn add @ts-engine/runtime
 ```

@@ -1,8 +1,8 @@
 {
   "name": "@e2e-test/command-start",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "private": true,
   "devDependencies": {
-    "@ts-engine/cli": "1.9.1"
+    "@ts-engine/cli": "1.9.2"
   }
 }
