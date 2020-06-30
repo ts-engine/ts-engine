@@ -75,6 +75,17 @@ Checkout the official docs over at https://ts-engine.dev.
       </a>
     </td>
   </tr>
+  <tr>
+    <td>
+      <a href="./packages/eslint-config-react/README.md">@ts-engine/runtime</a>
+    </td>
+    <td>The default runtime dependency for ts-engine.</td>
+    <td>
+      <a href="https://www.npmjs.com/package/@ts-engine/runtime" rel="noopener noreferrer" target="_blank">
+        <img src="https://badgen.net/npm/v/@ts-engine/runtime">
+      </a>
+    </td>
+  </tr>
 </table>
 
 ## Examples

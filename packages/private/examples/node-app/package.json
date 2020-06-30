@@ -9,6 +9,9 @@
     "test": "ts-engine test",
     "typecheck": "ts-engine typecheck"
   },
+  "dependencies": {
+    "@ts-engine/runtime": "1.9.0"
+  },
   "devDependencies": {
     "@ts-engine/cli": "1.9.0"
   }
