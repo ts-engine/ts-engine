@@ -219,6 +219,9 @@ ts-engine new-package --node-app --react --name my-react-app
     "test": "ts-engine test",
     "typecheck": "ts-engine typecheck"
   },
+  "dependencies": {
+    "@ts-engine/runtime": "latest"
+  },
   "devDependencies": {
     "@ts-engine/cli": "latest"
   }

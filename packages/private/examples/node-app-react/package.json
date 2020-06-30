@@ -15,6 +15,7 @@
     "@types/react-dom": "^16.9.8"
   },
   "dependencies": {
+    "@ts-engine/runtime": "1.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
