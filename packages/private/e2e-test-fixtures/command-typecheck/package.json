@@ -1,12 +1,12 @@
 {
   "name": "@e2e-test/command-typecheck",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "private": true,
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "sideEffects": false,
   "devDependencies": {
-    "@ts-engine/cli": "1.9.0"
+    "@ts-engine/cli": "1.9.1"
   }
 }

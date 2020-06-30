@@ -41,6 +41,10 @@ jobs:
         working-directory: packages/babel-preset-react
         run: npm publish --tag latest --access public
 
+      - name: Publish (runtime)
+        working-directory: packages/runtime
+        run: npm publish --tag latest --access public
+
       - name: Publish (cli)
         working-directory: packages/cli
         run: npm publish --tag latest --access public
