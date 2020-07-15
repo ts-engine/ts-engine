@@ -16,8 +16,8 @@
     "react"
   ],
   "dependencies": {
-    "@ts-engine/babel-preset": "1.9.2",
-    "@babel/preset-react": "^7.9.4",
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.10.5",
+    "@babel/preset-react": "^7.10.4",
+    "@ts-engine/babel-preset": "1.9.2"
   }
 }
