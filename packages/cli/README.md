@@ -72,6 +72,18 @@ ts-engine build --library
 ts-engine build --library --watch
 ```
 
+#### Typecheck post build
+
+You can tell ts-engine to typecheck once a build has completed automatically.
+
+```sh
+# typecheck only
+ts-engine build --node-app --typecheck
+
+# typecheck and emit types
+ts-engine build --library --typecheck --emit
+```
+
 #### Bundling dependencies
 
 Sometimes it is useful to bundle dependencies into the output file so you can run the file without `node_modules`. This makes it easier to use, share and deploy as it is a single file. You can bundle dependencies into a Node.js application or a library with ts-engine.
@@ -151,6 +163,12 @@ Forward arguments onto the application using the `--args` options.
 ```sh
 # The options "--one --two three" will be forward onto the Node.js application
 ts-engine start --watch --args --one --two three
+```
+
+Typechecking post build is supported just like in the `build` command.
+
+```sh
+ts-engine start --typecheck
 ```
 
 ### Test
