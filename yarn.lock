@@ -2243,6 +2243,14 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@mono-repo/utils@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@mono-repo/utils/-/utils-1.1.0.tgz#03dce09d4f464422550f50fbe58e5b6a1bcc1788"
+  integrity sha512-fSy1gwO+WPozRVTmbJYQOKyansjBN+v0p5Xh3jkehiCflLIQBlQvwA3Ue1UG0zaTD84+ouN9H31x5TN4P+O7IA==
+  dependencies:
+    fs-extra "^9.0.0"
+    glob-promise "^3.4.0"
+
 "@mono-repo/utils@^1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@mono-repo/utils/-/utils-1.4.2.tgz#ac9be043217267ef08eab75180ffce3914c431cc"
