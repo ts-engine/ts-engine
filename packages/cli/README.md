@@ -173,7 +173,11 @@ ts-engine start --typecheck
 
 ### Test
 
-Unit tests are run using [Jest](https://jestjs.io/). The default jest config can be extended by using a standard `jest.config.js` file. **Updating the `transform` option may lead to compilation issues when running tests.**
+Unit tests are run using [Jest](https://jestjs.io/).
+
+The default jest config can be extended by using a standard `jest.config.js` file. **Updating the `transform` option may lead to compilation issues when running tests.**
+
+You can create a setup file called `jest.setup.ts` and it will automatically be picked up and ran.
 
 ```sh
 # Run tests once

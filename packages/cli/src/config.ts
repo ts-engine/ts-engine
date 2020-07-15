@@ -50,8 +50,13 @@ interface CreateJestConfigOptions {
 export const createJestConfig = (options: CreateJestConfigOptions) => {
   const jestConfigFilename = path.resolve(process.cwd(), "jest.config.js");
   const jestConfigExists = fs.existsSync(jestConfigFilename);
-
   const jestConfig = jestConfigExists ? require(jestConfigFilename) : {};
+
+  const jestSetupFilename = path.resolve(process.cwd(), "jest.setup.ts");
+  const jestSetupExists = fs.existsSync(jestSetupFilename);
+  const jestSetupConfig = jestSetupExists
+    ? { setupFilesAfterEnv: ["./jest.setup.ts"] }
+    : {};
 
   return {
     testRegex: "src/.*.test.(js|jsx|ts|tsx)$",
@@ -63,6 +68,7 @@ export const createJestConfig = (options: CreateJestConfigOptions) => {
       ],
     },
     ...jestConfig,
+    ...jestSetupConfig,
   };
 };
 

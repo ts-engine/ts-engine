@@ -54,6 +54,9 @@ describe("config", () => {
       if (fs.existsSync("jest.config.js")) {
         fs.removeSync("jest.config.js");
       }
+      if (fs.existsSync("jest.setup.ts")) {
+        fs.removeSync("jest.setup.ts");
+      }
     });
 
     it("should supply default jest config", () => {
@@ -82,6 +85,22 @@ describe("config", () => {
           ],
         },
         coverage: 90,
+      });
+    });
+
+    it("should set jest.setup.ts if found", () => {
+      fs.writeFileSync("jest.setup.ts", "");
+
+      expect(createJestConfig({ react: false })).toEqual({
+        testRegex: "src/.*.test.(js|jsx|ts|tsx)$",
+        testURL: "http://localhost",
+        transform: {
+          ".(js|jsx|ts|tsx)$": [
+            "babel-jest",
+            createBabelConfig({ react: false }),
+          ],
+        },
+        setupFilesAfterEnv: ["./jest.setup.ts"],
       });
     });
   });
