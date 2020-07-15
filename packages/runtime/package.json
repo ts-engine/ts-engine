@@ -13,6 +13,6 @@
     "runtime"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.4"
+    "@babel/runtime": "^7.10.5"
   }
 }

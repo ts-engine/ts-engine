@@ -3,16 +3,14 @@
   "version": "1.9.2",
   "private": true,
   "scripts": {
-    "pretest": "cd ../../cli && yarn build",
+    "pretest": "#cd ../../cli && yarn build",
     "test": "jest --runInBand"
   },
   "devDependencies": {
-    "@mono-repo/utils": "^1.1.0",
-    "jest": "^26.0.1",
+    "@mono-repo/utils": "1.1.0",
+    "@ts-engine/babel-preset": "1.9.2",
+    "jest": "^26.1.0",
     "strip-ansi": "^6.0.0",
     "terminate": "^2.1.2"
-  },
-  "dependencies": {
-    "@ts-engine/babel-preset": "1.9.2"
   }
 }

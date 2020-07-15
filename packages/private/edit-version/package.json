@@ -15,13 +15,13 @@
     "typecheck": "ts-engine typecheck"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.9.2"
+    "@ts-engine/cli": "1.9.2",
+    "@types/semver": "^7.3.1"
   },
   "dependencies": {
-    "@mono-repo/utils": "^1.1.0",
-    "@types/semver": "^7.1.0",
-    "chalk": "^4.0.0",
-    "fs-extra": "^9.0.0",
+    "@mono-repo/utils": "^1.4.2",
+    "chalk": "^4.1.0",
+    "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
     "glob-promise": "^3.4.0",
     "minimist": "^1.2.5",
