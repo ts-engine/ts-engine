@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine-examples/library",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "private": false,
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
@@ -13,6 +13,6 @@
     "typecheck": "ts-engine typecheck --emit"
   },
   "devDependencies": {
-    "@ts-engine/cli": "1.9.2"
+    "@ts-engine/cli": "1.10.0"
   }
 }

@@ -2251,14 +2251,6 @@
     fs-extra "^9.0.0"
     glob-promise "^3.4.0"
 
-"@mono-repo/utils@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@mono-repo/utils/-/utils-1.4.2.tgz#ac9be043217267ef08eab75180ffce3914c431cc"
-  integrity sha512-d63KvqRotdHj85Bc9ZOgbN5MEUW/6/sc60ckdRihljCYJ35PmLQf6GYY6hW8zy7pLenG966EmkYb98VLi5NihA==
-  dependencies:
-    fs-extra "^9.0.0"
-    glob-promise "^3.4.0"
-
 "@rollup/plugin-commonjs@^12.0.0":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-12.0.0.tgz#e2f308ae6057499e0f413f878fff7c3a0fdc02a1"
