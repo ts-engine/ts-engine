@@ -9,18 +9,25 @@ interface NewPackageOptions {
   react: boolean;
 }
 
+const getNpmVersion = (packageName: string): string => {
+  return spawnSync("npm", ["show", packageName, "version"], {
+    encoding: "utf8",
+    shell: true,
+  }).stdout.replace("\n", "");
+};
+
 export const newPackage = async (options: NewPackageOptions) => {
   const newPackageDir = path.resolve(
     process.cwd(),
     options.name.startsWith("@") ? options.name.split("/")[1] : options.name
   );
 
-  // Obtain latest version of @ts-engine/cli from NPM
-  const tsEngineCliVersion = spawnSync(
-    "npm",
-    ["show", "@ts-engine/cli", "version"],
-    { encoding: "utf8", shell: true }
-  ).stdout.replace("\n", "");
+  // Obtain latest versions from NPM
+  const tsEngineCliVersion = getNpmVersion("@ts-engine/cli");
+  const reactVersion = getNpmVersion("react");
+  const reactDomVersion = getNpmVersion("react-dom");
+  const reactTypesVersion = getNpmVersion("@types/react");
+  const reactDomTypesVersion = getNpmVersion("@types/react-dom");
 
   const writeFiles = async () => {
     await fs.ensureDir(newPackageDir);
@@ -43,7 +50,23 @@ export const newPackage = async (options: NewPackageOptions) => {
       },
       devDependencies: {
         "@ts-engine/cli": `^${tsEngineCliVersion}`,
+        ...(options.react
+          ? {
+              "@types/react": `^${reactTypesVersion}`,
+              "@types/react-dom": `^${reactDomTypesVersion}`,
+              react: `^${reactVersion}`,
+              "react-dom": `^${reactDomVersion}`,
+            }
+          : {}),
       },
+      ...(options.react
+        ? {
+            peerDependencies: {
+              react: `^${reactVersion}`,
+              "react-dom": `^${reactDomVersion}`,
+            },
+          }
+        : {}),
     };
 
     const nodeAppPackageJson = {
@@ -59,9 +82,18 @@ export const newPackage = async (options: NewPackageOptions) => {
       },
       dependencies: {
         "@ts-engine/runtime": `^${tsEngineCliVersion}`,
+        ...(options.react
+          ? { react: `^${reactVersion}`, "react-dom": `^${reactDomVersion}` }
+          : {}),
       },
       devDependencies: {
         "@ts-engine/cli": `^${tsEngineCliVersion}`,
+        ...(options.react
+          ? {
+              "@types/react": `^${reactTypesVersion}`,
+              "@types/react-dom": `^${reactDomTypesVersion}`,
+            }
+          : {}),
       },
     };
 

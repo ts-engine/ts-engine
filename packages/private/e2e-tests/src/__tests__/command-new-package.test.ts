@@ -3,12 +3,19 @@ import path from "path";
 import fs from "fs-extra";
 import { runCliCommand } from "../run-cli-command";
 
+const getNpmVersion = (packageName: string): string => {
+  return spawnSync("npm", ["show", packageName, "version"], {
+    encoding: "utf8",
+    shell: true,
+  }).stdout.replace("\n", "");
+};
+
 describe("command-new-package", () => {
-  const tsEngineCliVersion = spawnSync(
-    "npm",
-    ["show", "@ts-engine/cli", "version"],
-    { encoding: "utf8" }
-  ).stdout.replace("\n", "");
+  const tsEngineCliVersion = getNpmVersion("@ts-engine/cli");
+  const reactVersion = getNpmVersion("react");
+  const reactDomVersion = getNpmVersion("react-dom");
+  const reactTypesVersion = getNpmVersion("@types/react");
+  const reactDomTypesVersion = getNpmVersion("@types/react-dom");
   const packageDir = path.resolve(process.cwd(), "temp");
   const packageJsonFilepath = path.resolve(packageDir, "package.json");
   const packageMainFilepath = path.resolve(packageDir, "src/main.ts");
@@ -70,9 +77,13 @@ describe("command-new-package", () => {
       },
       dependencies: {
         "@ts-engine/runtime": `^${tsEngineCliVersion}`,
+        react: `^${reactVersion}`,
+        "react-dom": `^${reactDomVersion}`,
       },
       devDependencies: {
         "@ts-engine/cli": `^${tsEngineCliVersion}`,
+        "@types/react": `^${reactTypesVersion}`,
+        "@types/react-dom": `^${reactDomTypesVersion}`,
       },
     });
     expect(await fs.readFile(packageMainFilepath, "utf8")).toBe(
@@ -135,6 +146,14 @@ describe("command-new-package", () => {
       },
       devDependencies: {
         "@ts-engine/cli": `^${tsEngineCliVersion}`,
+        "@types/react": `^${reactTypesVersion}`,
+        "@types/react-dom": `^${reactDomTypesVersion}`,
+        react: `^${reactVersion}`,
+        "react-dom": `^${reactDomVersion}`,
+      },
+      peerDependencies: {
+        react: `^${reactVersion}`,
+        "react-dom": `^${reactDomVersion}`,
       },
     });
     expect(await fs.readFile(packageMainFilepath, "utf8")).toBe(
