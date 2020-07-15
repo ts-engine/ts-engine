@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/runtime",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "description": "@ts-engine's runtime dependency for Node.js applications.",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"

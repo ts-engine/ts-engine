@@ -1,8 +1,8 @@
 {
   "name": "@e2e-test/command-lint-error",
-  "version": "1.9.2",
+  "version": "1.10.0",
   "private": true,
   "devDependencies": {
-    "@ts-engine/cli": "1.9.2"
+    "@ts-engine/cli": "1.10.0"
   }
 }
