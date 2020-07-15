@@ -324,7 +324,7 @@ describe("command-build", () => {
       );
       expect(content)
         .toBe(`export declare const add: (a: number, b: number) => number;
-  `);
+`);
 
       // Edit package
       revertFileEdit = await editFileTemporarily(
@@ -340,7 +340,7 @@ describe("command-build", () => {
       );
       expect(newContent)
         .toBe(`export declare const concat: (a: string, b: string) => string;
-  `);
+`);
 
       // Kill watching tool
       runner.kill();
