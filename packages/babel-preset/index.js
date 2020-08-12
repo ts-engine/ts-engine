@@ -10,6 +10,8 @@ module.exports = () => {
   return {
     presets: ["@babel/typescript", ["@babel/env", getEnvOptions()]],
     plugins: [
+      ["@babel/plugin-proposal-decorators", { legacy: true }],
+      "@babel/plugin-transform-typescript",
       "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-proposal-optional-chaining",

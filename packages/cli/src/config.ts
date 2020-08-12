@@ -186,5 +186,6 @@ export const createTypeScriptConfig = (
     strict: true,
     outDir: outputDir,
     allowJs: true,
+    experimentalDecorators: true,
   };
 };
