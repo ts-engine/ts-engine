@@ -183,6 +183,7 @@ describe("command-build", () => {
     });
 
     expect(await runRunner.waitForStatusCode()).toBe(0);
+
     expect(runRunner.stdoutLines).toContainInOrder(["1 + 2 = 3", "1 + 2 = 3"]);
   });
 

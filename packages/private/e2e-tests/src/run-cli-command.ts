@@ -5,11 +5,16 @@ import stripAnsi from "strip-ansi";
 export interface RunCliCommandOptions {
   cwd?: string;
   env?: NodeJS.ProcessEnv;
+  printLogs?: boolean;
 }
 
 export const runCliCommand = (
   command: string,
-  options: RunCliCommandOptions = { cwd: process.cwd(), env: {} }
+  options: RunCliCommandOptions = {
+    cwd: process.cwd(),
+    env: {},
+    printLogs: false,
+  }
 ) => {
   // Setup runner
   const [tool, ...args] = command.split(" ");
@@ -26,12 +31,18 @@ export const runCliCommand = (
   // Store stderr lines
   const stdoutLines: string[] = [];
   runner.stdout.on("data", (data: string) => {
+    if (options.printLogs) {
+      console.log(data);
+    }
     stdoutLines.push(...stripAnsi(data).split("\n"));
   });
 
   // Store non-empty stderr lines
   const stderrLines: string[] = [];
   runner.stderr.on("data", (data: string) => {
+    if (options.printLogs) {
+      console.error(data);
+    }
     stderrLines.push(...stripAnsi(data).split("\n"));
   });
 
