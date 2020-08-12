@@ -86,13 +86,7 @@ describe("command-build", () => {
     });
 
     expect(await runRunner.waitForStatusCode()).toBe(0);
-    expect(runRunner.stdoutLines).toContainInOrder([
-      "1 + 2 = 3",
-      "f(): evaluated",
-      "g(): evaluated",
-      "g(): called",
-      "f(): called",
-    ]);
+    expect(runRunner.stdoutLines).toContainInOrder(["1 + 2 = 3", "1 + 2 = 3"]);
   });
 
   it("should build a node app", async () => {
@@ -189,6 +183,7 @@ describe("command-build", () => {
     });
 
     expect(await runRunner.waitForStatusCode()).toBe(0);
+
     expect(runRunner.stdoutLines).toContainInOrder(["1 + 2 = 3", "1 + 2 = 3"]);
   });
 
