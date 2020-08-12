@@ -51,7 +51,9 @@ describe("checks", () => {
     it("should enforce valid npm package names", () => {
       expect(() => {
         checkNpmPackageName({ name: "]]]" });
-      }).toThrow("']]]' is not a valid npm package name");
+      }).toThrow(`']]]' is not a valid npm package name:
+
+- name can only contain URL-friendly characters`);
     });
 
     it("should accept valid npm package names", () => {

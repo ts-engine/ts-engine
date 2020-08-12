@@ -18,7 +18,9 @@ export const checkNpmPackageName = (argv: any) => {
   const result = validatePackageName(argv.name);
 
   if (!result.validForNewPackages) {
-    throw new Error(`'${argv.name}' is not a valid npm package name`);
+    throw new Error(`'${argv.name}' is not a valid npm package name:
+
+${result.errors.map((e: string) => `- ${e}\n`)}`);
   }
 
   return true;
