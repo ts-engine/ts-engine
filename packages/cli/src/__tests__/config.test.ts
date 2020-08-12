@@ -234,6 +234,7 @@ describe("config", () => {
         strict: true,
         outDir: outputDir,
         allowJs: true,
+        experimentalDecorators: true,
       });
     });
 
@@ -250,6 +251,7 @@ describe("config", () => {
         strict: true,
         outDir: outputDir,
         allowJs: true,
+        experimentalDecorators: true,
       });
     });
   });
