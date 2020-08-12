@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/babel-preset-react",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "@ts-engine's React babel preset.",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
@@ -18,6 +18,6 @@
   "dependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-react": "^7.10.4",
-    "@ts-engine/babel-preset": "1.10.0"
+    "@ts-engine/babel-preset": "1.11.0"
   }
 }
