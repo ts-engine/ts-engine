@@ -1,12 +1,12 @@
 {
   "name": "@e2e-test/command-build-typecheck-error",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "private": true,
   "main": "dist/main.cjs.js",
   "module": "dist/main.esm.js",
   "types": "dist/main.d.ts",
   "sideEffects": false,
   "devDependencies": {
-    "@ts-engine/cli": "1.10.0"
+    "@ts-engine/cli": "1.11.0"
   }
 }

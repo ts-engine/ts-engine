@@ -1,8 +1,8 @@
 {
   "name": "@e2e-test/command-test",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "private": true,
   "devDependencies": {
-    "@ts-engine/cli": "1.10.0"
+    "@ts-engine/cli": "1.11.0"
   }
 }
