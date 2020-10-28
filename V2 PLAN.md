@@ -54,7 +54,7 @@ Lint code.
 > tse lint src/
 
 # apply fixes
-> tse lint src/ --fix
+> tse lint --fix src/
 ```
 
 Test code, searches for `.test.tsx?` files
@@ -77,10 +77,10 @@ Build package.
 > tse build index.ts test-utils.ts
 
 # build in watch mode
-> tse build index.ts --watch
+> tse build --watch index.ts
 
 # skip typecheck (will not emit types either)
-> tse build index.ts --skip-typecheck
+> tse build --skip-typecheck index.ts
 ```
 
 Run a package.
