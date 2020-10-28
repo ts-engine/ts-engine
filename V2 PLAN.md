@@ -24,6 +24,14 @@ In order to more easily support custom named file entry points for apps it makes
 
 Many people have fed back that they always want to run typechecking no matter what. Whilst this isn't how I personally work, I can understand it. To that end, the `typecheck` command will be removed and all builds will perform typechecking and emit types by default. This removes the need for opt in flags on the build command and run command. Instead there should be a way to opt out of typechecking via a `skip-typecheck` flag or similar.
 
+## less intrusive react support
+
+Currently react support is provided via a CLI flag passed to commands. This is awkward and actually uneccasary and lots of people miss the fact you need to do that. ts-engine should detect whether react is a packages dependencies and if it is then should automatically apply the babel and eslint config. React dependencies should only every be added when react is detected as to include it by default without detection would potentially slow down compilation and linting but would also shut the door on easily supporting other JSX based libraries in the future.
+
+## configuration
+
+Currently babel, eslint and jest configuration is detected and is used in place of ts-engine's default configuration if found. ts-engine provides babel and eslint packages so you can extend from them when defining your own config if you just want to enhance the config, for example adding a single babel plugin for a library you are using. However currently 2 key pieces of configuration are _not_ configurable, `tsconfig.json` and `rollup.config.js`. Making rollup configuration configurable is likely to cause a number of headaches and severely break how ts-engine works... however allowing `tsconfig.json` to be configured seems reasonable.
+
 ## cli functionality
 
 Create packages with templating support, gone are notions of library/node-app at create time.
@@ -47,16 +55,6 @@ Lint code.
 
 # apply fixes
 > tse lint src/ --fix
-```
-
-Typecheck typescript code.
-
-```sh
-# typecheck file
-> tse typecheck index.ts
-
-# typecheck directory
-> tse typecheck src/
 ```
 
 Test code, searches for `.test.tsx?` files
@@ -99,4 +97,55 @@ Run a package.
 
 # skip typechecking
 > tse run --skip-typecheck index.ts
+```
+
+## exmple package.json
+
+For an application:
+
+```json
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "private": true,
+  "script": {
+    "build": "tse build src/index.ts",
+    "lint": "tse lint src/",
+    "run": "tse run src/index.ts"
+  },
+  "dependencies": {
+    "@ts-engine/runtime": "2.0.0"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "2.0.0"
+  }
+}
+```
+
+For a library:
+
+```json
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "script": {
+    "build": "tse build src/index.ts src/test-utils.ts",
+    "lint": "tse lint src/",
+    "run": "tse run src/index.ts"
+  },
+  "dependencies": {
+    "@ts-engine/runtime": "2.0.0"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "2.0.0",
+    "react": "latest"
+  },
+  "peerDependencies": {
+    "react": "latest"
+  }
+}
 ```
