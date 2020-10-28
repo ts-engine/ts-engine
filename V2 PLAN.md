@@ -28,7 +28,7 @@ Many people have fed back that they always want to run typechecking no matter wh
 
 Currently react support is provided via a CLI flag passed to commands. This is awkward and actually uneccasary and lots of people miss the fact you need to do that. ts-engine should detect whether react is a packages dependencies and if it is then should automatically apply the babel and eslint config. React dependencies should only every be added when react is detected as to include it by default without detection would potentially slow down compilation and linting but would also shut the door on easily supporting other JSX based libraries in the future.
 
-## configuration
+## configuration
 
 Currently babel, eslint and jest configuration is detected and is used in place of ts-engine's default configuration if found. ts-engine provides babel and eslint packages so you can extend from them when defining your own config if you just want to enhance the config, for example adding a single babel plugin for a library you are using. However currently 2 key pieces of configuration are _not_ configurable, `tsconfig.json` and `rollup.config.js`. Making rollup configuration configurable is likely to cause a number of headaches and severely break how ts-engine works... however allowing `tsconfig.json` to be configured seems reasonable.
 
