@@ -99,7 +99,7 @@ Run a package.
 > tse run --skip-typecheck index.ts
 ```
 
-## exmple package.json
+## example package.json
 
 For an application:
 
