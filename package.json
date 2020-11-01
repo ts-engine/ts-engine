@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/**"
+    ]
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
+    "typecheck": "lerna run typecheck"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}
