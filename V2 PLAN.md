@@ -32,6 +32,10 @@ Currently react support is provided via a CLI flag passed to commands. This is a
 
 Currently babel, eslint and jest configuration is detected and is used in place of ts-engine's default configuration if found. ts-engine provides babel and eslint packages so you can extend from them when defining your own config if you just want to enhance the config, for example adding a single babel plugin for a library you are using. However currently 2 key pieces of configuration are _not_ configurable, `tsconfig.json` and `rollup.config.js`. Making rollup configuration configurable is likely to cause a number of headaches and severely break how ts-engine works... however allowing `tsconfig.json` to be configured seems reasonable.
 
+## blazing fast performance :troll:
+
+Currently babel is used, which is a comparitively slow compilation, especially on large code bases. ts-engine should switch to a native tool for compilation to drastically increase its speed. esbuild (written in Go) and swc (written in Rust) are the two obvious choices. Both have pros and cons, esbuild supports bundling but only compiles to ES6 code. swc does not support bundling but does supporting compiling all the way down to es3. ts-engine should compile to es6 by default and bundle using esbuild, perfect sourcemaps can be delivered when doing this too. If the user wants to produce es5 output then they should pass a flag `--es5` and this would perform another compilation step by swc compiling the esbuild output down into es5, however, this would mean the original source map is meaningless and swc which does support source maps can only produce one for the compiled esbuild output to the compiled swc output, this means that no source maps should be delivered when compiling to es5.
+
 ## cli functionality
 
 Create packages with templating support, gone are notions of library/node-app at create time.
@@ -72,15 +76,26 @@ Build package.
 ```sh
 # build file and output typedefs
 > tse build index.ts
+index.ts -> dist/index.js
 
 # build multiple files to produce multiple outputs
 > tse build index.ts test-utils.ts
+index.ts -> dist/index.js
+test-utils.ts -> dist/test-utils.js
 
 # build in watch mode
 > tse build --watch index.ts
+index.ts -> dist/index.js
+index.ts -> dist/index.js
+index.ts -> dist/index.js
 
 # skip typecheck (will not emit types either)
 > tse build --skip-typecheck index.ts
+index.ts -> dist/index.js
+
+# compile to es5
+> tse build --es5 index.ts
+index.ts -> dist/index.js (source map excluded)
 ```
 
 Run a package.
