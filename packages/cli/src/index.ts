@@ -1,1 +1,3 @@
-console.log("hello world");
+import { cli } from "./cli";
+
+cli(process.argv);
