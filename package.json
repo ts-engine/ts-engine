@@ -6,6 +6,10 @@
     ]
   },
   "scripts": {
+    "clean": "yarn clean:coverage && yarn clean:dist && yarn clean:node_modules",
+    "clean:coverage": "find . -name coverage | xargs rm -rf",
+    "clean:dist": "find . -name dist | xargs rm -rf",
+    "clean:node_modules": "find . -name node_modules | xargs rm -rf",
     "build": "lerna run build",
     "lint": "lerna run lint",
     "test": "lerna run test",

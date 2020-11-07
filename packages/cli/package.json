@@ -3,7 +3,6 @@
   "version": "2.0.0-beta.1",
   "description": "Write TypeScript packages with optionally zero configuration.",
   "license": "MIT",
-  "main": "index.js",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
@@ -15,6 +14,11 @@
     "eslint-config",
     "prettier"
   ],
+  "bin": {
+    "ts-engine": "./bin.js",
+    "tsengine": "./bin.js",
+    "tse": "./bin.js"
+  },
   "scripts": {
     "build": "node ./build.js",
     "lint": "eslint src/**/*.ts",
