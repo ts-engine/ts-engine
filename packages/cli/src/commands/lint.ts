@@ -3,6 +3,7 @@ import { ESLint } from "eslint";
 // @ts-ignore - its an eslint config module so has no need for types
 import eslintConfig from "@ts-engine/eslint-config";
 import glob from "glob-promise";
+import { getSupportedExtensions } from "../utils";
 
 const command = "lint <globs...>";
 
@@ -37,7 +38,7 @@ const handler = async (argv: Arguments<LintArgs>) => {
     baseConfig: {
       ...eslintConfig,
     },
-    extensions: [".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs", ".es6"],
+    extensions: getSupportedExtensions({ dots: true }),
   });
 
   const results = await eslint.lintFiles(files);

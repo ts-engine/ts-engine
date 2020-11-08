@@ -1,17 +1,16 @@
-/* eslint-disable jest/no-standalone-expect */
-
 import fs from "fs-extra";
 import path from "path";
 import { matchLog, runCli } from "../../test-utils";
+import { getSupportedExtensions } from "../../utils";
 
 const tempDir = path.resolve(__dirname, "temp/lint");
 
 describe("no lint issues", () => {
-  ["js", "ts", "mjs", "jsx", "tsx"].forEach((extension) => {
-    it(`should report no issues in valid.${extension} file and exit with 0`, async () => {
+  getSupportedExtensions({ dots: true }).forEach((extension) => {
+    it(`should report no issues in valid${extension} file and exit with 0`, async () => {
       await fs.ensureDir(tempDir);
 
-      const filename = path.resolve(tempDir, `valid.${extension}`);
+      const filename = path.resolve(tempDir, `valid${extension}`);
       await fs.writeFile(
         filename,
         `export const add = (a: number, b: number): number => {
@@ -30,11 +29,11 @@ describe("no lint issues", () => {
 });
 
 describe("lint errors", () => {
-  ["js", "ts", "mjs", "jsx", "tsx"].forEach((extension) => {
-    it(`should report errors in error.${extension} file and exit with 1`, async () => {
+  getSupportedExtensions({ dots: true }).forEach((extension) => {
+    it(`should report errors in error${extension} file and exit with 1`, async () => {
       await fs.ensureDir(tempDir);
 
-      const filename = path.resolve(tempDir, `error.${extension}`);
+      const filename = path.resolve(tempDir, `error${extension}`);
       await fs.writeFile(
         filename,
         `var add = (a: number, b: number): number => {
@@ -56,11 +55,11 @@ describe("lint errors", () => {
 });
 
 describe("lint warnings", () => {
-  ["js", "ts", "mjs", "jsx", "tsx"].forEach((extension) => {
-    it(`should report warnings in warning.${extension} file and exit with 0`, async () => {
+  getSupportedExtensions({ dots: true }).forEach((extension) => {
+    it(`should report warnings in warning${extension} file and exit with 0`, async () => {
       await fs.ensureDir(tempDir);
 
-      const filename = path.resolve(tempDir, `warning.${extension}`);
+      const filename = path.resolve(tempDir, `warning${extension}`);
       await fs.writeFile(
         filename,
         `import fs from "fs";

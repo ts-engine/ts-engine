@@ -17,11 +17,15 @@ export const runCli = async (args: string): Promise<RunCliResult> => {
   const stdout: string[] = [];
 
   const stderrSpy = jest.fn((message: any) => {
-    stderr.push(message.toString());
+    if (message) {
+      stderr.push(message.toString());
+    }
   });
 
   const stdoutSpy = jest.fn((message: any) => {
-    stdout.push(message.toString());
+    if (message) {
+      stdout.push(message.toString());
+    }
   });
 
   jest.spyOn(console, "error").mockImplementation(stderrSpy);
