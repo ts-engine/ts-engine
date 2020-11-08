@@ -90,7 +90,7 @@ describe("no files found", () => {
 });
 
 describe("linting multiple files", () => {
-  it("should find and lint multiple files", async () => {
+  it("should find and lint multiple files from single glob", async () => {
     await fs.ensureDir(tempDir);
 
     const filename1 = path.resolve(tempDir, `error-1.js`);
@@ -111,6 +111,36 @@ return a + b;
     );
 
     const result = await runCli(`lint ${tempDir}`);
+    await fs.remove(tempDir);
+
+    expect(matchLog(/no-var/, result.stderr)).toBeTruthy();
+    expect(
+      matchLog(/@typescript-eslint\/no-unused-vars/, result.stderr)
+    ).toBeTruthy();
+    expect(result.exitCode).toBe(1);
+  });
+
+  it("should find and lint multiple files from multiple globs", async () => {
+    await fs.ensureDir(tempDir);
+
+    const filename1 = path.resolve(tempDir, `error-1.js`);
+    await fs.writeFile(
+      filename1,
+      `const add = (a: number, b: number): number => {
+return a + b;
+};
+`
+    );
+    const filename2 = path.resolve(tempDir, `error-2.ts`);
+    await fs.writeFile(
+      filename2,
+      `export var add = (a: number, b: number): number => {
+return a + b;
+};
+`
+    );
+
+    const result = await runCli(`lint ${filename1} ${filename2}`);
     await fs.remove(tempDir);
 
     expect(matchLog(/no-var/, result.stderr)).toBeTruthy();

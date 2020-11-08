@@ -4,12 +4,12 @@ import { ESLint } from "eslint";
 import eslintConfig from "@ts-engine/eslint-config";
 import glob from "glob-promise";
 
-const command = "lint <glob>";
+const command = "lint <globs...>";
 
 const description = "Lint code using ESLint";
 
 const builder: CommandBuilder = (yargs) => {
-  yargs.positional("glob", { type: "string" }).requiresArg("glob");
+  yargs.positional("globs", { type: "string" }).requiresArg("globs");
   yargs.boolean("fix").default("fix", false);
 
   return yargs;
@@ -17,11 +17,15 @@ const builder: CommandBuilder = (yargs) => {
 
 interface LintArgs {
   fix: boolean;
-  glob: string;
+  globs: string[];
 }
 
 const handler = async (argv: Arguments<LintArgs>) => {
-  const files = await glob(argv.glob);
+  const files = await (
+    await Promise.all(argv.globs.map((g) => glob(g)))
+  ).reduce((arr, next) => {
+    return [...arr, ...next];
+  }, []);
 
   if (files.length === 0) {
     console.error("No files found");
