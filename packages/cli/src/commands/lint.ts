@@ -33,6 +33,7 @@ const handler = async (argv: Arguments<LintArgs>) => {
     baseConfig: {
       ...eslintConfig,
     },
+    extensions: [".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs", ".es6"],
   });
 
   const results = await eslint.lintFiles(files);

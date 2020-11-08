@@ -101,7 +101,7 @@ return a + b;
 };
 `
     );
-    const filename2 = path.resolve(tempDir, `error-2.js`);
+    const filename2 = path.resolve(tempDir, `error-2.ts`);
     await fs.writeFile(
       filename2,
       `export var add = (a: number, b: number): number => {
@@ -110,7 +110,7 @@ return a + b;
 `
     );
 
-    const result = await runCli(`lint ${tempDir}/**`);
+    const result = await runCli(`lint ${tempDir}`);
     await fs.remove(tempDir);
 
     expect(matchLog(/no-var/, result.stderr)).toBeTruthy();
