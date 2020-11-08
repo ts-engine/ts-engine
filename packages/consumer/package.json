@@ -1,0 +1,8 @@
+{
+  "name": "consumer",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@ts-engine/cli": "2.0.0-beta.1",
+    "@types/fs-extra": "^9.0.3"
+  }
+}
