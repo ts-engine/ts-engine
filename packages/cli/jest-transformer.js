@@ -2,14 +2,17 @@
 
 const path = require("path");
 const fs = require("fs-extra");
-const pkg = require("./package.json");
 const esbuild = require("esbuild");
+const uuid = require("uuid");
 
-const external = [
-  ...Object.keys(pkg.dependencies || {}),
-  ...Object.keys(pkg.devDependencies || {}),
-  ...Object.keys(pkg.peerDependencies || {}),
-];
+// All temp files are stored in the same place with a cache busting name
+const getTempFilename = (filename, cacheBuster) => {
+  return path.join(
+    require.resolve("./package.json").replace("package.json", ""),
+    "/node_modules/.temp/jest-transformer",
+    `${cacheBuster}-${filename}`
+  );
+};
 
 module.exports = {
   getCacheKey: () => {
@@ -17,27 +20,32 @@ module.exports = {
     return Math.random().toString();
   },
   process: (src, filename) => {
+    const cacheBuster = uuid.v4();
     const filenameParts = filename.split("/");
-    const outfile = path.join(
-      require.resolve("./package.json").replace("package.json", ""),
-      "/node_modules/.cache/jest-transformer",
-      `${filenameParts[filenameParts.length - 1]}-${Date.now()}.js`
-    );
+    const file = filenameParts[filenameParts.length - 1];
 
+    const jsFilename = getTempFilename(`${file}`, cacheBuster);
+    const sourcemapFilename = getTempFilename(`${file}.map`, cacheBuster);
+
+    // build file using esbuild, don't perform bundling or it will break code coverage
     esbuild.buildSync({
-      sourcemap: "inline",
+      sourcemap: "external",
       format: "cjs",
-      bundle: true,
       entryPoints: [filename],
-      external,
       target: "node10.13",
       platform: "node",
-      outfile,
+      outfile: jsFilename,
     });
 
-    let js = fs.readFileSync(outfile, "utf-8");
-    fs.removeSync(outfile);
+    // read compiled js and sourcemap, delete the temp files as they aren't needed again
+    let js = fs.readFileSync(jsFilename, "utf-8");
+    fs.removeSync(jsFilename);
+    let sourcemap = fs.readFileSync(sourcemapFilename, "utf-8");
+    fs.removeSync(sourcemapFilename);
 
-    return js;
+    return {
+      code: js,
+      map: JSON.parse(sourcemap),
+    };
   },
 };

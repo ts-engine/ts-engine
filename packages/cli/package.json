@@ -27,16 +27,25 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@types/jest": "^26.0.15",
-    "eslint": "^7.12.1",
+    "eslint": "^7.13.0",
     "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "glob-promise": "^3.4.0",
     "jest": "^26.6.1",
     "typescript": "^4.0.5",
     "yargs": "^16.1.0"
   },
   "devDependencies": {
-    "@ts-engine/cli": "2.0.0-beta.1",
+    "@ts-engine/eslint-config": "2.0.0-beta.1",
+    "@types/eslint": "^7.2.4",
+    "@types/jest": "^26.0.15",
+    "@types/jest-each": "^24.3.0",
+    "@types/mock-fs": "^4.13.0",
+    "@types/string-argv": "^0.3.0",
+    "core-js": "^3.7.0",
     "esbuild": "^0.8.1",
-    "esbuild-jest": "^0.3.0-beta.0"
+    "jest-each": "^26.6.2",
+    "string-argv": "^0.3.1",
+    "uuid": "^8.3.1"
   }
 }

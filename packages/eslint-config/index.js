@@ -10,6 +10,7 @@ module.exports = {
     "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
+    "plugin:import/typescript",
     "plugin:jest/recommended",
   ],
   globals: {
