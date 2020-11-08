@@ -120,3 +120,31 @@ return a + b;
     expect(result.exitCode).toBe(1);
   });
 });
+
+describe("auto fix", () => {
+  it("should apply fixes to files", async () => {
+    await fs.ensureDir(tempDir);
+
+    const filename = path.resolve(tempDir, "fixable.js");
+    await fs.writeFile(
+      filename,
+      `export const add = (a: number, b: number): number => {
+return a + b;
+}
+`
+    );
+
+    const result = await runCli(`lint --fix ${filename}`);
+
+    expect(matchLog(/prettier\/prettier/, result.stderr)).toBeFalsy();
+    const fixedFile = await fs.readFile(filename, { encoding: "utf8" });
+    await fs.remove(filename);
+
+    expect(fixedFile)
+      .toBe(`export const add = (a: number, b: number): number => {
+  return a + b;
+};
+`);
+    expect(result.exitCode).toBe(0);
+  });
+});

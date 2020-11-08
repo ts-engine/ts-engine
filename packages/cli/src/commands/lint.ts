@@ -37,6 +37,10 @@ const handler = async (argv: Arguments<LintArgs>) => {
 
   const results = await eslint.lintFiles(files);
 
+  if (argv.fix) {
+    await ESLint.outputFixes(results);
+  }
+
   const formatter = await eslint.loadFormatter("stylish");
   const resultText = formatter.format(results);
 
