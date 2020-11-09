@@ -15,21 +15,37 @@ const checkDistFileOutput = async (filename: string, stdout: string[]) => {
   await fs.remove(filepath);
 };
 
+const writeFile = async (
+  filename: string,
+  contents: string
+): Promise<string> => {
+  const filepath = path.resolve(tempDir, filename);
+  await fs.ensureDir(filepath.substring(0, filepath.lastIndexOf("/")));
+  await fs.writeFile(filepath, contents, { encoding: "utf8" });
+
+  return filepath;
+};
+
+const writeTypeScriptFile = async (filename: string): Promise<string> => {
+  return await writeFile(
+    filename,
+    "export const add = (a: number, b: number): number => { return a + b; };"
+  );
+};
+
+const writeJavaScriptFile = async (filename: string): Promise<string> => {
+  return await writeFile(
+    filename,
+    "export const add = (a, b) => { return a + b; };"
+  );
+};
+
 getSupportedExtensions({ dots: true }).forEach((extension) => {
   it(`should build files with extension ${extension} and produce cjs and esm outputs`, async () => {
-    await fs.ensureDir(tempDir);
+    const filepath = await writeJavaScriptFile(`build${extension}`);
 
-    const filename = path.resolve(tempDir, `build${extension}`);
-    await fs.writeFile(
-      filename,
-      `export const add = (a, b) => {
-  return a + b;
-};
-`
-    );
-
-    const result = await runCli(`build ${filename}`);
-    await fs.remove(filename);
+    const result = await runCli(`build ${filepath}`);
+    await fs.remove(filepath);
 
     await checkDistFileOutput("build.js", result.stdout);
     await checkDistFileOutput("build.js.map", result.stdout);
@@ -41,7 +57,23 @@ getSupportedExtensions({ dots: true }).forEach((extension) => {
 });
 
 it("should build multiple files at once", async () => {
-  throw new Error("Not implemented!");
+  const oneFilepath = await writeTypeScriptFile(`one.ts`);
+  const twoFilepath = await writeJavaScriptFile(`two.js`);
+
+  const result = await runCli(`build ${oneFilepath} ${twoFilepath}`);
+  await fs.remove(oneFilepath);
+  await fs.remove(twoFilepath);
+
+  await checkDistFileOutput("one.js", result.stdout);
+  await checkDistFileOutput("one.js.map", result.stdout);
+  await checkDistFileOutput("one.esm.js", result.stdout);
+  await checkDistFileOutput("one.esm.js.map", result.stdout);
+  await checkDistFileOutput("two.js", result.stdout);
+  await checkDistFileOutput("two.js.map", result.stdout);
+  await checkDistFileOutput("two.esm.js", result.stdout);
+  await checkDistFileOutput("two.esm.js.map", result.stdout);
+
+  expect(result.exitCode).toBe(0);
 });
 
 it("should report file cannot be found and exit with 1", async () => {
@@ -57,21 +89,13 @@ it("should display build errors and exit with 1", async () => {
 });
 
 it("should bundle externals", async () => {
-  await fs.ensureDir(tempDir);
-
-  const filename = path.resolve(tempDir, `build.ts`);
-  await fs.writeFile(
-    filename,
-    `import finder from "find-package-json";
-
-export const findPackageJson = (): packageJsonFinder.Package | undefined => {
-  return finder().next().value;
-};
-`
+  const filepath = await writeFile(
+    "build.ts",
+    "import finder from 'find-package-json'; export const findPkg = (): packageJsonFinder.Package | undefined => { return finder().next().value; };"
   );
 
-  const result = await runCli(`build ${filename} --bundle`);
-  await fs.remove(filename);
+  const result = await runCli(`build ${filepath} --bundle`);
+  await fs.remove(filepath);
 
   await checkDistFileOutput("build.js", result.stdout);
   await checkDistFileOutput("build.js.map", result.stdout);
@@ -82,19 +106,10 @@ export const findPackageJson = (): packageJsonFinder.Package | undefined => {
 });
 
 it("should minify", async () => {
-  await fs.ensureDir(tempDir);
+  const filepath = await writeTypeScriptFile(`build.ts`);
 
-  const filename = path.resolve(tempDir, `build.ts`);
-  await fs.writeFile(
-    filename,
-    `export const add = (a: number, b: number): number => {
-return a + b;
-};
-`
-  );
-
-  const result = await runCli(`build ${filename} --minify`);
-  await fs.remove(filename);
+  const result = await runCli(`build ${filepath} --minify`);
+  await fs.remove(filepath);
 
   await checkDistFileOutput("build.js", result.stdout);
   await checkDistFileOutput("build.js.map", result.stdout);

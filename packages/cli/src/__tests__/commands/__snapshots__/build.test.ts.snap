@@ -24,8 +24,8 @@ exports[`should build files with extension .cjs and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.cjs\\", \\"../src/__tests__/commands/temp/build/build.cjs\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\", \\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\", \\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -47,8 +47,8 @@ exports[`should build files with extension .cjs and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.cjs\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";AAAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -78,8 +78,8 @@ exports[`should build files with extension .js and produce cjs and esm outputs 2
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.js\\", \\"../src/__tests__/commands/temp/build/build.js\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\", \\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\", \\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -101,8 +101,8 @@ exports[`should build files with extension .js and produce cjs and esm outputs 4
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.js\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";AAAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -132,8 +132,8 @@ exports[`should build files with extension .jsx and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.jsx\\", \\"../src/__tests__/commands/temp/build/build.jsx\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\", \\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\", \\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -155,8 +155,8 @@ exports[`should build files with extension .jsx and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.jsx\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";AAAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -186,8 +186,8 @@ exports[`should build files with extension .mjs and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.mjs\\", \\"../src/__tests__/commands/temp/build/build.mjs\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\", \\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\", \\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -209,8 +209,8 @@ exports[`should build files with extension .mjs and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.mjs\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";AAAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -240,8 +240,8 @@ exports[`should build files with extension .ts and produce cjs and esm outputs 2
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.ts\\", \\"../src/__tests__/commands/temp/build/build.ts\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\", \\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\", \\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -263,8 +263,8 @@ exports[`should build files with extension .ts and produce cjs and esm outputs 4
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.ts\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";AAAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -294,8 +294,8 @@ exports[`should build files with extension .tsx and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.tsx\\", \\"../src/__tests__/commands/temp/build/build.tsx\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\", \\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\", \\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -317,8 +317,116 @@ exports[`should build files with extension .tsx and produce cjs and esm outputs 
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.tsx\\"],
-  \\"sourcesContent\\": [\\"export const add = (a, b) => {\\\\n  return a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";AAAO,MAAM,MAAM;AACjB,SAAO,IAAI;AAAA;\\",
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
+  \\"names\\": []
+}
+"
+`;
+
+exports[`should build multiple files at once 1`] = `
+"var __defProp = Object.defineProperty;
+var __markAsModule = (target) => __defProp(target, \\"__esModule\\", {value: true});
+var __export = (target, all) => {
+  __markAsModule(target);
+  for (var name in all)
+    __defProp(target, name, {get: all[name], enumerable: true});
+};
+
+// src/__tests__/commands/temp/build/one.ts
+__export(exports, {
+  add: () => add
+});
+const add = (a, b) => {
+  return a + b;
+};
+//# sourceMappingURL=one.js.map
+"
+`;
+
+exports[`should build multiple files at once 2`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"../src/__tests__/commands/temp/build/one.ts\\", \\"../src/__tests__/commands/temp/build/one.ts\\"],
+  \\"sourcesContent\\": [\\"export const add = (a: number, b: number): number => { return a + b; };\\", \\"export const add = (a: number, b: number): number => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAoC,SAAO,IAAI;AAAA;\\",
+  \\"names\\": []
+}
+"
+`;
+
+exports[`should build multiple files at once 3`] = `
+"// src/__tests__/commands/temp/build/one.ts
+const add = (a, b) => {
+  return a + b;
+};
+export {
+  add
+};
+//# sourceMappingURL=one.esm.js.map
+"
+`;
+
+exports[`should build multiple files at once 4`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"../src/__tests__/commands/temp/build/one.ts\\"],
+  \\"sourcesContent\\": [\\"export const add = (a: number, b: number): number => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAoC,SAAO,IAAI;AAAA;\\",
+  \\"names\\": []
+}
+"
+`;
+
+exports[`should build multiple files at once 5`] = `
+"var __defProp = Object.defineProperty;
+var __markAsModule = (target) => __defProp(target, \\"__esModule\\", {value: true});
+var __export = (target, all) => {
+  __markAsModule(target);
+  for (var name in all)
+    __defProp(target, name, {get: all[name], enumerable: true});
+};
+
+// src/__tests__/commands/temp/build/two.js
+__export(exports, {
+  add: () => add
+});
+const add = (a, b) => {
+  return a + b;
+};
+//# sourceMappingURL=two.js.map
+"
+`;
+
+exports[`should build multiple files at once 6`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"../src/__tests__/commands/temp/build/two.js\\", \\"../src/__tests__/commands/temp/build/two.js\\"],
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\", \\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
+  \\"names\\": []
+}
+"
+`;
+
+exports[`should build multiple files at once 7`] = `
+"// src/__tests__/commands/temp/build/two.js
+const add = (a, b) => {
+  return a + b;
+};
+export {
+  add
+};
+//# sourceMappingURL=two.esm.js.map
+"
+`;
+
+exports[`should build multiple files at once 8`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"../src/__tests__/commands/temp/build/two.js\\"],
+  \\"sourcesContent\\": [\\"export const add = (a, b) => { return a + b; };\\"],
+  \\"mappings\\": \\";AAAO,MAAM,MAAM;AAAY,SAAO,IAAI;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -419,10 +527,10 @@ var require_find_package_json = __commonJS((exports2, module2) => {
 
 // src/__tests__/commands/temp/build/build.ts
 __export(exports, {
-  findPackageJson: () => findPackageJson
+  findPkg: () => findPkg
 });
 const find_package_json = __toModule(require_find_package_json());
-const findPackageJson = () => {
+const findPkg = () => {
   return find_package_json.default().next().value;
 };
 //# sourceMappingURL=build.js.map
@@ -433,8 +541,8 @@ exports[`should bundle externals 2`] = `
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../../../node_modules/find-package-json/index.js\\", \\"../src/__tests__/commands/temp/build/build.ts\\", \\"../src/__tests__/commands/temp/build/build.ts\\"],
-  \\"sourcesContent\\": [\\"'use strict';\\\\n\\\\nvar path = require('path')\\\\n  , fs = require('fs');\\\\n\\\\n/**\\\\n * Attempt to somewhat safely parse the JSON.\\\\n *\\\\n * @param {String} data JSON blob that needs to be parsed.\\\\n * @returns {Object|false} Parsed JSON or false.\\\\n * @api private\\\\n */\\\\nfunction parse(data) {\\\\n  data = data.toString('utf-8');\\\\n\\\\n  //\\\\n  // Remove a possible UTF-8 BOM (byte order marker) as this can lead to parse\\\\n  // values when passed in to the JSON.parse.\\\\n  //\\\\n  if (data.charCodeAt(0) === 0xFEFF) data = data.slice(1);\\\\n\\\\n  try { return JSON.parse(data); }\\\\n  catch (e) { return false; }\\\\n}\\\\n\\\\nvar iteratorSymbol = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.iterator : null;\\\\n/**\\\\n * Add \`Symbol.iterator\` method if Symbols are available\\\\n *\\\\n * @param {Object} Iterator interface.\\\\n * @returns {Object} Iterator interface.\\\\n * @api private\\\\n */\\\\nfunction addSymbolIterator(result) {\\\\n  if (!iteratorSymbol) {\\\\n    return result;\\\\n  }\\\\n  result[iteratorSymbol] = function () { return this; };\\\\n  return result;\\\\n}\\\\n\\\\n/**\\\\n * Find package.json files.\\\\n *\\\\n * @param {String|Object} root The root directory we should start searching in.\\\\n * @returns {Object} Iterator interface.\\\\n * @api public\\\\n */\\\\nmodule.exports = function find(root) {\\\\n  root = root || process.cwd();\\\\n  if (typeof root !== \\\\\\"string\\\\\\") {\\\\n    if (typeof root === \\\\\\"object\\\\\\" && typeof root.filename === 'string') {\\\\n      root = root.filename;\\\\n    } else {\\\\n      throw new Error(\\\\\\"Must pass a filename string or a module object to finder\\\\\\");\\\\n    }\\\\n  }\\\\n  return addSymbolIterator({\\\\n    /**\\\\n     * Return the parsed package.json that we find in a parent folder.\\\\n     *\\\\n     * @returns {Object} Value, filename and indication if the iteration is done.\\\\n     * @api public\\\\n     */\\\\n    next: function next() {\\\\n      if (root.match(/^(\\\\\\\\w:\\\\\\\\\\\\\\\\|\\\\\\\\/)$/)) return addSymbolIterator({\\\\n        value: undefined,\\\\n        filename: undefined,\\\\n        done: true\\\\n      });\\\\n\\\\n      var file = path.join(root, 'package.json')\\\\n        , data;\\\\n\\\\n      root = path.resolve(root, '..');\\\\n\\\\n      if (fs.existsSync(file) && (data = parse(fs.readFileSync(file)))) {\\\\n        data.__path = file;\\\\n\\\\n        return addSymbolIterator({\\\\n          value: data,\\\\n          filename: file,\\\\n          done: false\\\\n        });\\\\n      }\\\\n\\\\n      return next();\\\\n    }\\\\n  });\\\\n};\\\\n\\", \\"import finder from \\\\\\"find-package-json\\\\\\";\\\\n\\\\nexport const findPackageJson = (): packageJsonFinder.Package | undefined => {\\\\n  return finder().next().value;\\\\n};\\\\n\\", \\"import finder from \\\\\\"find-package-json\\\\\\";\\\\n\\\\nexport const findPackageJson = (): packageJsonFinder.Package | undefined => {\\\\n  return finder().next().value;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA,IAAA;AAAA;AAEA,aAAW;AAAX,WACS;AAST;AACE,WAAO,KAAK,SAAS;AAMrB,QAAI,KAAK,WAAW,OAAO;AAAQ,aAAO,KAAK,MAAM;AAErD;AAAM,aAAO,KAAK,MAAM;AAAA;AACZ,aAAO;AAAA;AAAA;AAGrB,uBAAqB,OAAO,WAAW,cAAc,OAAO,OAAO,aAAa,WAAW,OAAO,WAAW;AAQ7G;AACE,QAAI,CAAC;AACH,aAAO;AAAA;AAET,WAAO,kBAAkB;AAAc,aAAO;AAAA;AAC9C,WAAO;AAAA;AAUT,UAAO,UAAU;AACf,WAAO,QAAQ,QAAQ;AACvB,QAAI,OAAO,SAAS;AAClB,UAAI,OAAO,SAAS,YAAY,OAAO,KAAK,aAAa;AACvD,eAAO,KAAK;AAAA;AAEZ,cAAM,IAAI,MAAM;AAAA;AAAA;AAGpB,WAAO,kBAAkB;AAAA,MAOvB,MAAM;AACJ,YAAI,KAAK,MAAM;AAAiB,iBAAO,kBAAkB;AAAA,YACvD,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAGR,mBAAW,KAAK,KAAK,MAAM;AAG3B,eAAO,KAAK,QAAQ,MAAM;AAE1B,YAAI,GAAG,WAAW,SAAU,QAAO,MAAM,GAAG,aAAa;AACvD,eAAK,SAAS;AAEd,iBAAO,kBAAkB;AAAA,YACvB,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAAA;AAIV,eAAO;AAAA;AAAA;AAAA;AAAA;;;ACtFb;AAAA;AAAA;ACAA,MAAA,oBAAmB;AAEZ,wBAAwB;AAC7B,SAAO,4BAAS,OAAO;AAAA;\\",
+  \\"sourcesContent\\": [\\"'use strict';\\\\n\\\\nvar path = require('path')\\\\n  , fs = require('fs');\\\\n\\\\n/**\\\\n * Attempt to somewhat safely parse the JSON.\\\\n *\\\\n * @param {String} data JSON blob that needs to be parsed.\\\\n * @returns {Object|false} Parsed JSON or false.\\\\n * @api private\\\\n */\\\\nfunction parse(data) {\\\\n  data = data.toString('utf-8');\\\\n\\\\n  //\\\\n  // Remove a possible UTF-8 BOM (byte order marker) as this can lead to parse\\\\n  // values when passed in to the JSON.parse.\\\\n  //\\\\n  if (data.charCodeAt(0) === 0xFEFF) data = data.slice(1);\\\\n\\\\n  try { return JSON.parse(data); }\\\\n  catch (e) { return false; }\\\\n}\\\\n\\\\nvar iteratorSymbol = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.iterator : null;\\\\n/**\\\\n * Add \`Symbol.iterator\` method if Symbols are available\\\\n *\\\\n * @param {Object} Iterator interface.\\\\n * @returns {Object} Iterator interface.\\\\n * @api private\\\\n */\\\\nfunction addSymbolIterator(result) {\\\\n  if (!iteratorSymbol) {\\\\n    return result;\\\\n  }\\\\n  result[iteratorSymbol] = function () { return this; };\\\\n  return result;\\\\n}\\\\n\\\\n/**\\\\n * Find package.json files.\\\\n *\\\\n * @param {String|Object} root The root directory we should start searching in.\\\\n * @returns {Object} Iterator interface.\\\\n * @api public\\\\n */\\\\nmodule.exports = function find(root) {\\\\n  root = root || process.cwd();\\\\n  if (typeof root !== \\\\\\"string\\\\\\") {\\\\n    if (typeof root === \\\\\\"object\\\\\\" && typeof root.filename === 'string') {\\\\n      root = root.filename;\\\\n    } else {\\\\n      throw new Error(\\\\\\"Must pass a filename string or a module object to finder\\\\\\");\\\\n    }\\\\n  }\\\\n  return addSymbolIterator({\\\\n    /**\\\\n     * Return the parsed package.json that we find in a parent folder.\\\\n     *\\\\n     * @returns {Object} Value, filename and indication if the iteration is done.\\\\n     * @api public\\\\n     */\\\\n    next: function next() {\\\\n      if (root.match(/^(\\\\\\\\w:\\\\\\\\\\\\\\\\|\\\\\\\\/)$/)) return addSymbolIterator({\\\\n        value: undefined,\\\\n        filename: undefined,\\\\n        done: true\\\\n      });\\\\n\\\\n      var file = path.join(root, 'package.json')\\\\n        , data;\\\\n\\\\n      root = path.resolve(root, '..');\\\\n\\\\n      if (fs.existsSync(file) && (data = parse(fs.readFileSync(file)))) {\\\\n        data.__path = file;\\\\n\\\\n        return addSymbolIterator({\\\\n          value: data,\\\\n          filename: file,\\\\n          done: false\\\\n        });\\\\n      }\\\\n\\\\n      return next();\\\\n    }\\\\n  });\\\\n};\\\\n\\", \\"import finder from 'find-package-json'; export const findPkg = (): packageJsonFinder.Package | undefined => { return finder().next().value; };\\", \\"import finder from 'find-package-json'; export const findPkg = (): packageJsonFinder.Package | undefined => { return finder().next().value; };\\"],
+  \\"mappings\\": \\";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA,IAAA;AAAA;AAEA,aAAW;AAAX,WACS;AAST;AACE,WAAO,KAAK,SAAS;AAMrB,QAAI,KAAK,WAAW,OAAO;AAAQ,aAAO,KAAK,MAAM;AAErD;AAAM,aAAO,KAAK,MAAM;AAAA;AACZ,aAAO;AAAA;AAAA;AAGrB,uBAAqB,OAAO,WAAW,cAAc,OAAO,OAAO,aAAa,WAAW,OAAO,WAAW;AAQ7G;AACE,QAAI,CAAC;AACH,aAAO;AAAA;AAET,WAAO,kBAAkB;AAAc,aAAO;AAAA;AAC9C,WAAO;AAAA;AAUT,UAAO,UAAU;AACf,WAAO,QAAQ,QAAQ;AACvB,QAAI,OAAO,SAAS;AAClB,UAAI,OAAO,SAAS,YAAY,OAAO,KAAK,aAAa;AACvD,eAAO,KAAK;AAAA;AAEZ,cAAM,IAAI,MAAM;AAAA;AAAA;AAGpB,WAAO,kBAAkB;AAAA,MAOvB,MAAM;AACJ,YAAI,KAAK,MAAM;AAAiB,iBAAO,kBAAkB;AAAA,YACvD,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAGR,mBAAW,KAAK,KAAK,MAAM;AAG3B,eAAO,KAAK,QAAQ,MAAM;AAE1B,YAAI,GAAG,WAAW,SAAU,QAAO,MAAM,GAAG,aAAa;AACvD,eAAK,SAAS;AAEd,iBAAO,kBAAkB;AAAA,YACvB,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAAA;AAIV,eAAO;AAAA;AAAA;AAAA;AAAA;;;ACtFb;AAAA;AAAA;ACAA,MAAA,oBAAmB;AAA4B,gBAAgB;AAA+C,SAAO,4BAAS,OAAO;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -530,11 +638,11 @@ var require_find_package_json = __commonJS((exports, module) => {
 
 // src/__tests__/commands/temp/build/build.ts
 const find_package_json = __toModule(require_find_package_json());
-const findPackageJson = () => {
+const findPkg = () => {
   return find_package_json.default().next().value;
 };
 export {
-  findPackageJson
+  findPkg
 };
 //# sourceMappingURL=build.esm.js.map
 "
@@ -544,8 +652,8 @@ exports[`should bundle externals 4`] = `
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../../../node_modules/find-package-json/index.js\\", \\"../src/__tests__/commands/temp/build/build.ts\\"],
-  \\"sourcesContent\\": [\\"'use strict';\\\\n\\\\nvar path = require('path')\\\\n  , fs = require('fs');\\\\n\\\\n/**\\\\n * Attempt to somewhat safely parse the JSON.\\\\n *\\\\n * @param {String} data JSON blob that needs to be parsed.\\\\n * @returns {Object|false} Parsed JSON or false.\\\\n * @api private\\\\n */\\\\nfunction parse(data) {\\\\n  data = data.toString('utf-8');\\\\n\\\\n  //\\\\n  // Remove a possible UTF-8 BOM (byte order marker) as this can lead to parse\\\\n  // values when passed in to the JSON.parse.\\\\n  //\\\\n  if (data.charCodeAt(0) === 0xFEFF) data = data.slice(1);\\\\n\\\\n  try { return JSON.parse(data); }\\\\n  catch (e) { return false; }\\\\n}\\\\n\\\\nvar iteratorSymbol = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.iterator : null;\\\\n/**\\\\n * Add \`Symbol.iterator\` method if Symbols are available\\\\n *\\\\n * @param {Object} Iterator interface.\\\\n * @returns {Object} Iterator interface.\\\\n * @api private\\\\n */\\\\nfunction addSymbolIterator(result) {\\\\n  if (!iteratorSymbol) {\\\\n    return result;\\\\n  }\\\\n  result[iteratorSymbol] = function () { return this; };\\\\n  return result;\\\\n}\\\\n\\\\n/**\\\\n * Find package.json files.\\\\n *\\\\n * @param {String|Object} root The root directory we should start searching in.\\\\n * @returns {Object} Iterator interface.\\\\n * @api public\\\\n */\\\\nmodule.exports = function find(root) {\\\\n  root = root || process.cwd();\\\\n  if (typeof root !== \\\\\\"string\\\\\\") {\\\\n    if (typeof root === \\\\\\"object\\\\\\" && typeof root.filename === 'string') {\\\\n      root = root.filename;\\\\n    } else {\\\\n      throw new Error(\\\\\\"Must pass a filename string or a module object to finder\\\\\\");\\\\n    }\\\\n  }\\\\n  return addSymbolIterator({\\\\n    /**\\\\n     * Return the parsed package.json that we find in a parent folder.\\\\n     *\\\\n     * @returns {Object} Value, filename and indication if the iteration is done.\\\\n     * @api public\\\\n     */\\\\n    next: function next() {\\\\n      if (root.match(/^(\\\\\\\\w:\\\\\\\\\\\\\\\\|\\\\\\\\/)$/)) return addSymbolIterator({\\\\n        value: undefined,\\\\n        filename: undefined,\\\\n        done: true\\\\n      });\\\\n\\\\n      var file = path.join(root, 'package.json')\\\\n        , data;\\\\n\\\\n      root = path.resolve(root, '..');\\\\n\\\\n      if (fs.existsSync(file) && (data = parse(fs.readFileSync(file)))) {\\\\n        data.__path = file;\\\\n\\\\n        return addSymbolIterator({\\\\n          value: data,\\\\n          filename: file,\\\\n          done: false\\\\n        });\\\\n      }\\\\n\\\\n      return next();\\\\n    }\\\\n  });\\\\n};\\\\n\\", \\"import finder from \\\\\\"find-package-json\\\\\\";\\\\n\\\\nexport const findPackageJson = (): packageJsonFinder.Package | undefined => {\\\\n  return finder().next().value;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA,IAAA;AAAA;AAEA,aAAW;AAAX,WACS;AAST;AACE,WAAO,KAAK,SAAS;AAMrB,QAAI,KAAK,WAAW,OAAO;AAAQ,aAAO,KAAK,MAAM;AAErD;AAAM,aAAO,KAAK,MAAM;AAAA;AACZ,aAAO;AAAA;AAAA;AAGrB,uBAAqB,OAAO,WAAW,cAAc,OAAO,OAAO,aAAa,WAAW,OAAO,WAAW;AAQ7G;AACE,QAAI,CAAC;AACH,aAAO;AAAA;AAET,WAAO,kBAAkB;AAAc,aAAO;AAAA;AAC9C,WAAO;AAAA;AAUT,SAAO,UAAU;AACf,WAAO,QAAQ,QAAQ;AACvB,QAAI,OAAO,SAAS;AAClB,UAAI,OAAO,SAAS,YAAY,OAAO,KAAK,aAAa;AACvD,eAAO,KAAK;AAAA;AAEZ,cAAM,IAAI,MAAM;AAAA;AAAA;AAGpB,WAAO,kBAAkB;AAAA,MAOvB,MAAM;AACJ,YAAI,KAAK,MAAM;AAAiB,iBAAO,kBAAkB;AAAA,YACvD,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAGR,mBAAW,KAAK,KAAK,MAAM;AAG3B,eAAO,KAAK,QAAQ,MAAM;AAE1B,YAAI,GAAG,WAAW,SAAU,QAAO,MAAM,GAAG,aAAa;AACvD,eAAK,SAAS;AAEd,iBAAO,kBAAkB;AAAA,YACvB,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAAA;AAIV,eAAO;AAAA;AAAA;AAAA;AAAA;;;ACtFb,MAAA,oBAAmB;AAEZ,wBAAwB;AAC7B,SAAO,4BAAS,OAAO;AAAA;\\",
+  \\"sourcesContent\\": [\\"'use strict';\\\\n\\\\nvar path = require('path')\\\\n  , fs = require('fs');\\\\n\\\\n/**\\\\n * Attempt to somewhat safely parse the JSON.\\\\n *\\\\n * @param {String} data JSON blob that needs to be parsed.\\\\n * @returns {Object|false} Parsed JSON or false.\\\\n * @api private\\\\n */\\\\nfunction parse(data) {\\\\n  data = data.toString('utf-8');\\\\n\\\\n  //\\\\n  // Remove a possible UTF-8 BOM (byte order marker) as this can lead to parse\\\\n  // values when passed in to the JSON.parse.\\\\n  //\\\\n  if (data.charCodeAt(0) === 0xFEFF) data = data.slice(1);\\\\n\\\\n  try { return JSON.parse(data); }\\\\n  catch (e) { return false; }\\\\n}\\\\n\\\\nvar iteratorSymbol = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? Symbol.iterator : null;\\\\n/**\\\\n * Add \`Symbol.iterator\` method if Symbols are available\\\\n *\\\\n * @param {Object} Iterator interface.\\\\n * @returns {Object} Iterator interface.\\\\n * @api private\\\\n */\\\\nfunction addSymbolIterator(result) {\\\\n  if (!iteratorSymbol) {\\\\n    return result;\\\\n  }\\\\n  result[iteratorSymbol] = function () { return this; };\\\\n  return result;\\\\n}\\\\n\\\\n/**\\\\n * Find package.json files.\\\\n *\\\\n * @param {String|Object} root The root directory we should start searching in.\\\\n * @returns {Object} Iterator interface.\\\\n * @api public\\\\n */\\\\nmodule.exports = function find(root) {\\\\n  root = root || process.cwd();\\\\n  if (typeof root !== \\\\\\"string\\\\\\") {\\\\n    if (typeof root === \\\\\\"object\\\\\\" && typeof root.filename === 'string') {\\\\n      root = root.filename;\\\\n    } else {\\\\n      throw new Error(\\\\\\"Must pass a filename string or a module object to finder\\\\\\");\\\\n    }\\\\n  }\\\\n  return addSymbolIterator({\\\\n    /**\\\\n     * Return the parsed package.json that we find in a parent folder.\\\\n     *\\\\n     * @returns {Object} Value, filename and indication if the iteration is done.\\\\n     * @api public\\\\n     */\\\\n    next: function next() {\\\\n      if (root.match(/^(\\\\\\\\w:\\\\\\\\\\\\\\\\|\\\\\\\\/)$/)) return addSymbolIterator({\\\\n        value: undefined,\\\\n        filename: undefined,\\\\n        done: true\\\\n      });\\\\n\\\\n      var file = path.join(root, 'package.json')\\\\n        , data;\\\\n\\\\n      root = path.resolve(root, '..');\\\\n\\\\n      if (fs.existsSync(file) && (data = parse(fs.readFileSync(file)))) {\\\\n        data.__path = file;\\\\n\\\\n        return addSymbolIterator({\\\\n          value: data,\\\\n          filename: file,\\\\n          done: false\\\\n        });\\\\n      }\\\\n\\\\n      return next();\\\\n    }\\\\n  });\\\\n};\\\\n\\", \\"import finder from 'find-package-json'; export const findPkg = (): packageJsonFinder.Package | undefined => { return finder().next().value; };\\"],
+  \\"mappings\\": \\";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA,IAAA;AAAA;AAEA,aAAW;AAAX,WACS;AAST;AACE,WAAO,KAAK,SAAS;AAMrB,QAAI,KAAK,WAAW,OAAO;AAAQ,aAAO,KAAK,MAAM;AAErD;AAAM,aAAO,KAAK,MAAM;AAAA;AACZ,aAAO;AAAA;AAAA;AAGrB,uBAAqB,OAAO,WAAW,cAAc,OAAO,OAAO,aAAa,WAAW,OAAO,WAAW;AAQ7G;AACE,QAAI,CAAC;AACH,aAAO;AAAA;AAET,WAAO,kBAAkB;AAAc,aAAO;AAAA;AAC9C,WAAO;AAAA;AAUT,SAAO,UAAU;AACf,WAAO,QAAQ,QAAQ;AACvB,QAAI,OAAO,SAAS;AAClB,UAAI,OAAO,SAAS,YAAY,OAAO,KAAK,aAAa;AACvD,eAAO,KAAK;AAAA;AAEZ,cAAM,IAAI,MAAM;AAAA;AAAA;AAGpB,WAAO,kBAAkB;AAAA,MAOvB,MAAM;AACJ,YAAI,KAAK,MAAM;AAAiB,iBAAO,kBAAkB;AAAA,YACvD,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAGR,mBAAW,KAAK,KAAK,MAAM;AAG3B,eAAO,KAAK,QAAQ,MAAM;AAE1B,YAAI,GAAG,WAAW,SAAU,QAAO,MAAM,GAAG,aAAa;AACvD,eAAK,SAAS;AAEd,iBAAO,kBAAkB;AAAA,YACvB,OAAO;AAAA,YACP,UAAU;AAAA,YACV,MAAM;AAAA;AAAA;AAIV,eAAO;AAAA;AAAA;AAAA;AAAA;;;ACtFb,MAAA,oBAAmB;AAA4B,gBAAgB;AAA+C,SAAO,4BAAS,OAAO;AAAA;\\",
   \\"names\\": []
 }
 "
@@ -561,8 +669,8 @@ exports[`should minify 2`] = `
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.ts\\", \\"../src/__tests__/commands/temp/build/build.ts\\"],
-  \\"sourcesContent\\": [\\"export const add = (a: number, b: number): number => {\\\\nreturn a + b;\\\\n};\\\\n\\", \\"export const add = (a: number, b: number): number => {\\\\nreturn a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\"6HAAA,uBCAO,MAAM,EAAM,OACZ,EAAI\\",
+  \\"sourcesContent\\": [\\"export const add = (a: number, b: number): number => { return a + b; };\\", \\"export const add = (a: number, b: number): number => { return a + b; };\\"],
+  \\"mappings\\": \\"6HAAA,uBCAO,MAAM,EAAM,OAA2C,EAAI\\",
   \\"names\\": []
 }
 "
@@ -578,8 +686,8 @@ exports[`should minify 4`] = `
 "{
   \\"version\\": 3,
   \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.ts\\"],
-  \\"sourcesContent\\": [\\"export const add = (a: number, b: number): number => {\\\\nreturn a + b;\\\\n};\\\\n\\"],
-  \\"mappings\\": \\"AAAO,MAAM,EAAM,OACZ,EAAI\\",
+  \\"sourcesContent\\": [\\"export const add = (a: number, b: number): number => { return a + b; };\\"],
+  \\"mappings\\": \\"AAAO,MAAM,EAAM,OAA2C,EAAI\\",
   \\"names\\": []
 }
 "
