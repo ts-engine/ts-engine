@@ -14,6 +14,7 @@ const builder: CommandBuilder = (yargs) => {
   yargs.boolean("w").alias("w", "watch").default("watch", false);
   yargs.boolean("skip-typecheck").default("skip-typecheck", false);
   yargs.boolean("bundle").default("bundle", false);
+  yargs.boolean("minify").default("minify", false);
 
   return yargs;
 };
@@ -23,6 +24,7 @@ interface BuildArgs {
   skipTypecheck: boolean;
   bundle: boolean;
   entrypoints: string[];
+  minify: boolean;
 }
 
 const handler = async (argv: Arguments<BuildArgs>) => {
@@ -50,6 +52,7 @@ const handler = async (argv: Arguments<BuildArgs>) => {
       plugins: [],
       sourcemap: true,
       write: false,
+      minify: argv.minify,
     });
 
     for (let file of commonJsResults.outputFiles ?? []) {
@@ -74,6 +77,7 @@ const handler = async (argv: Arguments<BuildArgs>) => {
       },
       logLevel: "silent",
       write: false,
+      minify: argv.minify,
     });
 
     for (let file of esModuleResults.outputFiles ?? []) {
@@ -83,7 +87,10 @@ const handler = async (argv: Arguments<BuildArgs>) => {
     }
   } catch (error) {
     console.error(error.message);
+    return process.exit(1);
   }
+
+  return process.exit(0);
 };
 
 export const build = {

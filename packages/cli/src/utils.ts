@@ -1,7 +1,7 @@
 import packageJsonFinder from "find-package-json";
 
 export const getSupportedExtensions = (options: { dots: boolean }) => {
-  return ["js", "ts", "jsx", "tsx", "mjs", "cjs", "es6"].map((e) =>
+  return ["js", "ts", "jsx", "tsx", "mjs", "cjs"].map((e) =>
     options.dots ? `.${e}` : e
   );
 };
