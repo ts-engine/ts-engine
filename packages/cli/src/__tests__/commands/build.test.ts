@@ -6,7 +6,7 @@ import { getSupportedExtensions } from "../../utils";
 const tempDir = path.resolve(__dirname, "temp/build");
 
 getSupportedExtensions({ dots: true }).forEach((extension) => {
-  it.only(`should build files with extension ${extension} and produce cjs and esm outputs`, async () => {
+  it(`should build files with extension ${extension} and produce cjs and esm outputs`, async () => {
     await fs.ensureDir(tempDir);
 
     const filename = path.resolve(tempDir, `build${extension}`);
