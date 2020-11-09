@@ -93,9 +93,9 @@ index.ts -> dist/index.js
 > tse build --skip-typecheck index.ts
 index.ts -> dist/index.js
 
-# compile to es5
-> tse build --es5 index.ts
-index.ts -> dist/index.js (source map excluded)
+# bundle in externals
+> tse build --bundle index.ts
+index.ts -> dist/index.js
 ```
 
 Run a package.

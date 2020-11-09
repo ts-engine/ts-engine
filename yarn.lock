@@ -1448,6 +1448,13 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.45.tgz#e9387572998e5ecdac221950dab3e8c3b16af884"
   integrity sha512-jnqIUKDUqJbDIUxm0Uj7bnlMnRm1T/eZ9N+AVMqhPgzrba2GhGG5o/jCTwmdPK709nEZsGoMzXEDUjcXHa3W0g==
 
+"@types/find-package-json@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@types/find-package-json/-/find-package-json-1.1.1.tgz#c0d296ac74fe3309ed0fe75a9c3edb42a776d30c"
+  integrity sha512-XMCocYkg6VUpkbOQMKa3M5cgc3MvU/LJKQwd3VUJrWZbLr2ARUggupsCAF8DxjEEIuSO6HlnH+vl+XV4bgVeEQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/fs-extra@^9.0.3":
   version "9.0.3"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-9.0.3.tgz#9996e5cce993508c32325380b429f04a1327523e"
@@ -3468,6 +3475,11 @@ fill-range@^7.0.1:
   integrity sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
   dependencies:
     to-regex-range "^5.0.1"
+
+find-package-json@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/find-package-json/-/find-package-json-1.2.0.tgz#4057d1b943f82d8445fe52dc9cf456f6b8b58083"
+  integrity sha512-+SOGcLGYDJHtyqHd87ysBhmaeQ95oWspDKnMXBrnQ9Eq4OkLNqejgoaD8xVWu6GPa0B6roa6KinCMEMcVeqONw==
 
 find-up@^1.0.0:
   version "1.1.2"

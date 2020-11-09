@@ -14,7 +14,7 @@ esbuild
     entryPoints: ["src/index.ts"],
     outfile: "dist/index.js",
     platform: "node",
-    target: "node10.13",
+    target: "es2015",
   })
   .catch((error) => {
     console.error(error);
