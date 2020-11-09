@@ -659,6 +659,56 @@ exports[`should bundle externals 4`] = `
 "
 `;
 
+exports[`should display build warnings 1`] = `
+"var __defProp = Object.defineProperty;
+var __markAsModule = (target) => __defProp(target, \\"__esModule\\", {value: true});
+var __export = (target, all) => {
+  __markAsModule(target);
+  for (var name in all)
+    __defProp(target, name, {get: all[name], enumerable: true});
+};
+
+// src/__tests__/commands/temp/build/build.ts
+__export(exports, {
+  default: () => build_default
+});
+var build_default = require(one);
+//# sourceMappingURL=build.js.map
+"
+`;
+
+exports[`should display build warnings 2`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.ts\\", \\"../src/__tests__/commands/temp/build/build.ts\\"],
+  \\"sourcesContent\\": [\\"const a = 'one'; export default require(one);\\", \\"const a = 'one'; export default require(one);\\"],
+  \\"mappings\\": \\";;;;;;;;;AAAA;AAAA;AAAA;ACAiB,IAAO,gBAAQ,QAAQ;\\",
+  \\"names\\": []
+}
+"
+`;
+
+exports[`should display build warnings 3`] = `
+"// src/__tests__/commands/temp/build/build.ts
+var build_default = require(one);
+export {
+  build_default as default
+};
+//# sourceMappingURL=build.esm.js.map
+"
+`;
+
+exports[`should display build warnings 4`] = `
+"{
+  \\"version\\": 3,
+  \\"sources\\": [\\"../src/__tests__/commands/temp/build/build.ts\\"],
+  \\"sourcesContent\\": [\\"const a = 'one'; export default require(one);\\"],
+  \\"mappings\\": \\";AAAiB,IAAO,gBAAQ,QAAQ;\\",
+  \\"names\\": []
+}
+"
+`;
+
 exports[`should minify 1`] = `
 "var u=Object.defineProperty,b=r=>u(r,\\"__esModule\\",{value:!0}),m=(r,e)=>{b(r);for(var n in e)u(r,n,{get:e[n],enumerable:!0})};m(exports,{add:()=>t});const t=(r,e)=>r+e;
 //# sourceMappingURL=build.js.map

@@ -77,15 +77,29 @@ it("should build multiple files at once", async () => {
 });
 
 it("should report file cannot be found and exit with 1", async () => {
-  throw new Error("Not implemented!");
-});
+  const result = await runCli("build does-not-exist.js");
 
-it("should display build warnings", async () => {
-  throw new Error("Not implemented!");
+  expect(
+    matchLog(
+      `error: Could not read from file: ${path.resolve(
+        process.cwd(),
+        "does-not-exist.js"
+      )}`,
+      result.stderr
+    )
+  ).toBeTruthy();
+  expect(result.exitCode).toBe(1);
 });
 
 it("should display build errors and exit with 1", async () => {
-  throw new Error("Not implemented!");
+  const filepath = await writeFile("build.ts", "console.log(]]]);");
+
+  const result = await runCli(`build ${filepath}`);
+  await fs.remove(filepath);
+  console.log(result);
+
+  expect(matchLog("1 error", result.stderr)).toBeTruthy();
+  expect(result.exitCode).toBe(1);
 });
 
 it("should bundle externals", async () => {
