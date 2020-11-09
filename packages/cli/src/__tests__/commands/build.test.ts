@@ -5,6 +5,16 @@ import { getSupportedExtensions } from "../../utils";
 
 const tempDir = path.resolve(__dirname, "temp/build");
 
+const checkDistFileOutput = async (filename: string, stdout: string[]) => {
+  const filepath = path.resolve("dist", filename);
+  expect(await fs.readFile(filepath, { encoding: "utf8" })).toMatchSnapshot();
+  expect(
+    matchLog(path.resolve(process.cwd(), "dist", filename), stdout)
+  ).toBeTruthy();
+
+  await fs.remove(filepath);
+};
+
 getSupportedExtensions({ dots: true }).forEach((extension) => {
   it(`should build files with extension ${extension} and produce cjs and esm outputs`, async () => {
     await fs.ensureDir(tempDir);
@@ -21,40 +31,10 @@ getSupportedExtensions({ dots: true }).forEach((extension) => {
     const result = await runCli(`build ${filename}`);
     await fs.remove(filename);
 
-    expect(
-      await fs.readFile(path.resolve("dist", `build.js`), { encoding: "utf8" })
-    ).toMatchSnapshot();
-    expect(
-      await fs.readFile(path.resolve("dist", `build.js.map`), {
-        encoding: "utf8",
-      })
-    ).toMatchSnapshot();
-    expect(
-      await fs.readFile(path.resolve("dist", `build.esm.js`), {
-        encoding: "utf8",
-      })
-    ).toMatchSnapshot();
-    expect(
-      await fs.readFile(path.resolve("dist", `build.esm.js.map`), {
-        encoding: "utf8",
-      })
-    ).toMatchSnapshot();
-
-    expect(
-      matchLog(path.resolve(process.cwd(), "dist/build.js"), result.stdout)
-    ).toBeTruthy();
-    expect(
-      matchLog(path.resolve(process.cwd(), "dist/build.js.map"), result.stdout)
-    ).toBeTruthy();
-    expect(
-      matchLog(path.resolve(process.cwd(), "dist/build.esm.js"), result.stdout)
-    ).toBeTruthy();
-    expect(
-      matchLog(
-        path.resolve(process.cwd(), "dist/build.esm.js.map"),
-        result.stdout
-      )
-    ).toBeTruthy();
+    await checkDistFileOutput("build.js", result.stdout);
+    await checkDistFileOutput("build.js.map", result.stdout);
+    await checkDistFileOutput("build.esm.js", result.stdout);
+    await checkDistFileOutput("build.esm.js.map", result.stdout);
 
     expect(result.exitCode).toBe(0);
   });
@@ -93,40 +73,10 @@ export const findPackageJson = (): packageJsonFinder.Package | undefined => {
   const result = await runCli(`build ${filename} --bundle`);
   await fs.remove(filename);
 
-  expect(
-    await fs.readFile(path.resolve("dist", `build.js`), { encoding: "utf8" })
-  ).toMatchSnapshot();
-  expect(
-    await fs.readFile(path.resolve("dist", `build.js.map`), {
-      encoding: "utf8",
-    })
-  ).toMatchSnapshot();
-  expect(
-    await fs.readFile(path.resolve("dist", `build.esm.js`), {
-      encoding: "utf8",
-    })
-  ).toMatchSnapshot();
-  expect(
-    await fs.readFile(path.resolve("dist", `build.esm.js.map`), {
-      encoding: "utf8",
-    })
-  ).toMatchSnapshot();
-
-  expect(
-    matchLog(path.resolve(process.cwd(), "dist/build.js"), result.stdout)
-  ).toBeTruthy();
-  expect(
-    matchLog(path.resolve(process.cwd(), "dist/build.js.map"), result.stdout)
-  ).toBeTruthy();
-  expect(
-    matchLog(path.resolve(process.cwd(), "dist/build.esm.js"), result.stdout)
-  ).toBeTruthy();
-  expect(
-    matchLog(
-      path.resolve(process.cwd(), "dist/build.esm.js.map"),
-      result.stdout
-    )
-  ).toBeTruthy();
+  await checkDistFileOutput("build.js", result.stdout);
+  await checkDistFileOutput("build.js.map", result.stdout);
+  await checkDistFileOutput("build.esm.js", result.stdout);
+  await checkDistFileOutput("build.esm.js.map", result.stdout);
 
   expect(result.exitCode).toBe(0);
 });
@@ -146,40 +96,10 @@ return a + b;
   const result = await runCli(`build ${filename} --minify`);
   await fs.remove(filename);
 
-  expect(
-    await fs.readFile(path.resolve("dist", `build.js`), { encoding: "utf8" })
-  ).toMatchSnapshot();
-  expect(
-    await fs.readFile(path.resolve("dist", `build.js.map`), {
-      encoding: "utf8",
-    })
-  ).toMatchSnapshot();
-  expect(
-    await fs.readFile(path.resolve("dist", `build.esm.js`), {
-      encoding: "utf8",
-    })
-  ).toMatchSnapshot();
-  expect(
-    await fs.readFile(path.resolve("dist", `build.esm.js.map`), {
-      encoding: "utf8",
-    })
-  ).toMatchSnapshot();
-
-  expect(
-    matchLog(path.resolve(process.cwd(), "dist/build.js"), result.stdout)
-  ).toBeTruthy();
-  expect(
-    matchLog(path.resolve(process.cwd(), "dist/build.js.map"), result.stdout)
-  ).toBeTruthy();
-  expect(
-    matchLog(path.resolve(process.cwd(), "dist/build.esm.js"), result.stdout)
-  ).toBeTruthy();
-  expect(
-    matchLog(
-      path.resolve(process.cwd(), "dist/build.esm.js.map"),
-      result.stdout
-    )
-  ).toBeTruthy();
+  await checkDistFileOutput("build.js", result.stdout);
+  await checkDistFileOutput("build.js.map", result.stdout);
+  await checkDistFileOutput("build.esm.js", result.stdout);
+  await checkDistFileOutput("build.esm.js.map", result.stdout);
 
   expect(result.exitCode).toBe(0);
 });
