@@ -68,6 +68,6 @@ export const runCli = async (args: string): Promise<RunCliResult> => {
   };
 };
 
-export const matchLog = (regex: RegExp, logs: string[]) => {
+export const matchLog = (regex: RegExp | string, logs: string[]) => {
   return logs.find((log) => log.match(regex));
 };

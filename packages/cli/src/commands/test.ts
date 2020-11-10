@@ -27,7 +27,7 @@ const handler = async () => {
     try {
       jestConfig = require(jestConfigFilename);
     } catch (error) {
-      console.error("Failed to load jest.config.js ->", error.message);
+      console.error("Failed to load jest.config.js.", error.message);
       return process.exit(1);
     }
   }
