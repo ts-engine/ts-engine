@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import { Arguments, CommandBuilder } from "yargs";
 import * as esbuild from "esbuild";
+import * as typescript from "typescript";
 import { findPackageJson } from "../utils";
 
 const command = "build <entrypoints...>";
@@ -40,7 +41,9 @@ const handler = async (argv: Arguments<BuildArgs>) => {
       ];
 
   try {
-    // first compile to common js, this is the buidl we allow to output warnings/errors
+    const filesToTypecheck: string[] = [];
+    // first compile to common js, this is the build we allow to output warnings/errors
+    // and we also capture files to typecheck
     const commonJsResults = await esbuild.build({
       bundle: true,
       external,
@@ -49,11 +52,65 @@ const handler = async (argv: Arguments<BuildArgs>) => {
       platform: "node",
       target: ["es2015"],
       format: "cjs",
-      plugins: [],
+      plugins: [
+        {
+          name: "typescript-file-path-catcher",
+          setup: (build) => {
+            build.onLoad(
+              { filter: /^.+\.tsx?$/, namespace: "file" },
+              (args) => {
+                filesToTypecheck.push(args.path);
+                return null;
+              }
+            );
+          },
+        },
+      ],
       sourcemap: true,
       write: false,
       minify: argv.minify,
     });
+
+    // perform typecheck before we output the cjs files, if the typechecking
+    // fails then we won't output any build files
+    if (!argv.skipTypecheck) {
+      const typescriptOptions = {
+        noEmit: true,
+        declaration: false,
+        emitDeclarationOnly: false,
+        esModuleInterop: true,
+        jsx: typescript.JsxEmit.React,
+        lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
+        resolveJsonModule: true,
+        skipLibCheck: true,
+        strict: true,
+        outDir: "dist",
+        allowJs: true,
+        experimentalDecorators: true,
+      };
+
+      let program = typescript.createProgram(
+        filesToTypecheck,
+        typescriptOptions
+      );
+
+      let emitResult = program.emit();
+
+      const allDiagnostics = typescript
+        .getPreEmitDiagnostics(program)
+        .concat(emitResult.diagnostics);
+
+      if (allDiagnostics.length > 0) {
+        const host = typescript.createCompilerHost(typescriptOptions);
+        const output = typescript.formatDiagnosticsWithColorAndContext(
+          allDiagnostics,
+          host
+        );
+
+        console.error(output);
+        return process.exit(1);
+      }
+    }
 
     for (let file of commonJsResults.outputFiles ?? []) {
       await fs.ensureDir(file.path.substring(0, file.path.lastIndexOf("/")));

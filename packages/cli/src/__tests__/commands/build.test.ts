@@ -33,6 +33,15 @@ const writeTypeScriptFile = async (filename: string): Promise<string> => {
   );
 };
 
+const writeInvalidTypeScriptFile = async (
+  filename: string
+): Promise<string> => {
+  return await writeFile(
+    filename,
+    "export const add = (a: number, b: string): number => { return a + b; };"
+  );
+};
+
 const writeJavaScriptFile = async (filename: string): Promise<string> => {
   return await writeFile(
     filename,
@@ -42,10 +51,13 @@ const writeJavaScriptFile = async (filename: string): Promise<string> => {
 
 getSupportedExtensions({ dots: true }).forEach((extension) => {
   it(`should build files with extension ${extension} and produce cjs and esm outputs`, async () => {
-    const filepath = await writeJavaScriptFile(`build${extension}`);
+    const filepath = extension.includes("ts")
+      ? await writeTypeScriptFile(`build${extension}`)
+      : await writeJavaScriptFile(`build${extension}`);
 
     const result = await runCli(`build ${filepath}`);
     await fs.remove(filepath);
+    console.log(result);
 
     await checkDistFileOutput("build.js", result.stdout);
     await checkDistFileOutput("build.js.map", result.stdout);
@@ -96,7 +108,6 @@ it("should display build errors and exit with 1", async () => {
 
   const result = await runCli(`build ${filepath}`);
   await fs.remove(filepath);
-  console.log(result);
 
   expect(matchLog("1 error", result.stderr)).toBeTruthy();
   expect(result.exitCode).toBe(1);
@@ -104,8 +115,8 @@ it("should display build errors and exit with 1", async () => {
 
 it("should bundle externals", async () => {
   const filepath = await writeFile(
-    "build.ts",
-    "import finder from 'find-package-json'; export const findPkg = (): packageJsonFinder.Package | undefined => { return finder().next().value; };"
+    "build.js",
+    "import finder from 'find-package-json'; export const findPkg = () => { return finder().next().value; };"
   );
 
   const result = await runCli(`build ${filepath} --bundle`);
@@ -131,4 +142,35 @@ it("should minify", async () => {
   await checkDistFileOutput("build.esm.js.map", result.stdout);
 
   expect(result.exitCode).toBe(0);
+});
+
+it("should output built files when there are type errors when skipping typecheck", async () => {
+  const filepath = await writeInvalidTypeScriptFile("build.ts");
+
+  const result = await runCli(`build --skip-typecheck ${filepath}`);
+  await fs.remove(filepath);
+
+  await checkDistFileOutput("build.js", result.stdout);
+  await checkDistFileOutput("build.js.map", result.stdout);
+  await checkDistFileOutput("build.esm.js", result.stdout);
+  await checkDistFileOutput("build.esm.js.map", result.stdout);
+  expect(result.exitCode).toBe(0);
+});
+
+it("should not output built files when there are type errors and exit with code 1", async () => {
+  const filepath = await writeInvalidTypeScriptFile("build.ts");
+
+  const result = await runCli(`build ${filepath}`);
+  await fs.remove(filepath);
+
+  expect(await fs.pathExists(path.resolve("dist", "build.js"))).toBeFalsy();
+  expect(await fs.pathExists(path.resolve("dist", "build.js.map"))).toBeFalsy();
+  expect(await fs.pathExists(path.resolve("dist", "build.esm.js"))).toBeFalsy();
+  expect(
+    await fs.pathExists(path.resolve("dist", "build.esm.js.map"))
+  ).toBeFalsy();
+  expect(
+    matchLog("'string' is not assignable to type 'number'", result.stderr)
+  ).toBeTruthy();
+  expect(result.exitCode).toBe(1);
 });
