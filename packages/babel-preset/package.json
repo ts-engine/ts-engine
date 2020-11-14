@@ -1,0 +1,38 @@
+{
+  "name": "@ts-engine/babel-preset",
+  "version": "2.0.0-beta.1",
+  "description": "@ts-engine's Babel preset.",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/ts-engine/ts-engine"
+  },
+  "keywords": [
+    "ts-engine",
+    "tse",
+    "tsengine",
+    "typescript",
+    "cli",
+    "packaging",
+    "bundling",
+    "rollup",
+    "linting",
+    "eslint",
+    "testing",
+    "jest"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-decorators": "^7.12.1",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/plugin-transform-typescript": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "core-js": "^3.7.0"
+  }
+}

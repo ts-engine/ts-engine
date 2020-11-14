@@ -1,13 +1,15 @@
 {
-  "name": "@ts-engine/jest-transform",
+  "name": "@ts-engine/runtime",
   "version": "2.0.0-beta.1",
-  "description": "@ts-engine's Jest transform.",
+  "description": "@ts-engine's runtime dependencies.",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
   "keywords": [
     "ts-engine",
+    "tse",
+    "tsengine",
     "typescript",
     "cli",
     "packaging",
@@ -18,10 +20,9 @@
     "testing",
     "jest"
   ],
-  "main": "index.js",
   "dependencies": {
-    "esbuild": "^0.8.5",
-    "fs-extra": "^9.0.1",
-    "uuid": "^8.3.1"
+    "@babel/runtime": "^7.12.5",
+    "core-js": "^3.7.0",
+    "regenerator-runtime": "^0.13.7"
   }
 }

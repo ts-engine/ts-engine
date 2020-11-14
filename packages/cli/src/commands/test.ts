@@ -55,7 +55,7 @@ const handler = async () => {
       testRegex: `(/__tests__/.*|(.|/)(test|spec)).(${extensions})?$`,
       testURL: "http://localhost",
       transform: JSON.parse(`{
-        ".(${extensions})$": "@ts-engine/jest-transform"
+        ".(${extensions})$": ["babel-jest", { "presets": ["@ts-engine/babel-preset"] }]
       }`),
       ...jestConfig,
       ...jestSetupConfig,
