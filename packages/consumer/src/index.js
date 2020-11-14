@@ -1,1 +1,1 @@
-export { add } from "./other/index";
+export { add } from "./add";

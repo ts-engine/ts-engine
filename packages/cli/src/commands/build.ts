@@ -5,7 +5,6 @@ import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import babel from "@rollup/plugin-babel";
-import rollupTypescript from "rollup-plugin-typescript2";
 import typescript from "typescript";
 import { terser } from "rollup-plugin-terser";
 import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
@@ -39,44 +38,36 @@ interface BuildArgs {
 }
 
 const handler = async (argv: Arguments<BuildArgs>) => {
-  const plugins = [
-    preserveShebangs(),
-    json(),
-    resolve({
-      extensions: getSupportedExtensions({ dots: true }),
-      preferBuiltins: true,
-    }),
-    ...(argv.skipTypecheck
-      ? []
-      : [
-          rollupTypescript({
-            tsconfigOverride: { declaration: true },
-            tsconfigDefaults: {
-              declaration: true,
-              declarationMap: true,
-              emitDeclarationOnly: true,
-              esModuleInterop: true,
-              jsx: typescript.JsxEmit.React,
-              lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
-              resolveJsonModule: true,
-              skipLibCheck: true,
-              strict: true,
-              allowJs: true,
-              experimentalDecorators: true,
-            },
-          }),
-        ]),
-    babel({
-      exclude: "node_modules/**",
-      extensions: getSupportedExtensions({ dots: true }),
-      babelHelpers: "runtime",
-      presets: ["@ts-engine/babel-preset"],
-    }),
-    commonjs(),
-    ...(argv.minify ? [terser()] : []),
-  ];
+  const filesToTypecheck: string[] = [];
 
   for (let input of argv.inputs) {
+    const plugins = [
+      {
+        name: "ts-engine-plugin",
+        load: (source: string) => {
+          if (source.startsWith(".") || source.endsWith(input)) {
+            filesToTypecheck.push(source);
+          }
+
+          return null;
+        },
+      },
+      preserveShebangs(),
+      json(),
+      resolve({
+        extensions: getSupportedExtensions({ dots: true }),
+        preferBuiltins: true,
+      }),
+      babel({
+        exclude: "node_modules/**",
+        extensions: getSupportedExtensions({ dots: true }),
+        babelHelpers: "runtime",
+        presets: ["@ts-engine/babel-preset"],
+      }),
+      commonjs(),
+      ...(argv.minify ? [terser()] : []),
+    ];
+
     let filename = trimExtension(extractFilename(input));
     const dir = path.dirname(input).replace(/\/?src\/?/, "");
 
@@ -116,6 +107,45 @@ const handler = async (argv: Arguments<BuildArgs>) => {
     for (let output of outputs) {
       await bundle.write(output);
       console.log(`${input} -> ${output.file}`);
+
+      if (!argv.skipTypecheck) {
+        const typescriptOptions = {
+          noEmit: true,
+          declaration: false,
+          emitDeclarationOnly: false,
+          esModuleInterop: true,
+          jsx: typescript.JsxEmit.React,
+          lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
+          resolveJsonModule: true,
+          skipLibCheck: true,
+          strict: true,
+          outDir: "dist",
+          allowJs: true,
+          experimentalDecorators: true,
+        };
+
+        let program = typescript.createProgram(
+          filesToTypecheck,
+          typescriptOptions
+        );
+
+        let emitResult = program.emit();
+
+        const allDiagnostics = typescript
+          .getPreEmitDiagnostics(program)
+          .concat(emitResult.diagnostics);
+
+        if (allDiagnostics.length > 0) {
+          const host = typescript.createCompilerHost(typescriptOptions);
+          const output = typescript.formatDiagnosticsWithColorAndContext(
+            allDiagnostics,
+            host
+          );
+
+          console.error(output);
+          return process.exit(1);
+        }
+      }
     }
   }
 };
