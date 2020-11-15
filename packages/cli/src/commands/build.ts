@@ -110,9 +110,9 @@ const handler = async (argv: Arguments<BuildArgs>) => {
 
       if (!argv.skipTypecheck) {
         const typescriptOptions = {
-          noEmit: true,
-          declaration: false,
-          emitDeclarationOnly: false,
+          noEmit: false,
+          declaration: true,
+          emitDeclarationOnly: true,
           esModuleInterop: true,
           jsx: typescript.JsxEmit.React,
           lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
