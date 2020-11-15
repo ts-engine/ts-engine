@@ -1,40 +1,33 @@
-import { Arguments, CommandBuilder } from "yargs";
 import { ESLint } from "eslint";
 // @ts-ignore - its an eslint config module so has no need for types
 import eslintConfig from "@ts-engine/eslint-config";
 import glob from "glob-promise";
-import { getSupportedExtensions } from "../utils";
+import { getSupportedExtensions } from "./utils";
+import { TsEngineError } from "./error";
 
-const name = "lint <globs...>";
-
-const description = "Lint code using ESLint";
-
-const builder: CommandBuilder = (yargs) => {
-  yargs.positional("globs", { type: "string" }).requiresArg("globs");
-  yargs.boolean("fix").default("fix", false);
-
-  return yargs;
-};
-
-interface LintArgs {
+export interface LintOptions {
   fix: boolean;
   globs: string[];
 }
 
-const handler = async (argv: Arguments<LintArgs>) => {
-  const files = await (
-    await Promise.all(argv.globs.map((g) => glob(g)))
-  ).reduce((arr, next) => {
+const findFiles = async (globs: string[]) => {
+  const globResults = await Promise.all(globs.map((g) => glob(g)));
+  const files = globResults.reduce((arr, next) => {
     return [...arr, ...next];
   }, []);
 
   if (files.length === 0) {
-    console.error("No files found");
-    return process.exit(1);
+    throw new TsEngineError("No files found.");
   }
 
+  return files;
+};
+
+export const lint = async (options: LintOptions) => {
+  const files = await findFiles(options.globs);
+
   const eslint = new ESLint({
-    fix: argv.fix,
+    fix: options.fix,
     baseConfig: {
       ...eslintConfig,
     },
@@ -43,7 +36,7 @@ const handler = async (argv: Arguments<LintArgs>) => {
 
   const results = await eslint.lintFiles(files);
 
-  if (argv.fix) {
+  if (options.fix) {
     await ESLint.outputFixes(results);
   }
 
@@ -54,20 +47,11 @@ const handler = async (argv: Arguments<LintArgs>) => {
   const hasWarnings = results.find((r) => r.warningCount > 0);
 
   if (hasErrors) {
-    console.error(resultText);
-    process.exit(1);
+    // Result test is formatted by ESLint so don't overwrite that formatting
+    throw new TsEngineError(resultText);
   }
 
   if (hasWarnings) {
     console.warn(resultText);
   }
-
-  process.exit(0);
-};
-
-export const lint = {
-  name,
-  description,
-  builder,
-  handler,
 };

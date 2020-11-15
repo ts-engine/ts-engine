@@ -14,8 +14,9 @@ import {
   extractFilename,
   trimExtension,
 } from "../utils";
+import { Command } from "../command";
 
-const command = "build <inputs...>";
+const name = "build <inputs...>";
 
 const description = "Build code using ESBuild.";
 
@@ -143,15 +144,15 @@ const handler = async (argv: Arguments<BuildArgs>) => {
           );
 
           console.error(output);
-          return process.exit(1);
+          process.exit(1);
         }
       }
     }
   }
 };
 
-export const build = {
-  command,
+export const build: Command = {
+  name,
   description,
   builder,
   handler,

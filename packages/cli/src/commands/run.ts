@@ -1,6 +1,6 @@
 import { Arguments, CommandBuilder } from "yargs";
 
-const command = "run <entrypoint>";
+const name = "run <entrypoint>";
 
 const description = "Build and run code.";
 
@@ -25,7 +25,7 @@ const handler = (argv: Arguments<RunArgs>) => {
 };
 
 export const run = {
-  command,
+  name,
   description,
   builder,
   handler,

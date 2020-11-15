@@ -1,3 +1,3 @@
-import { cli } from "./cli";
+import { runCli } from "./cli";
 
-cli(process.argv.slice(2));
+runCli(process.argv.slice(2));

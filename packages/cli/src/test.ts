@@ -1,17 +1,9 @@
-import { CommandBuilder } from "yargs";
 import fs from "fs-extra";
 import path from "path";
-import { getSupportedExtensions } from "../utils";
+import { TsEngineError } from "./error";
+import { getSupportedExtensions } from "./utils";
 
-const name = "test";
-
-const description = "Test code using Jest.";
-
-const builder: CommandBuilder = (yargs) => {
-  return yargs;
-};
-
-const handler = async () => {
+export const test = async () => {
   process.env.BABEL_ENV = "test";
   process.env.NODE_ENV = "test";
 
@@ -27,8 +19,9 @@ const handler = async () => {
     try {
       jestConfig = require(jestConfigFilename);
     } catch (error) {
-      console.error("Failed to load jest.config.js.", error.message);
-      return process.exit(1);
+      throw new TsEngineError(
+        `Failed to load jest.config.js: ${error.message}`
+      );
     }
   }
 
@@ -41,7 +34,7 @@ const handler = async () => {
     jestJsSetupExists || jestTsSetupExists
       ? {
           setupFilesAfterEnv: [
-            // favour the typescript file if both exist
+            // prefer the typescript file if both exist
             `./jest.setup.${jestTsSetupExists ? "t" : "j"}s`,
           ],
         }
@@ -57,15 +50,8 @@ const handler = async () => {
       transform: JSON.parse(`{
         ".(${extensions})$": ["babel-jest", { "presets": ["@ts-engine/babel-preset"] }]
       }`),
-      ...jestConfig,
       ...jestSetupConfig,
+      ...jestConfig,
     }),
   ]);
-};
-
-export const test = {
-  name,
-  description,
-  builder,
-  handler,
 };

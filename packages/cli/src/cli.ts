@@ -1,10 +1,94 @@
 import yargs from "yargs";
-import { build, lint, run, test } from "./commands";
+import { lint, LintOptions } from "./lint";
+import { test } from "./test";
+import { formatter } from "./formatter";
+import { isTsEngineError } from "./error";
 
-export const cli = (args: string[]) => {
+interface BuildOptions {
+  filepaths: string[];
+  watch: boolean;
+  typecheck: boolean;
+  bundle: boolean;
+  minify: boolean;
+}
+
+interface RunOptions {
+  filepath: string;
+  watch: boolean;
+  typecheck: boolean;
+  bundle: boolean;
+  minify: boolean;
+}
+
+const handleError = (error: Error) => {
+  if (isTsEngineError(error)) {
+    console.error(formatter.error(error.message.toString()));
+  } else {
+    console.error(formatter.error(error.toString()));
+  }
+
+  process.exit(1);
+};
+
+export const runCli = (args: string[]) => {
   yargs(args)
-    .command(build.command, build.description, build.builder, build.handler)
-    .command(lint.command, lint.description, lint.builder, lint.handler)
-    .command(run.command, run.description, run.builder, run.handler)
-    .command(test.command, test.description, test.builder, test.handler).argv;
+    .command(
+      "build <filepaths...>",
+      "Build code using Rollup.",
+      (yargs) => {
+        yargs
+          .positional("filepaths", { type: "string" })
+          .requiresArg("filepaths");
+        yargs.boolean("w").alias("w", "watch").default("watch", false);
+        yargs.boolean("typecheck").default("typecheck", true);
+        yargs.boolean("bundle").default("bundle", false);
+        yargs.boolean("minify").default("minify", true);
+      },
+      (options: BuildOptions) => {
+        console.log("hello world from build!", options);
+      }
+    )
+    .command(
+      "lint <globs...>",
+      "Lint code using ESLint.",
+      (yargs) => {
+        yargs.positional("globs", { type: "string" }).requiresArg("globs");
+        yargs.boolean("fix").default("fix", false);
+      },
+      async (options: LintOptions) => {
+        try {
+          await lint(options);
+        } catch (error) {
+          handleError(error);
+        }
+      }
+    )
+    .command(
+      "run <filepath>",
+      "Build and run code.",
+      (yargs) => {
+        yargs
+          .positional("filepath", { type: "string" })
+          .requiresArg("filepath");
+        yargs.boolean("w").alias("w", "watch").default("watch", true);
+        yargs.boolean("typecheck").default("typecheck", true);
+        yargs.boolean("bundle").default("bundle", false);
+        yargs.boolean("minify").default("minify", true);
+      },
+      (options: RunOptions) => {
+        console.log("hello world from run!", options);
+      }
+    )
+    .command(
+      "test",
+      "Run tests using Jest.",
+      () => {},
+      async () => {
+        try {
+          await test();
+        } catch (error) {
+          handleError(error);
+        }
+      }
+    ).argv;
 };

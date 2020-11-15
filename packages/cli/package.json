@@ -43,6 +43,7 @@
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.7",
     "builtin-modules": "^3.1.0",
+    "chalk": "^4.1.0",
     "core-js": "^3.7.0",
     "esbuild": "^0.8.1",
     "eslint": "^7.13.0",
@@ -59,6 +60,7 @@
     "yargs": "^16.1.0"
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/eslint": "^7.2.4",
     "@types/find-package-json": "^1.1.1",
     "@types/mock-fs": "^4.13.0",
