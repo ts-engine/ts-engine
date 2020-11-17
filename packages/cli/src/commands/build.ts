@@ -14,7 +14,6 @@ import {
   extractFilename,
   trimExtension,
 } from "../utils";
-import { Command } from "../command";
 
 const name = "build <inputs...>";
 
@@ -151,7 +150,7 @@ const handler = async (argv: Arguments<BuildArgs>) => {
   }
 };
 
-export const build: Command = {
+export const build = {
   name,
   description,
   builder,

@@ -7,16 +7,24 @@ const getEnvOptions = () => {
 };
 
 module.exports = () => {
+  // We require() plugins and presets here as letting babel resolve them
+  // instead of nodejs led to issues when plugins and presets clashed with
+  // other packages dependencies, for instance using nextjs in the same
+  // mono repo as ts-engine lead to @babel/plugin-proposal-decorators
+  // installing into the incorrect directories in node_modules.
   return {
-    presets: ["@babel/typescript", ["@babel/env", getEnvOptions()]],
+    presets: [
+      require("@babel/preset-typescript"),
+      [require("@babel/preset-env"), getEnvOptions()],
+    ],
     plugins: [
-      ["@babel/plugin-proposal-decorators", { legacy: true }],
-      "@babel/plugin-transform-typescript",
-      "@babel/plugin-proposal-class-properties",
-      "@babel/plugin-proposal-object-rest-spread",
-      "@babel/plugin-proposal-optional-chaining",
-      "@babel/plugin-proposal-nullish-coalescing-operator",
-      ["@babel/plugin-transform-runtime", { regenerator: true }],
+      [require("@babel/plugin-proposal-decorators"), { legacy: true }],
+      require("@babel/plugin-transform-typescript"),
+      require("@babel/plugin-proposal-class-properties"),
+      require("@babel/plugin-proposal-object-rest-spread"),
+      require("@babel/plugin-proposal-optional-chaining"),
+      require("@babel/plugin-proposal-nullish-coalescing-operator"),
+      [require("@babel/plugin-transform-runtime"), { regenerator: true }],
     ],
   };
 };

@@ -3895,11 +3895,6 @@ es6-promisify@^5.0.0:
   dependencies:
     es6-promise "^4.0.3"
 
-esbuild@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.8.1.tgz#aa9a1fb89532b38fe7ac93f6f87cce94484189f8"
-  integrity sha512-izduJqbu66nHek4Rw+4WyZZoo66LMds9Fx5Z1gZDAY0hEyTpL6fRjN7WrQANLZCXEYObjW36Ra5vLA9Zs9QHvg==
-
 escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"

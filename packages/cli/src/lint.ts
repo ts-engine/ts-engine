@@ -16,15 +16,17 @@ const findFiles = async (globs: string[]) => {
     return [...arr, ...next];
   }, []);
 
-  if (files.length === 0) {
-    throw new TsEngineError("No files found.");
-  }
-
   return files;
 };
 
 export const lint = async (options: LintOptions) => {
+  // Find files to lint based on globs
   const files = await findFiles(options.globs);
+
+  // If no files then throw friendly error
+  if (files.length === 0) {
+    throw new TsEngineError("No files found.");
+  }
 
   const eslint = new ESLint({
     fix: options.fix,
@@ -37,6 +39,7 @@ export const lint = async (options: LintOptions) => {
   const results = await eslint.lintFiles(files);
 
   if (options.fix) {
+    // ESLint handles writing file fixes to disk
     await ESLint.outputFixes(results);
   }
 
@@ -44,13 +47,12 @@ export const lint = async (options: LintOptions) => {
   const resultText = formatter.format(results);
 
   const hasErrors = results.find((r) => r.errorCount > 0);
-  const hasWarnings = results.find((r) => r.warningCount > 0);
-
   if (hasErrors) {
     // Result test is formatted by ESLint so don't overwrite that formatting
     throw new TsEngineError(resultText);
   }
 
+  const hasWarnings = results.find((r) => r.warningCount > 0);
   if (hasWarnings) {
     console.warn(resultText);
   }

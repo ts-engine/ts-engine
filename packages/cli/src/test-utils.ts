@@ -1,5 +1,5 @@
 import { parseArgsStringToArgv } from "string-argv";
-import { cli } from "./cli";
+import { runCli as cli } from "./cli";
 
 export const testConsole = {
   log: console.debug,

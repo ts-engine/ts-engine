@@ -1,16 +1,9 @@
 import yargs from "yargs";
 import { lint, LintOptions } from "./lint";
+import { build, BuildOptions } from "./build";
 import { test } from "./test";
-import { formatter } from "./formatter";
+import { formatter } from "./log-formatter";
 import { isTsEngineError } from "./error";
-
-interface BuildOptions {
-  filepaths: string[];
-  watch: boolean;
-  typecheck: boolean;
-  bundle: boolean;
-  minify: boolean;
-}
 
 interface RunOptions {
   filepath: string;
@@ -44,8 +37,12 @@ export const runCli = (args: string[]) => {
         yargs.boolean("bundle").default("bundle", false);
         yargs.boolean("minify").default("minify", true);
       },
-      (options: BuildOptions) => {
-        console.log("hello world from build!", options);
+      async (options: BuildOptions) => {
+        try {
+          await build(options);
+        } catch (error) {
+          handleError(error);
+        }
       }
     )
     .command(
