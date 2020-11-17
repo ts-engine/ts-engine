@@ -1,11 +1,11 @@
 import fs from "fs-extra";
 import path from "path";
 import { matchLog, runCli } from "../../test-utils";
-import { getSupportedExtensions } from "../../utils";
+import { supportedExtensionsWithDot } from "../../constants";
 
 const tempDir = path.resolve(__dirname, "temp/lint");
 
-getSupportedExtensions({ dots: true }).forEach((extension) => {
+supportedExtensionsWithDot.forEach((extension) => {
   it(`should report no issues in file with extension ${extension}`, async () => {
     await fs.ensureDir(tempDir);
 
@@ -26,7 +26,7 @@ getSupportedExtensions({ dots: true }).forEach((extension) => {
   });
 });
 
-getSupportedExtensions({ dots: true }).forEach((extension) => {
+supportedExtensionsWithDot.forEach((extension) => {
   it(`should report errors in file with extension ${extension} and exit with 1`, async () => {
     await fs.ensureDir(tempDir);
 
@@ -50,7 +50,7 @@ getSupportedExtensions({ dots: true }).forEach((extension) => {
   });
 });
 
-getSupportedExtensions({ dots: true }).forEach((extension) => {
+supportedExtensionsWithDot.forEach((extension) => {
   it(`should report warnings in file with extension ${extension}`, async () => {
     await fs.ensureDir(tempDir);
 

@@ -2,7 +2,7 @@ import { ESLint } from "eslint";
 // @ts-ignore - its an eslint config module so has no need for types
 import eslintConfig from "@ts-engine/eslint-config";
 import glob from "glob-promise";
-import { getSupportedExtensions } from "./utils";
+import { supportedExtensionsWithDot } from "./constants";
 import { TsEngineError } from "./error";
 
 export interface LintOptions {
@@ -33,7 +33,7 @@ export const lint = async (options: LintOptions) => {
     baseConfig: {
       ...eslintConfig,
     },
-    extensions: getSupportedExtensions({ dots: true }),
+    extensions: supportedExtensionsWithDot,
   });
 
   const results = await eslint.lintFiles(files);

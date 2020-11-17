@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import { matchLog, runCli } from "../../test-utils";
-import { getSupportedExtensions } from "../../utils";
+import { supportedExtensionsWithDot } from "../../constants";
 
 const tempDir = path.resolve(__dirname, "temp/build");
 
@@ -49,7 +49,7 @@ const writeJavaScriptFile = async (filename: string): Promise<string> => {
   );
 };
 
-getSupportedExtensions({ dots: true }).forEach((extension) => {
+supportedExtensionsWithDot.forEach((extension) => {
   it(`should build files with extension ${extension} and produce cjs and esm outputs`, async () => {
     const filepath = extension.includes("ts")
       ? await writeTypeScriptFile(`build${extension}`)

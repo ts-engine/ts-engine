@@ -1,14 +1,14 @@
 import fs from "fs-extra";
 import path from "path";
 import { TsEngineError } from "./error";
-import { getSupportedExtensions } from "./utils";
+import { supportedExtensions } from "./constants";
 
 export const test = async () => {
   process.env.BABEL_ENV = "test";
   process.env.NODE_ENV = "test";
 
   const [, , , ...jestArgs] = process.argv;
-  const extensions = getSupportedExtensions({ dots: false }).join("|");
+  const extensions = supportedExtensions.join("|");
 
   // read jest config file if it exists
   const jestConfigFilename = path.resolve(process.cwd(), "jest.config.js");
