@@ -10,7 +10,7 @@ import builtInModules from "builtin-modules";
 import prettyMs from "pretty-ms";
 import { supportedExtensionsWithDot } from "./constants";
 import { typecheck } from "./typecheck";
-import { formatter } from "./log-formatter";
+import { logger, formatRandomColor } from "./logger";
 
 const isNpmModule = (module: string) => {
   const isBuiltIn = builtInModules.includes(module);
@@ -18,6 +18,10 @@ const isNpmModule = (module: string) => {
   const isAbsoluteFile = path.isAbsolute(module);
 
   return isBuiltIn || (!isRelativeFile && !isAbsoluteFile);
+};
+
+const getFilenameFromFilepath = (filepath: string) => {
+  return filepath.substr(Math.max(0, filepath.lastIndexOf("/")));
 };
 
 interface GetRollupConfigOptions {
@@ -55,9 +59,7 @@ const getRollupConfig = (options: GetRollupConfigOptions): RollupOptions => {
   // path structure is maintained, but special consideration is given to the convention
   // of a 'src' folder, so we remove the src folder build building the dist path
   const dir = path.dirname(options.input).replace(/\/?src\/?/, "");
-  const filename = options.input.substr(
-    Math.max(0, options.input.lastIndexOf("/"))
-  );
+  const filename = getFilenameFromFilepath(options.input);
   const filenameWithNoExtension = filename.split(".").slice(0, -1).join(".");
   const outputs: rollup.OutputOptions[] = [
     {
@@ -126,21 +128,78 @@ export const build = async (options: BuildOptions) => {
       input: filepath,
       minify: options.minify,
     });
-    const bundle = await rollup.rollup(rollupConfig);
 
-    await Promise.all(
-      (rollupConfig.output as OutputOptions[]).map(async (o: OutputOptions) => {
-        // generate and write output file, time the process to report it
-        const start = Date.now();
-        await bundle.write(o);
-        const end = Date.now();
-        const time = prettyMs(end - start);
-        console.log(formatter.success(`${filepath} -> ${o.file} (${time})`));
-      })
-    );
-  }
+    if (!options.watch) {
+      const bundle = await rollup.rollup(rollupConfig);
 
-  if (options.typecheck) {
-    typecheck({ files: filesToTypecheck });
+      await Promise.all(
+        (rollupConfig.output as OutputOptions[]).map(
+          async (output: OutputOptions) => {
+            // generate and write output file, time the process to report it
+            const start = Date.now();
+            await bundle.write(output);
+            const end = Date.now();
+            const time = prettyMs(end - start);
+            logger.success(`${filepath} -> ${output.file} (${time})`);
+          }
+        )
+      );
+
+      if (options.typecheck) {
+        typecheck({ files: filesToTypecheck });
+        logger.success("Type definition files written to dist/");
+      }
+    } else {
+      const watcher = rollup.watch(rollupConfig);
+      let start = 0;
+      let end = 0;
+      const label = formatRandomColor(`[${filepath}]`);
+      watcher.on("event", async (event) => {
+        switch (event.code) {
+          case "START": {
+            start = Date.now();
+            break;
+          }
+          case "BUNDLE_START": {
+            break;
+          }
+          case "BUNDLE_END": {
+            break;
+          }
+          case "END": {
+            end = Date.now();
+            const time = prettyMs(end - start);
+
+            for (let output of rollupConfig.output as OutputOptions[]) {
+              logger.success(
+                `${label} ${filepath} -> ${output.file} (${time} combined)`
+              );
+            }
+
+            if (options.typecheck) {
+              try {
+                typecheck({ files: filesToTypecheck });
+                logger.success(
+                  `${label} Type definition files written to dist/`
+                );
+              } catch (e) {
+                logger.error(e.toString());
+              }
+            }
+
+            logger.subtext(`${label} Watching for changes...`);
+            break;
+          }
+          case "ERROR": {
+            logger.error(event.error.toString());
+            logger.subtext(`${label} Watching for changes...`);
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      });
+    }
   }
 };

@@ -2,7 +2,7 @@ import yargs from "yargs";
 import { lint, LintOptions } from "./lint";
 import { build, BuildOptions } from "./build";
 import { test } from "./test";
-import { formatter } from "./log-formatter";
+import { logger } from "./logger";
 import { isTsEngineError } from "./error";
 
 interface RunOptions {
@@ -15,9 +15,9 @@ interface RunOptions {
 
 const handleError = (error: Error) => {
   if (isTsEngineError(error)) {
-    console.error(formatter.error(error.message.toString()));
+    logger.error(error.message.toString());
   } else {
-    console.error(formatter.error(error.toString()));
+    logger.error(error.toString());
   }
 
   process.exit(1);
