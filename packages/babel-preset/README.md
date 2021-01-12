@@ -33,3 +33,7 @@ module.exports = {
   presets: ["@ts-engine/babel-preset"],
 };
 ```
+
+## React support
+
+This preset automatically applies `@babel/preset-react` if react is found in package.json.

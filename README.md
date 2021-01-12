@@ -24,21 +24,10 @@ Checkout the official docs over at https://ts-engine.dev.
     <td>
       <a href="./packages/babel-preset/README.md">@ts-engine/babel-preset</a>
     </td>
-    <td>The default Babel preset for ts-engine.</td>
+    <td>The default Babel preset for ts-engine. Automatically detects React and applies React babel plugins.</td>
     <td>
       <a href="https://www.npmjs.com/package/@ts-engine/babel-preset" rel="noopener noreferrer" target="_blank">
         <img src="https://badgen.net/npm/v/@ts-engine/babel-preset">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="./packages/babel-preset-react/README.md">@ts-engine/babel-preset-react</a>
-    </td>
-    <td>A Babel preset for ts-engine with React support.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@ts-engine/babel-preset-react" rel="noopener noreferrer" target="_blank">
-        <img src="https://badgen.net/npm/v/@ts-engine/babel-preset-react">
       </a>
     </td>
   </tr>
@@ -57,21 +46,10 @@ Checkout the official docs over at https://ts-engine.dev.
     <td>
       <a href="./packages/eslint-config/README.md">@ts-engine/eslint-config</a>
     </td>
-    <td>The default ESLint config for ts-engine.</td>
+    <td>The default ESLint config for ts-engine. Automatically detects React and adds react and a11y rules.</td>
     <td>
       <a href="https://www.npmjs.com/package/@ts-engine/eslint-config" rel="noopener noreferrer" target="_blank">
         <img src="https://badgen.net/npm/v/@ts-engine/eslint-config">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="./packages/eslint-config-react/README.md">@ts-engine/eslint-config-react</a>
-    </td>
-    <td>The React ESLint config for ts-engine.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@ts-engine/eslint-config-react" rel="noopener noreferrer" target="_blank">
-        <img src="https://badgen.net/npm/v/@ts-engine/eslint-config-react">
       </a>
     </td>
   </tr>
@@ -90,4 +68,4 @@ Checkout the official docs over at https://ts-engine.dev.
 
 ## Examples
 
-Example Node.js applications and libraries can be found [here](./packages/private/examples).
+Example Node.js applications and libraries can be found [here](./packages/_examples).
