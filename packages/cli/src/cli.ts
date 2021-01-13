@@ -2,7 +2,8 @@ import { createCli as createLeeChenelerCli } from "@leecheneler/cli";
 import pkg from "../package.json";
 import { build } from "./middleware/commands/build";
 import { lint } from "./middleware/commands/lint";
-import { test } from "./middleware/commands/_test";
+import { _test } from "./middleware/commands/_test";
+import { run } from "./middleware/commands/run";
 import { packageJson } from "./middleware/package-json";
 
 export const createCli = () => {
@@ -66,10 +67,10 @@ export const createCli = () => {
     .useCommand(
       "test",
       "Run tests using Jest, all options are forwarded onto Jest.",
-      test(),
+      _test(),
       {}
     )
-    .useCommand("run", "Build and run a file.", test(), {
+    .useCommand("run", "Build and run a file.", run(), {
       arguments: [
         {
           name: "watch",

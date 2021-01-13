@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tse build src/index.ts",
     "lint": "tse lint src",
-    "start": "tse run src/index.ts --watch",
+    "start": "tse run --watch src/index.ts",
     "test": "tse test --coverage"
   },
   "devDependencies": {
