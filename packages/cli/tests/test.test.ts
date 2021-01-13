@@ -1,4 +1,3 @@
-import path from "path";
 import mockFs from "mock-fs";
 import { mockConsole } from "../test-utils/console";
 import { createCli } from "../src/cli";
