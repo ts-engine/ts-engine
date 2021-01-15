@@ -21,8 +21,8 @@ export const createCli = () => {
           type: "boolean",
         },
         {
-          name: "typecheck",
-          description: "Typecheck code.",
+          name: "skip-typecheck",
+          description: "Skip typechecking code (including emitting types).",
           type: "boolean",
         },
         {

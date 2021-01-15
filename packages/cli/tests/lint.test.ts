@@ -33,7 +33,7 @@ beforeEach(async () => {
 });
 
 it("should lint files and pass", async () => {
-  const result = await createCli().run(["lint", "src"]);
+  const result = await createCli().run(["lint", "tests/lint.test.ts"]);
 
   expect(result.code).toBe(0);
 });

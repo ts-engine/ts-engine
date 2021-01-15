@@ -14,12 +14,12 @@ const findFiles = async (globs: string[]) => {
   return files;
 };
 
-interface LintContext {
+interface LintOptions {
   fix: boolean;
 }
 
 export const lint = () => async (
-  ctx: Context & LintContext,
+  ctx: Context<LintOptions>,
   next: NextFunction
 ) => {
   const [...globs] = ctx.options._;

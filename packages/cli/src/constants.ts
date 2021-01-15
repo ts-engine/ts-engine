@@ -9,3 +9,7 @@ export const SUPPORTED_EXTENSIONS = [
 ];
 
 export const SUPPORTED_EXTENSIONS_REGEX = `(${SUPPORTED_EXTENSIONS.join("|")})`;
+
+export const SUPPORTED_EXTENSIONS_WITH_DOTS = SUPPORTED_EXTENSIONS.map(
+  (e) => `.${e}`
+);

@@ -33,7 +33,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@leecheneler/cli": "^1.0.0-beta.7",
+    "@leecheneler/cli": "^1.0.0-beta.11",
     "@rollup/plugin-babel": "^5.2.1",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",

@@ -8,7 +8,7 @@
    "skipLibCheck": true,
    "strict": true,
    "allowJs": true,
-   "experimentalDecorators": true,
+   "experimentalDecorators": true, 
  },
  "include": [
    "src/**/*.ts",

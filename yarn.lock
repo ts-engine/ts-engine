@@ -1244,10 +1244,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@leecheneler/cli@^1.0.0-beta.7":
-  version "1.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@leecheneler/cli/-/cli-1.0.0-beta.7.tgz#bf1c95936a396922f59f03ef534909bbb52a7275"
-  integrity sha512-ioJn+O+8LUgR5ipJhX1X1p41tX9XKpND39NMCuIeIG/5g2R4oNX/rGEuq2jRHK2cs6Zx0DkXuCKKRLrpgap1eA==
+"@leecheneler/cli@^1.0.0-beta.11":
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@leecheneler/cli/-/cli-1.0.0-beta.11.tgz#24957fd279e630f385d27c7a8e1a1d075601dce9"
+  integrity sha512-AYe0bPQ2y9SZ3PwXpedZ0y4/C23jfcmwpX4XlhaTGd+NvqmoBHxazh0aF9lr25Q5CgOIrzoC8ZWpM1XERyAi6g==
   dependencies:
     minimist "^1.2.5"
 
