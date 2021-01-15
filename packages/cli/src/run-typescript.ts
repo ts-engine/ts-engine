@@ -3,26 +3,23 @@ import typescript from "typescript";
 import glob from "glob-promise";
 import prettyMs from "pretty-ms";
 
-interface RunTypescriptResult {
+interface ProcessFilesOptions {
+  emitTypes: boolean;
+}
+
+interface ProcessFilesResult {
   passed: boolean;
   output: string;
 }
 
-export const runTypescript = (): RunTypescriptResult => {
-  const startMs = Date.now();
-
-  // find all files files to typecheck in the project
-  const files = glob
-    .sync("{,**/}*.{d.ts,ts}")
-    .map((p) => path.resolve(p))
-    .filter((p) => !p.includes("/node_modules/"))
-    .filter((p) => !p.includes("/dist/"))
-    .filter((p) => !p.includes("/coverage/"));
-
-  const typescriptOptions: typescript.CompilerOptions = {
-    noEmit: false,
+const processFiles = (
+  files: string[],
+  options: ProcessFilesOptions
+): ProcessFilesResult => {
+  const typeScriptOptions: typescript.CompilerOptions = {
+    noEmit: !options.emitTypes,
     declaration: true,
-    emitDeclarationOnly: true,
+    emitDeclarationOnly: options.emitTypes,
     esModuleInterop: true,
     jsx: typescript.JsxEmit.React,
     lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
@@ -35,30 +32,71 @@ export const runTypescript = (): RunTypescriptResult => {
     emitDecoratorMetadata: true,
   };
 
-  const program = typescript.createProgram(files, typescriptOptions);
+  const program = typescript.createProgram(files, typeScriptOptions);
   const emitResult = program.emit();
-  const allDiagnostics = typescript
+  const diagnostics = typescript
     .getPreEmitDiagnostics(program)
     .concat(emitResult.diagnostics);
 
-  const endMs = Date.now();
-  const duration = prettyMs(endMs - startMs);
-
-  if (allDiagnostics.length > 0) {
-    const host = typescript.createCompilerHost(typescriptOptions);
+  if (diagnostics.length > 0) {
+    const host = typescript.createCompilerHost(typeScriptOptions);
     const output = typescript.formatDiagnosticsWithColorAndContext(
-      allDiagnostics,
+      diagnostics,
       host
     );
 
     return {
       passed: false,
-      output: `Typechecked ${files.length} files in ${duration}.\n\n${output}`,
+      output: output,
     };
   }
 
   return {
     passed: true,
-    output: `Typechecked ${files.length} files in ${duration}.`,
+    output: "",
   };
+};
+
+interface RunTypescriptResult {
+  passed: boolean;
+  output: string;
+}
+
+export const runTypescript = (): RunTypescriptResult => {
+  const startMs = Date.now();
+
+  // find all test files to typecheck
+  const testFiles = glob
+    .sync("{,**/}*.{test,spec}.{.d.ts,ts,tsx}")
+    .map((p) => path.resolve(p));
+
+  // find all source files to typecheck and emit types for
+  const sourceFiles = glob
+    .sync("{,**/}*.{d.ts,ts,tsx}")
+    .map((p) => path.resolve(p))
+    .filter((p) => !testFiles.includes(p)) // don't want tp emit types for test files
+    .filter((p) => !p.includes("/node_modules/"))
+    .filter((p) => !p.includes("/dist/"))
+    .filter((p) => !p.includes("/coverage/"));
+
+  const testFilesResult = processFiles(testFiles, { emitTypes: false });
+  const sourceFilesResult = processFiles(sourceFiles, { emitTypes: true });
+
+  const endMs = Date.now();
+  const duration = prettyMs(endMs - startMs);
+  const totalFiles = sourceFiles.length + testFiles.length;
+
+  if (sourceFilesResult.passed && testFilesResult.passed) {
+    return {
+      passed: true,
+      output: `Typechecked ${totalFiles} files in ${duration}.`,
+    };
+  } else {
+    const output = `${sourceFilesResult.output}${testFilesResult.output}`;
+
+    return {
+      passed: false,
+      output: `Typechecked ${totalFiles} files in ${duration}.\n\n${output}`,
+    };
+  }
 };

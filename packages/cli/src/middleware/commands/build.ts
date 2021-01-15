@@ -21,6 +21,7 @@ const isNpmModule = (module: string) => {
 
   return isBuiltIn || (!isRelativeFile && !isAbsoluteFile);
 };
+
 const getFilenameFromFilepath = (filepath: string) => {
   return filepath.substr(Math.max(0, filepath.lastIndexOf("/")));
 };
