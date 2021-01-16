@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs-extra";
 import typescript from "typescript";
 import glob from "glob-promise";
 import prettyMs from "pretty-ms";
@@ -12,10 +13,10 @@ interface ProcessFilesResult {
   output: string;
 }
 
-const processFiles = (
+const processFiles = async (
   files: string[],
   options: ProcessFilesOptions
-): ProcessFilesResult => {
+): Promise<ProcessFilesResult> => {
   const typeScriptOptions: typescript.CompilerOptions = {
     noEmit: !options.emitTypes,
     declaration: true,
@@ -31,6 +32,8 @@ const processFiles = (
     experimentalDecorators: true,
     emitDecoratorMetadata: true,
     allowSyntheticDefaultImports: true,
+    noEmitOnError: true,
+    listEmittedFiles: true,
   };
 
   const program = typescript.createProgram(files, typeScriptOptions);
@@ -38,6 +41,11 @@ const processFiles = (
   const diagnostics = typescript
     .getPreEmitDiagnostics(program)
     .concat(emitResult.diagnostics);
+
+  // create a copy of each type file for .cjs output files
+  for (let file of emitResult.emittedFiles ?? []) {
+    await fs.copyFile(file, file.replace(".d.ts", ".cjs.d.ts"));
+  }
 
   if (diagnostics.length > 0) {
     const host = typescript.createCompilerHost(typeScriptOptions);
@@ -63,7 +71,7 @@ interface RunTypescriptResult {
   output: string;
 }
 
-export const runTypescript = (): RunTypescriptResult => {
+export const runTypescript = async (): Promise<RunTypescriptResult> => {
   const startMs = Date.now();
 
   // find all test files to typecheck
@@ -83,8 +91,10 @@ export const runTypescript = (): RunTypescriptResult => {
     .filter((p) => !p.includes("/dist/"))
     .filter((p) => !p.includes("/coverage/"));
 
-  const testFilesResult = processFiles(testFiles, { emitTypes: false });
-  const sourceFilesResult = processFiles(sourceFiles, { emitTypes: true });
+  const testFilesResult = await processFiles(testFiles, { emitTypes: false });
+  const sourceFilesResult = await processFiles(sourceFiles, {
+    emitTypes: true,
+  });
 
   const endMs = Date.now();
   const duration = prettyMs(endMs - startMs);

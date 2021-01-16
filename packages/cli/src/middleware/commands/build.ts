@@ -121,7 +121,7 @@ export const build = () => async (
 
   // typecheck
   if (!ctx.options["skip-typecheck"]) {
-    const result = runTypescript();
+    const result = await runTypescript();
 
     if (result.passed) {
       console.log(result.output);

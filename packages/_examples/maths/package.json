@@ -1,0 +1,18 @@
+{
+  "name": "@examples/maths",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tse build src/index.ts src/add.ts src/subtract.ts",
+    "lint": "tse lint src",
+    "start": "tse run --watch src/index.ts",
+    "test": "tse test --coverage"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "2.0.0-beta.1"
+  }
+}
