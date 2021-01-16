@@ -71,7 +71,7 @@ interface RunTypescriptResult {
   output: string;
 }
 
-export const runTypescript = async (): Promise<RunTypescriptResult> => {
+export const typecheck = async (): Promise<RunTypescriptResult> => {
   const startMs = Date.now();
 
   // find all test files to typecheck

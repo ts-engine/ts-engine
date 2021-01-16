@@ -9,7 +9,6 @@
   "scripts": {
     "build": "tse build src/index.ts src/add.ts src/subtract.ts",
     "lint": "tse lint src",
-    "start": "tse run --watch src/index.ts",
     "test": "tse test --coverage"
   },
   "devDependencies": {
