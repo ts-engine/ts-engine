@@ -30,6 +30,7 @@ const processFiles = (
     allowJs: true,
     experimentalDecorators: true,
     emitDecoratorMetadata: true,
+    allowSyntheticDefaultImports: true,
   };
 
   const program = typescript.createProgram(files, typeScriptOptions);

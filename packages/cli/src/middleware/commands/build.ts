@@ -1,7 +1,8 @@
 import { Context, NextFunction } from "@leecheneler/cli";
 import path from "path";
 import fs from "fs-extra";
-import rollup, { RollupOptions, OutputOptions } from "rollup";
+import type { RollupOptions, OutputOptions } from "rollup";
+import * as rollup from "rollup";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";

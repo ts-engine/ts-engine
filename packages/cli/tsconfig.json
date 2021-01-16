@@ -9,6 +9,7 @@
    "strict": true,
    "allowJs": true,
    "experimentalDecorators": true, 
+   "allowSyntheticDefaultImports": true,
  },
  "include": [
    "src/**/*.ts",
