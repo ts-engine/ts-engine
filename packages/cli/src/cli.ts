@@ -26,11 +26,6 @@ export const createCli = () => {
           type: "boolean",
         },
         {
-          name: "bundle",
-          description: "Bundle dependencies into output code.",
-          type: "boolean",
-        },
-        {
           name: "minify",
           description: "Minify output code.",
           type: "boolean",
@@ -80,11 +75,6 @@ export const createCli = () => {
         {
           name: "typecheck",
           description: "Typecheck code.",
-          type: "boolean",
-        },
-        {
-          name: "bundle",
-          description: "Bundle dependencies into output code.",
           type: "boolean",
         },
         {

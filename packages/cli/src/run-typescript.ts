@@ -69,7 +69,10 @@ export const runTypescript = (): RunTypescriptResult => {
   // find all test files to typecheck
   const testFiles = glob
     .sync("{,**/}*.{test,spec}.{.d.ts,ts,tsx}")
-    .map((p) => path.resolve(p));
+    .map((p) => path.resolve(p))
+    .filter((p) => !p.includes("/node_modules/"))
+    .filter((p) => !p.includes("/dist/"))
+    .filter((p) => !p.includes("/coverage/"));
 
   // find all source files to typecheck and emit types for
   const sourceFiles = glob

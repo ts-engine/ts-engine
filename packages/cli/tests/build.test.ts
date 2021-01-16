@@ -58,9 +58,10 @@ it("should build given files", async () => {
   expect(await fs.pathExists(path.resolve(distDir, "index.cjs"))).toBe(true);
 
   const nodeResult = executeDistFile("index.cjs");
+
   expect(nodeResult.status).toBe(0);
   expect(nodeResult.output).toContain("hello world!\n");
-});
+}, 10000);
 
 it("should build with relative imports", async () => {
   await writeSrcFile(
@@ -76,9 +77,10 @@ it("should build with relative imports", async () => {
   expect(await fs.pathExists(path.resolve(distDir, "index.cjs"))).toBe(true);
 
   const nodeResult = executeDistFile("index.cjs");
+
   expect(nodeResult.status).toBe(0);
   expect(nodeResult.output).toContain("hello world!\n");
-});
+}, 10000);
 
 it("should build JSX", async () => {
   await writeSrcFile(
@@ -93,16 +95,61 @@ it("should build JSX", async () => {
   expect(await fs.pathExists(path.resolve(distDir, "index.cjs"))).toBe(true);
 
   const nodeResult = executeDistFile("index.cjs");
+
   expect(nodeResult.status).toBe(0);
   expect(nodeResult.output).toContain("<div>hello world!</div>\n");
+}, 10000);
+
+it("should skip typecheck", async () => {
+  await writeSrcFile("index.ts", `export const one: number = "1";`);
+
+  const result = await createCli().run([
+    "build",
+    "src/temp/build/index.ts",
+    "--skip-typecheck",
+  ]);
+
+  expect(result.code).toBe(0);
+}, 10000);
+
+it("should minify", async () => {
+  await writeSrcFile("index.ts", `const abc = 1; console.log(abc);`);
+
+  const result = await createCli().run(["build", "src/temp/build/index.ts"]);
+  const { length } = await fs.readFile(path.resolve(distDir, "index.cjs"));
+
+  const minifiedResult = await createCli().run([
+    "build",
+    "src/temp/build/index.ts",
+    "--minify",
+  ]);
+  const { length: minifiedLength } = await fs.readFile(
+    path.resolve(distDir, "index.cjs")
+  );
+
+  expect(result.code).toBe(0);
+  expect(minifiedResult.code).toBe(0);
+  expect(length).toBeGreaterThan(minifiedLength);
+}, 15000);
+
+it("should report broken syntax", async () => {
+  await writeSrcFile("index.ts", `]]]`);
+
+  const result = await createCli().run(["build", "src/temp/build/index.ts"]);
+
+  expect(result.code).toBe(1);
+  expect(consoleMock.error.mock.calls[0][0]).toMatch(
+    /Declaration or statement expected/
+  );
 });
 
-it.skip("should skip typecheck", async () => {});
+it("should report a broken type", async () => {
+  await writeSrcFile("index.ts", `export const one: number = "1";`);
 
-it.skip("should minify", async () => {});
+  const result = await createCli().run(["build", "src/temp/build/index.ts"]);
 
-it.skip("should bundle externals", async () => {});
-
-it.skip("should report broken syntax", async () => {});
-
-it.skip("should report a broken type", async () => {});
+  expect(result.code).toBe(1);
+  expect(consoleMock.error.mock.calls[0][0]).toMatch(
+    /Type 'string' is not assignable to type 'number'/
+  );
+});

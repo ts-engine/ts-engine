@@ -30,7 +30,6 @@ const getFilenameFromFilepath = (filepath: string) => {
 interface BuildRollupConfigOptions {
   input: string;
   minify: boolean;
-  bundle: boolean;
 }
 
 const buildRollupConfig = (
@@ -87,12 +86,6 @@ const buildRollupConfig = (
         return false;
       }
 
-      // if we're bundling externals then only exclude nodejs' built
-      // in modules like 'fs' and 'path' etc
-      if (options.bundle) {
-        return builtInModules.includes(id);
-      }
-
       // external if its a built in node module like 'fs' or 'path
       // or if the modsule is not a relative path and also doesn't point
       // to a file on disk
@@ -105,7 +98,6 @@ interface BuildOptions {
   watch: boolean;
   minify: boolean;
   "skip-typecheck": boolean;
-  bundle: boolean;
 }
 
 export const build = () => async (
@@ -141,7 +133,6 @@ export const build = () => async (
   // build each file
   for (let filepath of filepaths) {
     const rollupConfig = buildRollupConfig({
-      bundle: ctx.options.bundle,
       input: filepath,
       minify: ctx.options.minify,
     });
