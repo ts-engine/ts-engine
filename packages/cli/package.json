@@ -27,7 +27,7 @@
   },
   "scripts": {
     "build": "rollup -c rollup.config.js",
-    "lint": "eslint --ext .ts,.tsx src test-utils tests",
+    "lint": "eslint --ext .ts,.tsx .",
     "start": "yarn build && node dist/index.js",
     "typecheck": "tsc"
   },
