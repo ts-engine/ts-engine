@@ -27,7 +27,7 @@ jobs:
       - name: Test
         run: yarn test -- -- --coverage
 
-      - name: Test
+      - name: Integration Test
         run: |
           # need to reinstall to synmlink binaries for integration tests now the cli tool is built
           find . -name node_modules | xargs rm -rf
