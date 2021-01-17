@@ -47,6 +47,11 @@ type FixtureName =
   | "run-react"
   | "run-syntax-error"
   | "run-type-error"
+  | "test-error"
+  | "test-pass"
+  | "test-config"
+  | "test-setup-ts"
+  | "test-setup-js"
   | "version";
 
 export const createFixture = (name: FixtureName): Fixture => {
