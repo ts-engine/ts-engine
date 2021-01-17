@@ -6,6 +6,7 @@ const fixtures = {
   config: createFixture("test-config"),
   setupJs: createFixture("test-setup-js"),
   setupTs: createFixture("test-setup-ts"),
+  noTests: createFixture("test-no-tests"),
 };
 
 beforeEach(async () => {
@@ -14,6 +15,7 @@ beforeEach(async () => {
   await fixtures.config.reset();
   await fixtures.setupJs.reset();
   await fixtures.setupTs.reset();
+  await fixtures.noTests.reset();
 });
 
 it("should pass", async () => {
@@ -52,4 +54,10 @@ it("should load jest.setup.ts", async () => {
   expect(tseResult.status).toBe(0);
   expect(tseResult.stderr).toMatch(/✓ should pass/);
   expect(tseResult.stdout).toMatch(/jest.setup.ts/);
+});
+
+it("should forward args to jest", async () => {
+  const tseResult = fixtures.noTests.runTse("test tests --passWithNoTests");
+
+  expect(tseResult.status).toBe(0);
 });

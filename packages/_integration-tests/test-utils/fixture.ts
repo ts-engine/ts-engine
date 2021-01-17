@@ -33,6 +33,9 @@ interface Fixture {
   reset: () => Promise<void>;
   runTse: (args: string) => RunCliResult;
   runNode: (args: string) => RunCliResult;
+  writeFile: (filepath: string, content: string) => Promise<void>;
+  removeFile: (filepath: string) => Promise<void>;
+  readFile: (filepath: string) => Promise<string>;
 }
 
 type FixtureName =
@@ -41,8 +44,10 @@ type FixtureName =
   | "build-syntax-error"
   | "build-type-error"
   | "lint-error"
+  | "lint-fix"
   | "lint-pass"
   | "lint-warning"
+  | "lint-no-files"
   | "run-normal"
   | "run-react"
   | "run-syntax-error"
@@ -52,6 +57,7 @@ type FixtureName =
   | "test-config"
   | "test-setup-ts"
   | "test-setup-js"
+  | "test-no-tests"
   | "version";
 
 export const createFixture = (name: FixtureName): Fixture => {
@@ -78,9 +84,26 @@ export const createFixture = (name: FixtureName): Fixture => {
     });
   };
 
+  const writeFile = async (filepath: string, content: string) => {
+    await fs.writeFile(path.resolve(dir, filepath), content, {
+      encoding: "utf8",
+    });
+  };
+
+  const removeFile = async (filepath: string) => {
+    await fs.remove(path.resolve(dir, filepath));
+  };
+
+  const readFile = async (filepath: string) => {
+    return await fs.readFile(path.resolve(dir, filepath), { encoding: "utf8" });
+  };
+
   return {
     reset,
     runTse,
     runNode,
+    writeFile,
+    removeFile,
+    readFile,
   };
 };
