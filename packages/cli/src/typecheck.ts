@@ -26,10 +26,7 @@ interface ProcessFilesOptions {
   emitTypes: boolean;
 }
 
-const processFiles = async (
-  files: string[],
-  options: ProcessFilesOptions
-): Promise<typescript.Diagnostic[]> => {
+const processFiles = async (files: string[], options: ProcessFilesOptions) => {
   const program = typescript.createProgram(files, {
     ...typeScriptOptions,
     noEmit: !options.emitTypes,
@@ -40,12 +37,10 @@ const processFiles = async (
     .getPreEmitDiagnostics(program)
     .concat(emitResult.diagnostics);
 
-  // create a copy of each type file for .cjs output files
-  for (let file of emitResult.emittedFiles ?? []) {
-    await fs.copyFile(file, file.replace(".d.ts", ".cjs.d.ts"));
-  }
-
-  return diagnostics;
+  return {
+    diagnostics,
+    emitResult,
+  };
 };
 
 export interface RunTypescriptResult {
@@ -53,7 +48,9 @@ export interface RunTypescriptResult {
   output: string;
 }
 
-export const typecheck = async (): Promise<RunTypescriptResult> => {
+export const typecheck = async (
+  entryFilepaths: string[]
+): Promise<RunTypescriptResult> => {
   const startMs = Date.now();
 
   // find all test files to typecheck
@@ -73,18 +70,38 @@ export const typecheck = async (): Promise<RunTypescriptResult> => {
     .filter((p) => !p.includes("/dist/"))
     .filter((p) => !p.includes("/coverage/"));
 
-  const testFilesDiagnostics = await processFiles(testFiles, {
+  const testFilesResults = await processFiles(testFiles, {
     emitTypes: false,
   });
-  const sourceFilesDiagnostics = await processFiles(sourceFiles, {
+  const sourceFilesResults = await processFiles(sourceFiles, {
     emitTypes: true,
   });
+
+  const emittedFiles = [
+    ...(testFilesResults.emitResult.emittedFiles ?? []),
+    ...(sourceFilesResults.emitResult.emittedFiles ?? []),
+  ];
+  const emittedEntryFiles = emittedFiles.filter((emittedFile) =>
+    entryFilepaths.find((entryFile) =>
+      entryFile
+        .replace("src", "dist")
+        .startsWith(emittedFile.replace("d.ts", ""))
+    )
+  );
+
+  // create a copy of each type file for .cjs output files
+  for (let file of emittedEntryFiles ?? []) {
+    await fs.copyFile(file, file.replace(".d.ts", ".cjs.d.ts"));
+  }
 
   const endMs = Date.now();
   const duration = prettyMs(endMs - startMs);
   const totalFiles = sourceFiles.length + testFiles.length;
 
-  const diagnostics = [...testFilesDiagnostics, ...sourceFilesDiagnostics];
+  const diagnostics = [
+    ...sourceFilesResults.diagnostics,
+    ...sourceFilesResults.diagnostics,
+  ];
 
   if (diagnostics.length === 0) {
     return {

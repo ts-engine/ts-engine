@@ -130,7 +130,7 @@ export const buildFiles = async (
 
   // typecheck only if not in watch mode
   if (!options.skipTypecheck && !options.watch) {
-    const result = await typecheck();
+    const result = await typecheck(filepaths);
 
     if (result.passed) {
       console.log(result.output);
@@ -216,7 +216,7 @@ export const buildFiles = async (
 
             let typecheckResult: RunTypescriptResult | null = null;
             if (!options.skipTypecheck) {
-              typecheckResult = await typecheck();
+              typecheckResult = await typecheck(filepaths);
               console.log(prefixLabel(typecheckResult.output));
             }
 
