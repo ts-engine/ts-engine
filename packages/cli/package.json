@@ -29,7 +29,6 @@
     "build": "rollup -c rollup.config.js",
     "lint": "eslint --ext .ts,.tsx src test-utils tests",
     "start": "yarn build && node dist/index.js",
-    "test": "jest --runInBand",
     "typecheck": "tsc"
   },
   "dependencies": {

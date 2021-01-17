@@ -18,12 +18,6 @@ jobs:
       - name: Build
         run: yarn build
 
-      # need to reinstall to synmlink binaries for integration tests now the cli tool is built
-      - name: Reinstall
-        run: |
-          find . -name node_modules | xargs rm -rf
-          yarn
-
       - name: Lint
         run: yarn lint
 
@@ -34,4 +28,8 @@ jobs:
         run: yarn test -- -- --coverage
 
       - name: Test
-        run: yarn test:integration
+        run: |
+          # need to reinstall to synmlink binaries for integration tests now the cli tool is built
+          find . -name node_modules | xargs rm -rf
+          yarn
+          yarn test:integration

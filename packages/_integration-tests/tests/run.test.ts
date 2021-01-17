@@ -24,6 +24,13 @@ it("should run", async () => {
   expect(tseResult.stdout).toMatch(/hello world/);
 });
 
+it("should report input file not found", async () => {
+  const tseResult = fixtures.normal.runTse("build src/not-found.ts");
+
+  expect(tseResult.status).toBe(1);
+  expect(tseResult.stderr).toMatch(/src\/not-found\.ts not found\./);
+});
+
 it("should run react", async () => {
   const tseResult = fixtures.react.runTse("run src/index.tsx");
 
@@ -56,4 +63,6 @@ it("should report type errors", async () => {
   );
 });
 
-it.skip("should watch for changes", async () => {});
+it.skip("should watch for changes", async () => {
+  // TODO - implement me
+});
