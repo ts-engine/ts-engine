@@ -10,8 +10,14 @@ import { terser } from "rollup-plugin-terser";
 import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
 import builtInModules from "builtin-modules";
 import prettyMs from "pretty-ms";
+import chalk from "chalk";
+import randomColor from "randomcolor";
 import { SUPPORTED_EXTENSIONS_WITH_DOTS } from "./constants";
 import { typecheck } from "./typecheck";
+
+export const formatRandomColor = (str: string) => {
+  return chalk.hex(randomColor({ luminosity: "bright" }))(str);
+};
 
 const isNpmModule = (module: string) => {
   const isBuiltIn = builtInModules.includes(module);
@@ -98,9 +104,10 @@ interface BuildFilesOptions {
   skipTypecheck: boolean;
   srcDir: string;
   throw: (code: number, message: string) => void;
-  onBuildComplete?: (
-    outputs: { filepath: string; format: "cjs" | "es" }[]
-  ) => void;
+  onBuildComplete?: (output: {
+    filepath: string;
+    format: "cjs" | "es";
+  }) => void;
 }
 
 export const buildFiles = async (
@@ -153,10 +160,11 @@ export const buildFiles = async (
             const duration = prettyMs(end - start);
             console.log(`${filepath} -> ${output.file} (${duration})`);
 
-            return {
-              filepath: output.file as string,
-              format: output.format as "cjs" | "es",
-            };
+            options.onBuildComplete &&
+              options.onBuildComplete({
+                filepath: output.file as string,
+                format: output.format as "cjs" | "es",
+              });
           } catch (e) {
             console.error(e.toString());
             process.exit(1);
@@ -165,6 +173,77 @@ export const buildFiles = async (
       );
 
       options.onBuildComplete && options.onBuildComplete(outputs);
+    } else {
+      // only need a label prefix when more than one input
+      const label =
+        filepaths.length === 1 ? "" : formatRandomColor(`[${filepath}] `);
+      const prefixLabel = (s: string) =>
+        `${label}${s.split("\n").join(`\n${label}`)}`;
+
+      const watcher = rollup.watch({
+        ...rollupConfig,
+        watch: {
+          exclude: ["node_modules/**", "dist/**", "coverage/**"],
+          buildDelay: 300,
+        },
+      });
+      let start = 0;
+      let end = 0;
+
+      watcher.on("event", async (event) => {
+        switch (event.code) {
+          case "START": {
+            start = Date.now();
+            break;
+          }
+          case "BUNDLE_START": {
+            break;
+          }
+          case "BUNDLE_END": {
+            break;
+          }
+          case "END": {
+            end = Date.now();
+            const time = prettyMs(end - start);
+
+            for (let output of outputOptions) {
+              console.log(
+                prefixLabel(`${filepath} -> ${output.file} (${time} combined)`)
+              );
+            }
+
+            if (!options.skipTypecheck) {
+              try {
+                // typecheck({ files: filesToTypecheck[filepath] });
+                // console.log(
+                //   prefixLabel("Type definition files written to dist/")
+                // );
+              } catch (e) {
+                console.log(prefixLabel(e.toString()));
+              }
+            }
+
+            for (let output of outputOptions) {
+              options.onBuildComplete &&
+                options.onBuildComplete({
+                  filepath: output.file as string,
+                  format: output.format as "cjs" | "es",
+                });
+            }
+
+            console.log(prefixLabel("Watching for changes..."));
+            break;
+          }
+          case "ERROR": {
+            console.error(prefixLabel(event.error.toString()));
+            console.log(prefixLabel("Watching for changes..."));
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      });
     }
   }
 };

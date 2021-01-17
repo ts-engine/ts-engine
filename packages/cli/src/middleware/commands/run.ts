@@ -27,33 +27,38 @@ export const run = () => async (
     }
   };
 
-  const onBuildComplete = (
-    outputs: { filepath: string; format: "cjs" | "es" }[]
-  ) => {
-    const output = outputs.find((o) => o.format === "cjs");
-    killRunner();
-    runner = spawn("node", [output!.filepath, ...forwardedArgs], {
-      stdio: "inherit",
-    });
+  const onBuildComplete = (output: {
+    filepath: string;
+    format: "cjs" | "es";
+  }) => {
+    if (output.format === "cjs") {
+      killRunner();
+      runner = spawn("node", [output!.filepath, ...forwardedArgs], {
+        stdio: "inherit",
+      });
 
-    runner!.stdout?.setEncoding("utf8");
-    runner!.stderr?.setEncoding("utf8");
+      runner!.stdout?.setEncoding("utf8");
+      runner!.stderr?.setEncoding("utf8");
 
-    // forward code of child process
-    runner.on("close", (code) => {
-      process.exit(code ?? 0);
-    });
+      // forward code of child process if not in watch mode
+      if (!ctx.options.watch) {
+        runner.on("close", (code) => {
+          process.exit(code ?? 0);
+        });
+      }
+    }
   };
 
-  // wrap final action in a promise that we will never resolve, we want the user kill the process or the app closing to
-  return new Promise(() => {
-    buildFiles([filepath], {
-      minify: ctx.options.minify,
-      skipTypecheck: ctx.options["skip-typecheck"],
-      watch: ctx.options.watch,
-      srcDir: ctx.package.srcDir,
-      throw: ctx.throw,
-      onBuildComplete,
-    });
+  await buildFiles([filepath], {
+    minify: ctx.options.minify,
+    skipTypecheck: ctx.options["skip-typecheck"],
+    watch: ctx.options.watch,
+    srcDir: ctx.package.srcDir,
+    throw: ctx.throw,
+    onBuildComplete,
   });
+
+  // wait for promise that will never resolve,
+  // we want the user kill the process or the app closing to
+  await new Promise(() => {});
 };

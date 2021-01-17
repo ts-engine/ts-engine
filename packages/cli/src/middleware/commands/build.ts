@@ -22,5 +22,11 @@ export const build = () => async (
     throw: ctx.throw,
   });
 
+  // if in watch mode wait for promise that will never resolve,
+  // we want the user kill the process or the app closing to
+  if (ctx.options.watch) {
+    await new Promise(() => {});
+  }
+
   await next();
 };
