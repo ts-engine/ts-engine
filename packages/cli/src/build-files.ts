@@ -151,7 +151,7 @@ export const buildFiles = async (
         ...rollupConfig,
       });
 
-      const outputs = await Promise.all(
+      await Promise.all(
         outputOptions.map(async (output: OutputOptions) => {
           const start = Date.now();
           try {
@@ -171,8 +171,6 @@ export const buildFiles = async (
           }
         })
       );
-
-      options.onBuildComplete && options.onBuildComplete(outputs);
     } else {
       // only need a label prefix when more than one input
       const label =
@@ -200,6 +198,8 @@ export const buildFiles = async (
             break;
           }
           case "BUNDLE_END": {
+            // important to call this as per rollup docs so plugins can properly clean up
+            event.result.close();
             break;
           }
           case "END": {
