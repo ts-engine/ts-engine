@@ -21,5 +21,11 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: Typecheck
+        run: yarn typecheck
+
       - name: Test
         run: yarn test -- -- --coverage
+
+      - name: Test
+        run: yarn test:integration
