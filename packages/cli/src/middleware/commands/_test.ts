@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs-extra";
 import { Context, NextFunction } from "@leecheneler/cli";
-import { run } from "../../jest-proxy";
+import { run } from "../../jest";
 import { SUPPORTED_EXTENSIONS_REGEX } from "../../constants";
 
 export const BASE_JEST_CONFIG = {

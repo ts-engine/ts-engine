@@ -3,9 +3,9 @@ import { mockConsole } from "../test-utils/console";
 import { createCli } from "../src/cli";
 import { createPackageJsonMock } from "../test-utils/package-json";
 import { BASE_JEST_CONFIG } from "../src/middleware/commands/_test";
-import { run } from "../src/jest-proxy";
+import { run } from "../src/jest";
 
-jest.mock("../src/jest-proxy", () => {
+jest.mock("../src/jest", () => {
   return {
     run: jest.fn(),
   };
