@@ -5,10 +5,12 @@ const fixtures = {
   react: createFixture("run-react"),
   syntaxError: createFixture("run-syntax-error"),
   typeError: createFixture("run-type-error"),
+  minify: createFixture("run-minify"),
 };
 
 beforeEach(async () => {
   await fixtures.normal.reset();
+  await fixtures.minify.reset();
   await fixtures.react.reset();
   await fixtures.syntaxError.reset();
   await fixtures.typeError.reset();
@@ -61,6 +63,41 @@ it("should report type errors", async () => {
   expect(tseResult.stderr).toMatch(
     /Type 'string' is not assignable to type 'number'/
   );
+});
+
+it("should skip typecheck", async () => {
+  const tseResult = fixtures.typeError.runTse(
+    "run src/index.ts --skip-typecheck"
+  );
+
+  expect(tseResult.status).toBe(0);
+  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.cjs/);
+  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.js/);
+  expect(tseResult.stdout).toMatch(/1 \+ 2 = 3/);
+});
+
+it("should minify", async () => {
+  const unminifiedResult = fixtures.minify.runTse("run src/index.ts");
+
+  expect(unminifiedResult.status).toBe(0);
+  expect(unminifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.cjs/);
+  expect(unminifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.js/);
+  expect(unminifiedResult.stdout).toMatch(/minify me!/);
+
+  const unminifiedLength = (await fixtures.minify.readFile("dist/index.js"))
+    .length;
+
+  const minifiedResult = fixtures.minify.runTse("run src/index.ts --minify");
+
+  expect(minifiedResult.status).toBe(0);
+  expect(minifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.cjs/);
+  expect(minifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.js/);
+  expect(unminifiedResult.stdout).toMatch(/minify me!/);
+
+  const minifiedLength = (await fixtures.minify.readFile("dist/index.js"))
+    .length;
+
+  expect(unminifiedLength).toBeGreaterThan(minifiedLength);
 });
 
 it.skip("should watch for changes", async () => {

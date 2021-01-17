@@ -50,6 +50,7 @@ type FixtureName =
   | "lint-warning"
   | "lint-no-files"
   | "run-normal"
+  | "run-minify"
   | "run-react"
   | "run-syntax-error"
   | "run-type-error"

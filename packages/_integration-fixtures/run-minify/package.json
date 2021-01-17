@@ -1,5 +1,5 @@
 {
-  "name": "@integration-fixtures/test-no-tests",
+  "name": "@integration-fixtures/run-minify",
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
