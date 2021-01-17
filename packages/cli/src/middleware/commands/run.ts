@@ -30,9 +30,11 @@ export const run = () => async (
   const onBuildComplete = (output: {
     filepath: string;
     format: "cjs" | "es";
+    passedTypecheck: boolean;
   }) => {
-    if (output.format === "cjs") {
+    if (output.format === "cjs" && output.passedTypecheck) {
       killRunner();
+
       runner = spawn("node", [output!.filepath, ...forwardedArgs], {
         stdio: "inherit",
       });

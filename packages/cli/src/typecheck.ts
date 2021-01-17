@@ -4,39 +4,37 @@ import typescript from "typescript";
 import glob from "glob-promise";
 import prettyMs from "pretty-ms";
 
+const typeScriptOptions: typescript.CompilerOptions = {
+  declaration: true,
+  esModuleInterop: true,
+  jsx: typescript.JsxEmit.React,
+  lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
+  resolveJsonModule: true,
+  skipLibCheck: true,
+  strict: true,
+  outDir: "dist",
+  allowJs: true,
+  experimentalDecorators: true,
+  emitDecoratorMetadata: true,
+  allowSyntheticDefaultImports: true,
+  noEmitOnError: true,
+  listEmittedFiles: true,
+};
+
+const typescriptHost = typescript.createCompilerHost(typeScriptOptions);
 interface ProcessFilesOptions {
   emitTypes: boolean;
-}
-
-interface ProcessFilesResult {
-  passed: boolean;
-  output: string;
 }
 
 const processFiles = async (
   files: string[],
   options: ProcessFilesOptions
-): Promise<ProcessFilesResult> => {
-  const typeScriptOptions: typescript.CompilerOptions = {
+): Promise<typescript.Diagnostic[]> => {
+  const program = typescript.createProgram(files, {
+    ...typeScriptOptions,
     noEmit: !options.emitTypes,
-    declaration: true,
     emitDeclarationOnly: options.emitTypes,
-    esModuleInterop: true,
-    jsx: typescript.JsxEmit.React,
-    lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
-    resolveJsonModule: true,
-    skipLibCheck: true,
-    strict: true,
-    outDir: "dist",
-    allowJs: true,
-    experimentalDecorators: true,
-    emitDecoratorMetadata: true,
-    allowSyntheticDefaultImports: true,
-    noEmitOnError: true,
-    listEmittedFiles: true,
-  };
-
-  const program = typescript.createProgram(files, typeScriptOptions);
+  });
   const emitResult = program.emit();
   const diagnostics = typescript
     .getPreEmitDiagnostics(program)
@@ -47,26 +45,10 @@ const processFiles = async (
     await fs.copyFile(file, file.replace(".d.ts", ".cjs.d.ts"));
   }
 
-  if (diagnostics.length > 0) {
-    const host = typescript.createCompilerHost(typeScriptOptions);
-    const output = typescript.formatDiagnosticsWithColorAndContext(
-      diagnostics,
-      host
-    );
-
-    return {
-      passed: false,
-      output: output,
-    };
-  }
-
-  return {
-    passed: true,
-    output: "",
-  };
+  return diagnostics;
 };
 
-interface RunTypescriptResult {
+export interface RunTypescriptResult {
   passed: boolean;
   output: string;
 }
@@ -91,8 +73,10 @@ export const typecheck = async (): Promise<RunTypescriptResult> => {
     .filter((p) => !p.includes("/dist/"))
     .filter((p) => !p.includes("/coverage/"));
 
-  const testFilesResult = await processFiles(testFiles, { emitTypes: false });
-  const sourceFilesResult = await processFiles(sourceFiles, {
+  const testFilesDiagnostics = await processFiles(testFiles, {
+    emitTypes: false,
+  });
+  const sourceFilesDiagnostics = await processFiles(sourceFiles, {
     emitTypes: true,
   });
 
@@ -100,17 +84,41 @@ export const typecheck = async (): Promise<RunTypescriptResult> => {
   const duration = prettyMs(endMs - startMs);
   const totalFiles = sourceFiles.length + testFiles.length;
 
-  if (sourceFilesResult.passed && testFilesResult.passed) {
+  const diagnostics = [...testFilesDiagnostics, ...sourceFilesDiagnostics];
+
+  if (diagnostics.length === 0) {
     return {
       passed: true,
       output: `Typechecked ${totalFiles} files in ${duration}.`,
     };
-  } else {
-    const output = `${sourceFilesResult.output}${testFilesResult.output}`;
-
-    return {
-      passed: false,
-      output: `Typechecked ${totalFiles} files in ${duration}.\n\n${output}`,
-    };
   }
+
+  const normalisedDiagnostics: typescript.Diagnostic[] = [];
+
+  for (let d of diagnostics) {
+    const exists = normalisedDiagnostics.find(
+      (nd) =>
+        nd.category === d.category &&
+        nd.code === d.code &&
+        nd.file?.fileName === d.file?.fileName &&
+        nd.length === d.length &&
+        nd.messageText === d.messageText &&
+        nd.source === d.source &&
+        nd.start === d.start
+    );
+
+    if (!exists) {
+      normalisedDiagnostics.push(d);
+    }
+  }
+
+  const output = typescript.formatDiagnosticsWithColorAndContext(
+    normalisedDiagnostics,
+    typescriptHost
+  );
+
+  return {
+    passed: false,
+    output: `Typechecked ${totalFiles} files in ${duration}.\n\n${output}`,
+  };
 };

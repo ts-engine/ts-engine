@@ -13,7 +13,7 @@ import prettyMs from "pretty-ms";
 import chalk from "chalk";
 import randomColor from "randomcolor";
 import { SUPPORTED_EXTENSIONS_WITH_DOTS } from "./constants";
-import { typecheck } from "./typecheck";
+import { RunTypescriptResult, typecheck } from "./typecheck";
 
 export const formatRandomColor = (str: string) => {
   return chalk.hex(randomColor({ luminosity: "bright" }))(str);
@@ -107,6 +107,7 @@ interface BuildFilesOptions {
   onBuildComplete?: (output: {
     filepath: string;
     format: "cjs" | "es";
+    passedTypecheck: boolean;
   }) => void;
 }
 
@@ -127,8 +128,8 @@ export const buildFiles = async (
     }
   }
 
-  // typecheck
-  if (!options.skipTypecheck) {
+  // typecheck only if not in watch mode
+  if (!options.skipTypecheck && !options.watch) {
     const result = await typecheck();
 
     if (result.passed) {
@@ -164,6 +165,7 @@ export const buildFiles = async (
               options.onBuildComplete({
                 filepath: output.file as string,
                 format: output.format as "cjs" | "es",
+                passedTypecheck: true,
               });
           } catch (e) {
             console.error(e.toString());
@@ -212,15 +214,10 @@ export const buildFiles = async (
               );
             }
 
+            let typecheckResult: RunTypescriptResult | null = null;
             if (!options.skipTypecheck) {
-              try {
-                // typecheck({ files: filesToTypecheck[filepath] });
-                // console.log(
-                //   prefixLabel("Type definition files written to dist/")
-                // );
-              } catch (e) {
-                console.log(prefixLabel(e.toString()));
-              }
+              typecheckResult = await typecheck();
+              console.log(prefixLabel(typecheckResult.output));
             }
 
             for (let output of outputOptions) {
@@ -228,6 +225,7 @@ export const buildFiles = async (
                 options.onBuildComplete({
                   filepath: output.file as string,
                   format: output.format as "cjs" | "es",
+                  passedTypecheck: typecheckResult?.passed ?? true,
                 });
             }
 
