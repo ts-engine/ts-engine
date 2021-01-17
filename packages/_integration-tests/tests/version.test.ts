@@ -9,7 +9,7 @@ beforeEach(async () => {
   await fixtures.version.reset();
 });
 
-it("should build", async () => {
+it("should display version", async () => {
   const tseResult = fixtures.version.runTse("version");
 
   expect(tseResult.status).toBe(0);

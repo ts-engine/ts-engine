@@ -14,7 +14,7 @@ beforeEach(async () => {
   await fixtures.typeError.reset();
 });
 
-it("should build", async () => {
+it("should run", async () => {
   const tseResult = fixtures.normal.runTse("run src/index.ts");
 
   expect(tseResult.status).toBe(0);
@@ -24,7 +24,7 @@ it("should build", async () => {
   expect(tseResult.stdout).toMatch(/hello world/);
 });
 
-it("should build react", async () => {
+it("should run react", async () => {
   const tseResult = fixtures.react.runTse("run src/index.tsx");
 
   expect(tseResult.status).toBe(0);
