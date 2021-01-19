@@ -98,8 +98,32 @@ const buildRollupConfig = (
   };
 };
 
+interface AssertFilepathsOptions {
+  throw: (code: number, message: string) => void;
+  srcDir: string;
+}
+
+const assertFilepaths = (
+  filepaths: string[],
+  options: AssertFilepathsOptions
+) => {
+  for (let filepath of filepaths) {
+    const absoluteFilepath = path.resolve(filepath);
+
+    if (!absoluteFilepath.startsWith(options.srcDir)) {
+      options.throw(
+        1,
+        chalk.redBright`${filepath} is not inside the src directory.`
+      );
+    }
+
+    if (!fs.pathExistsSync(absoluteFilepath)) {
+      options.throw(1, chalk.redBright`${filepath} not found.`);
+    }
+  }
+};
+
 interface BuildFilesOptions {
-  watch: boolean;
   minify: boolean;
   skipTypecheck: boolean;
   srcDir: string;
@@ -115,21 +139,7 @@ export const buildFiles = async (
   filepaths: string[],
   options: BuildFilesOptions
 ) => {
-  // assert all filepaths exist and are inside src/
-  for (let filepath of filepaths) {
-    const absoluteFilepath = path.resolve(filepath);
-
-    if (!absoluteFilepath.startsWith(options.srcDir)) {
-      options.throw(
-        1,
-        chalk.redBright`${filepath} is not inside the src directory.`
-      );
-    }
-
-    if (!fs.pathExistsSync(absoluteFilepath)) {
-      options.throw(1, chalk.redBright`${filepath} not found.`);
-    }
-  }
+  assertFilepaths(filepaths, { srcDir: options.srcDir, throw: options.throw });
 
   const allOutputOptions: OutputOptions[] = [];
 
@@ -142,129 +152,152 @@ export const buildFiles = async (
     const outputOptions = rollupConfig.output as OutputOptions[];
     allOutputOptions.push(...outputOptions);
 
-    if (!options.watch) {
-      try {
-        const bundle = await rollup.rollup({
-          ...rollupConfig,
-        });
-
-        await Promise.all(
-          outputOptions.map(async (output: OutputOptions) => {
-            const start = Date.now();
-            await bundle.write(output);
-            const end = Date.now();
-            const duration = prettyMs(end - start);
-            console.log(
-              chalk.cyan`${filepath} ${chalk.bold`->`} ${
-                output.file
-              } (${chalk.bold`${duration}`})`
-            );
-          })
-        );
-      } catch (e) {
-        options.throw(1, chalk.redBright(e));
-      }
-    } else {
-      // only need a label prefix when more than one input
-      const label =
-        filepaths.length === 1 ? "" : formatRandomColor(`[${filepath}] `);
-      const prefixLabel = (s: string) =>
-        `${label}${s.split("\n").join(`\n${label}`)}`;
-      let currentError: rollup.RollupError | null = null;
-
-      const watcher = rollup.watch({
+    try {
+      const bundle = await rollup.rollup({
         ...rollupConfig,
-        watch: {
-          exclude: ["node_modules/**", "dist/**", "coverage/**"],
-          buildDelay: 300,
-        },
       });
-      let start = 0;
-      let end = 0;
 
-      watcher.on("event", async (event) => {
-        switch (event.code) {
-          case "START": {
-            start = Date.now();
-            break;
-          }
-          case "BUNDLE_START": {
-            break;
-          }
-          case "BUNDLE_END": {
-            // important to call this as per rollup docs so plugins can properly clean up
-            event.result.close();
-            break;
-          }
-          case "END": {
-            end = Date.now();
-            const time = prettyMs(end - start);
-
-            if (currentError) {
-              console.error(prefixLabel(chalk.redBright(currentError)));
-              currentError = null;
-            } else {
-              for (let output of outputOptions) {
-                console.log(
-                  prefixLabel(
-                    chalk.cyan`${filepath} ${chalk.bold`->`} ${
-                      output.file
-                    } (${chalk.bold`${time}`})`
-                  )
-                );
-              }
-
-              let typecheckResult: RunTypescriptResult | null = null;
-              if (!options.skipTypecheck) {
-                typecheckResult = await typecheck(filepaths);
-                console.log(prefixLabel(typecheckResult.output));
-              }
-
-              for (let output of outputOptions) {
-                options.onBuildComplete &&
-                  options.onBuildComplete({
-                    filepath: output.file as string,
-                    format: output.format as "cjs" | "es",
-                    passedTypecheck: typecheckResult?.passed ?? true,
-                  });
-              }
-            }
-
-            console.log(prefixLabel(chalk.grey`Watching for changes...`));
-            break;
-          }
-          case "ERROR": {
-            currentError = event.error;
-            break;
-          }
-          default: {
-            break;
-          }
-        }
-      });
+      await Promise.all(
+        outputOptions.map(async (output: OutputOptions) => {
+          const start = Date.now();
+          await bundle.write(output);
+          const end = Date.now();
+          const duration = prettyMs(end - start);
+          console.log(
+            chalk.cyan`${filepath} ${chalk.bold`->`} ${
+              output.file
+            } (${chalk.bold`${duration}`})`
+          );
+        })
+      );
+    } catch (e) {
+      options.throw(1, chalk.redBright(e));
     }
   }
 
-  if (!options.watch) {
-    // typecheck only if not in watch mode
-    if (!options.skipTypecheck) {
-      const result = await typecheck(filepaths);
+  if (!options.skipTypecheck) {
+    const result = await typecheck(filepaths);
 
-      if (result.passed) {
-        console.log(result.output);
-      } else {
-        options.throw(1, result.output);
+    if (result.passed) {
+      console.log(result.output);
+    } else {
+      options.throw(1, result.output);
+    }
+  }
+
+  // report build succeeded for each output
+  for (let output of allOutputOptions) {
+    options.onBuildComplete &&
+      options.onBuildComplete({
+        filepath: output.file as string,
+        format: output.format as "cjs" | "es",
+        passedTypecheck: true,
+      });
+  }
+};
+
+interface BuildFilesAndWatchOptions {
+  minify: boolean;
+  skipTypecheck: boolean;
+  srcDir: string;
+  throw: (code: number, message: string) => void;
+  onBuildComplete?: (output: {
+    filepath: string;
+    format: "cjs" | "es";
+    passedTypecheck: boolean;
+  }) => void;
+}
+
+export const buildFilesAndWatch = async (
+  filepaths: string[],
+  options: BuildFilesAndWatchOptions
+) => {
+  assertFilepaths(filepaths, { srcDir: options.srcDir, throw: options.throw });
+
+  // build each file
+  for (let filepath of filepaths) {
+    const rollupConfig = buildRollupConfig({
+      input: filepath,
+      minify: options.minify,
+    });
+    const outputOptions = rollupConfig.output as OutputOptions[];
+
+    // only need a label prefix when more than one input
+    const label =
+      filepaths.length === 1 ? "" : formatRandomColor(`[${filepath}] `);
+    const prefixLabel = (s: string) =>
+      `${label}${s.split("\n").join(`\n${label}`)}`;
+    let currentError: rollup.RollupError | null = null;
+
+    const watcher = rollup.watch({
+      ...rollupConfig,
+      watch: {
+        exclude: ["node_modules/**", "dist/**", "coverage/**"],
+        buildDelay: 300,
+      },
+    });
+    let start = 0;
+    let end = 0;
+
+    watcher.on("event", async (event) => {
+      switch (event.code) {
+        case "START": {
+          start = Date.now();
+          break;
+        }
+        case "BUNDLE_START": {
+          break;
+        }
+        case "BUNDLE_END": {
+          // important to call this as per rollup docs so plugins can properly clean up
+          event.result.close();
+          break;
+        }
+        case "END": {
+          end = Date.now();
+          const time = prettyMs(end - start);
+
+          if (currentError) {
+            console.error(prefixLabel(chalk.redBright(currentError)));
+            currentError = null;
+          } else {
+            for (let output of outputOptions) {
+              console.log(
+                prefixLabel(
+                  chalk.cyan`${filepath} ${chalk.bold`->`} ${
+                    output.file
+                  } (${chalk.bold`${time}`})`
+                )
+              );
+            }
+
+            let typecheckResult: RunTypescriptResult | null = null;
+            if (!options.skipTypecheck) {
+              typecheckResult = await typecheck(filepaths);
+              console.log(prefixLabel(typecheckResult.output));
+            }
+
+            for (let output of outputOptions) {
+              options.onBuildComplete &&
+                options.onBuildComplete({
+                  filepath: output.file as string,
+                  format: output.format as "cjs" | "es",
+                  passedTypecheck: typecheckResult?.passed ?? true,
+                });
+            }
+          }
+
+          console.log(prefixLabel(chalk.grey`Watching for changes...`));
+          break;
+        }
+        case "ERROR": {
+          currentError = event.error;
+          break;
+        }
+        default: {
+          break;
+        }
       }
-    }
-
-    // report build succeeded for each output
-    for (let output of allOutputOptions) {
-      options.onBuildComplete &&
-        options.onBuildComplete({
-          filepath: output.file as string,
-          format: output.format as "cjs" | "es",
-          passedTypecheck: true,
-        });
-    }
+    });
   }
 };

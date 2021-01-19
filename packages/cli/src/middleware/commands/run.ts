@@ -1,7 +1,7 @@
 import { spawn, ChildProcess } from "child_process";
 import { Context } from "@leecheneler/cli";
 import { PackageJsonContext } from "../package-json";
-import { buildFiles } from "../../build-files";
+import { buildFiles, buildFilesAndWatch } from "../../build-files";
 
 interface RunOptions {
   watch: boolean;
@@ -51,14 +51,23 @@ export const run = () => async (
     }
   };
 
-  await buildFiles([filepath], {
-    minify: ctx.options.minify,
-    skipTypecheck: ctx.options["skip-typecheck"],
-    watch: ctx.options.watch,
-    srcDir: ctx.package.srcDir,
-    throw: ctx.throw,
-    onBuildComplete,
-  });
+  if (ctx.options.watch) {
+    await buildFilesAndWatch([filepath], {
+      minify: ctx.options.minify,
+      skipTypecheck: ctx.options["skip-typecheck"],
+      srcDir: ctx.package.srcDir,
+      throw: ctx.throw,
+      onBuildComplete,
+    });
+  } else {
+    await buildFiles([filepath], {
+      minify: ctx.options.minify,
+      skipTypecheck: ctx.options["skip-typecheck"],
+      srcDir: ctx.package.srcDir,
+      throw: ctx.throw,
+      onBuildComplete,
+    });
+  }
 
   // wait for promise that will never resolve,
   // we want the user kill the process or the app closing to
