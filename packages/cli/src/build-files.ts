@@ -120,24 +120,18 @@ export const buildFiles = async (
     const absoluteFilepath = path.resolve(filepath);
 
     if (!absoluteFilepath.startsWith(options.srcDir)) {
-      options.throw(1, `${filepath} is not inside the src directory.`);
+      options.throw(
+        1,
+        chalk.redBright`${filepath} is not inside the src directory.`
+      );
     }
 
     if (!fs.pathExistsSync(absoluteFilepath)) {
-      options.throw(1, `${filepath} not found.`);
+      options.throw(1, chalk.redBright`${filepath} not found.`);
     }
   }
 
-  // typecheck only if not in watch mode
-  if (!options.skipTypecheck && !options.watch) {
-    const result = await typecheck(filepaths);
-
-    if (result.passed) {
-      console.log(result.output);
-    } else {
-      options.throw(1, result.output);
-    }
-  }
+  const allOutputOptions: OutputOptions[] = [];
 
   // build each file
   for (let filepath of filepaths) {
@@ -146,39 +140,37 @@ export const buildFiles = async (
       minify: options.minify,
     });
     const outputOptions = rollupConfig.output as OutputOptions[];
+    allOutputOptions.push(...outputOptions);
 
     if (!options.watch) {
-      const bundle = await rollup.rollup({
-        ...rollupConfig,
-      });
+      try {
+        const bundle = await rollup.rollup({
+          ...rollupConfig,
+        });
 
-      await Promise.all(
-        outputOptions.map(async (output: OutputOptions) => {
-          const start = Date.now();
-          try {
+        await Promise.all(
+          outputOptions.map(async (output: OutputOptions) => {
+            const start = Date.now();
             await bundle.write(output);
             const end = Date.now();
             const duration = prettyMs(end - start);
-            console.log(`${filepath} -> ${output.file} (${duration})`);
-
-            options.onBuildComplete &&
-              options.onBuildComplete({
-                filepath: output.file as string,
-                format: output.format as "cjs" | "es",
-                passedTypecheck: true,
-              });
-          } catch (e) {
-            console.error(e.toString());
-            process.exit(1);
-          }
-        })
-      );
+            console.log(
+              chalk.cyan`${filepath} ${chalk.bold`->`} ${
+                output.file
+              } (${chalk.bold`${duration}`})`
+            );
+          })
+        );
+      } catch (e) {
+        options.throw(1, chalk.redBright(e));
+      }
     } else {
       // only need a label prefix when more than one input
       const label =
         filepaths.length === 1 ? "" : formatRandomColor(`[${filepath}] `);
       const prefixLabel = (s: string) =>
         `${label}${s.split("\n").join(`\n${label}`)}`;
+      let currentError: rollup.RollupError | null = null;
 
       const watcher = rollup.watch({
         ...rollupConfig,
@@ -208,33 +200,41 @@ export const buildFiles = async (
             end = Date.now();
             const time = prettyMs(end - start);
 
-            for (let output of outputOptions) {
-              console.log(
-                prefixLabel(`${filepath} -> ${output.file} (${time} combined)`)
-              );
+            if (currentError) {
+              console.error(prefixLabel(chalk.redBright(currentError)));
+              currentError = null;
+            } else {
+              for (let output of outputOptions) {
+                console.log(
+                  prefixLabel(
+                    chalk.cyan`${filepath} ${chalk.bold`->`} ${
+                      output.file
+                    } (${chalk.bold`${time}`})`
+                  )
+                );
+              }
+
+              let typecheckResult: RunTypescriptResult | null = null;
+              if (!options.skipTypecheck) {
+                typecheckResult = await typecheck(filepaths);
+                console.log(prefixLabel(typecheckResult.output));
+              }
+
+              for (let output of outputOptions) {
+                options.onBuildComplete &&
+                  options.onBuildComplete({
+                    filepath: output.file as string,
+                    format: output.format as "cjs" | "es",
+                    passedTypecheck: typecheckResult?.passed ?? true,
+                  });
+              }
             }
 
-            let typecheckResult: RunTypescriptResult | null = null;
-            if (!options.skipTypecheck) {
-              typecheckResult = await typecheck(filepaths);
-              console.log(prefixLabel(typecheckResult.output));
-            }
-
-            for (let output of outputOptions) {
-              options.onBuildComplete &&
-                options.onBuildComplete({
-                  filepath: output.file as string,
-                  format: output.format as "cjs" | "es",
-                  passedTypecheck: typecheckResult?.passed ?? true,
-                });
-            }
-
-            console.log(prefixLabel("Watching for changes..."));
+            console.log(prefixLabel(chalk.grey`Watching for changes...`));
             break;
           }
           case "ERROR": {
-            console.error(prefixLabel(event.error.toString()));
-            console.log(prefixLabel("Watching for changes..."));
+            currentError = event.error;
             break;
           }
           default: {
@@ -242,6 +242,29 @@ export const buildFiles = async (
           }
         }
       });
+    }
+  }
+
+  if (!options.watch) {
+    // typecheck only if not in watch mode
+    if (!options.skipTypecheck) {
+      const result = await typecheck(filepaths);
+
+      if (result.passed) {
+        console.log(result.output);
+      } else {
+        options.throw(1, result.output);
+      }
+    }
+
+    // report build succeeded for each output
+    for (let output of allOutputOptions) {
+      options.onBuildComplete &&
+        options.onBuildComplete({
+          filepath: output.file as string,
+          format: output.format as "cjs" | "es",
+          passedTypecheck: true,
+        });
     }
   }
 };

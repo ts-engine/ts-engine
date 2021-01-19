@@ -3,6 +3,7 @@ import fs from "fs-extra";
 import typescript from "typescript";
 import glob from "glob-promise";
 import prettyMs from "pretty-ms";
+import chalk from "chalk";
 
 const typeScriptOptions: typescript.CompilerOptions = {
   declaration: true,
@@ -106,7 +107,7 @@ export const typecheck = async (
   if (diagnostics.length === 0) {
     return {
       passed: true,
-      output: `Typechecked ${totalFiles} files in ${duration}.`,
+      output: chalk.green`Typechecked ${chalk.bold`${totalFiles}`} files (${chalk.bold`${duration}`})`,
     };
   }
 
@@ -136,6 +137,6 @@ export const typecheck = async (
 
   return {
     passed: false,
-    output: `Typechecked ${totalFiles} files in ${duration}.\n\n${output}`,
+    output: chalk.redBright`Typechecked ${chalk.bold`${totalFiles}`} files (${chalk.bold`${duration}`}).\n\n${output}`,
   };
 };

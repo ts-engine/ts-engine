@@ -47,10 +47,9 @@ it("should report syntax errors", async () => {
   const tseResult = fixtures.syntaxError.runTse("run src/index.ts");
 
   expect(tseResult.status).toBe(1);
-  expect(tseResult.stderr).toMatch(/Typechecked 1 files/);
-  expect(tseResult.stderr).toMatch(/error/);
-  expect(tseResult.stderr).toMatch(/TS1128/);
-  expect(tseResult.stderr).toMatch(/Declaration or statement expected/);
+  expect(tseResult.stderr).toMatch(/SyntaxError:/);
+  expect(tseResult.stderr).toMatch(/Unexpected token/);
+  expect(tseResult.stderr).toMatch(/]]]/);
 });
 
 it("should report type errors", async () => {
