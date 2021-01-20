@@ -10,6 +10,8 @@ interface LayoutProps {
 }
 
 export const Layout = (props: LayoutProps) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
     <div>
       <header className="font-semibold font-mono p-2 md:p-4 bg-blue-500 text-white">
@@ -18,15 +20,36 @@ export const Layout = (props: LayoutProps) => {
             <div className="pr-4">
               <TsEngineSvg className="w-16 h-16 md:w-20 md:h-20" />
             </div>
-            <div className="text-xl md:text-3xl">ts-engine</div>
+            <div>
+              <div className="text-xl md:text-3xl">ts-engine</div>
+              <div className="text-xs md:text-md">{version}</div>
+            </div>
           </div>
-          <div className="text-sm md:text-lg">{version}</div>
+          <div className="p-4">
+            <a href="https://github.com/ts-engine/ts-engine">GitHub</a>
+          </div>
         </div>
       </header>
       <div className="flex flex-col md:flex-row">
-        <aside className="pb-4 pl-0 md:p-6">
-          <Directory docs={props.docs} />
+        <aside className="p-6 pb-0 md:p-6">
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-md bg-blue-500 text-white"
+            >
+              {isOpen ? "Hide" : "Open"} Doc directory
+            </button>
+            {isOpen && (
+              <div className="pt-4">
+                <Directory docs={props.docs} />
+              </div>
+            )}
+          </div>
+          <div className="hidden md:block">
+            <Directory docs={props.docs} />
+          </div>
         </aside>
+
         <main className="container mx-auto p-6">{props.children}</main>
       </div>
     </div>
