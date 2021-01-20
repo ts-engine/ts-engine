@@ -1,57 +1,45 @@
 import React from "react";
 import { GetStaticProps } from "next";
 import { markdownToHtml } from "../../lib/markdown-to-html";
-import { getDocBySlug, getDocs } from "../../lib/docs";
-import { Directory } from "../../components/directory";
+import { getDocs, Doc } from "../../lib/docs";
+import { Layout } from "../../components/layout";
 
-interface DocProps {
+interface DocPageProps {
   docHtml: string;
-  currentSlug?: string;
-  pages: {
-    title: string;
-    slug: string;
-  }[];
+  docs: Doc[];
 }
 
-const Doc = (props: DocProps) => {
+const DocPage = (props: DocPageProps) => {
   return (
-    <>
-      <Directory pages={props.pages} currentSlug={props.currentSlug} />
+    <Layout docs={props.docs}>
       <article
-        className="prose lg:prose-xl"
+        className="prose lg:prose-lg"
         dangerouslySetInnerHTML={{ __html: props.docHtml }}
       ></article>
-    </>
+    </Layout>
   );
 };
 
-export default Doc;
+export default DocPage;
 
-export const getStaticProps: GetStaticProps<DocProps> = async (context) => {
+export const getStaticProps: GetStaticProps<DocPageProps> = async (context) => {
   const { slug } = context.params;
 
-  const doc = await getDocBySlug(slug as string);
+  const docs = await getDocs();
+  const doc = docs.find((d) => d.slug === slug);
   const docHtml = await markdownToHtml(doc.markdown);
 
-  const docs = await getDocs();
-  const pages = docs.map((d) => {
-    return {
-      title: d.title,
-      slug: d.slug,
-    };
-  });
-
-  const currentSlug = slug as string;
-
-  return { props: { docHtml, pages, currentSlug } };
+  return { props: { docHtml, docs } };
 };
 
 export const getStaticPaths = async () => {
   const docs = await getDocs();
 
-  const paths = docs.map((d) => {
-    return { params: { slug: d.slug } };
-  });
+  const paths = docs.map((d) => ({
+    params: {
+      slug: d.slug,
+    },
+  }));
 
   return {
     paths,
