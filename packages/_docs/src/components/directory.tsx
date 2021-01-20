@@ -1,5 +1,4 @@
 import React from "react";
-import { GetStaticProps } from "next";
 
 interface DirectoryProps {
   currentSlug?: string;

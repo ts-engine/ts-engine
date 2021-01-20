@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "lint": "tse lint ."
   },
   "dependencies": {
     "@mdx-js/loader": "^1.6.22",
@@ -24,6 +25,7 @@
     "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
+    "@ts-engine/cli": "2.0.0-beta.1",
     "@types/fs-extra": "^9.0.6",
     "@types/mdx-js__react": "^1.5.3",
     "@types/react": "^17.0.0",
