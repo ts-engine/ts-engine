@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Doc } from "../lib/docs";
 import { Directory } from "./directory";
 import TsEngineSvg from "../icons/ts-engine.svg";
@@ -21,12 +22,21 @@ export const Layout = (props: LayoutProps) => {
               <TsEngineSvg className="w-16 h-16 md:w-20 md:h-20" />
             </div>
             <div>
-              <div className="text-xl md:text-3xl">ts-engine</div>
+              <div>
+                <Link href="/">
+                  <a className="text-xl md:text-3xl">ts-engine</a>
+                </Link>
+              </div>
               <div className="text-xs md:text-md">{version}</div>
             </div>
           </div>
           <div className="p-4">
-            <a href="https://github.com/ts-engine/ts-engine">GitHub</a>
+            <a
+              className="hover:underline"
+              href="https://github.com/ts-engine/ts-engine"
+            >
+              GitHub
+            </a>
           </div>
         </div>
       </header>
