@@ -16,7 +16,9 @@ export const Directory = (props: DirectoryProps) => {
         {props.docs.map((p) => {
           const path = `/docs/${p.slug}`;
           const isActive = router.asPath === path;
-          const activeStyle = isActive ? "text-blue-500 underline" : "";
+          const activeStyle = isActive
+            ? "text-blue-500 underline font-bold"
+            : "";
 
           return (
             <li key={p.slug} className="pb-2">
