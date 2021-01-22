@@ -14,7 +14,7 @@ tse run src/index.ts
 tse run --watch src/index.ts
 
 # pass options your want forwarded to your app after the file you want to run
-tse run  src/index.ts --port 3000
+tse run src/index.ts --port 3000
 ```
 
 ## Options

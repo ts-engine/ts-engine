@@ -19,10 +19,10 @@ Build and typecheck your code using [Rollup](https://rollupjs.org/guide/en/), [T
 tse build src/index.ts
 ```
 
-Run your app in watch mode.
+Run your app directly from its TypeScript entry file.
 
 ```sh
-tse run --watch src/index.ts
+tse run src/index.ts
 ```
 
 Execute tests using [Jest](https://jestjs.io/).
