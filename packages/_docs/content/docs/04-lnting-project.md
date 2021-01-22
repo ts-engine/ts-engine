@@ -28,6 +28,12 @@ You can optionally provide a `.eslintrc` or `.eslintrc.js`. It will be automatic
 }
 ```
 
+ts-engine does not require an ESLint config file to be present in order to lint your code, however to get IDE hints you may want to add the above `.eslintrc` file to the root of your repository.
+
+## Prettier configuration
+
+[Prettier](https://prettier.io/) is supported out the box. No need to install it or even add a config file if you are happy with the default configuration. If you provide `.prettierrc` then it will automatically be applied.
+
 ## Options
 
 `--fix`
