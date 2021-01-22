@@ -48,17 +48,6 @@ Opt out of typechecking, this will also stop type declarations being produced.
 
 Watch for changes and rebuild.
 
-## Babel configuration
+## Configuration
 
-You can optionally provide a `.babelrc` or `babel.config.js`. It will be automatically picked up and applied. You can either provide your own config completely or extend ts-engine's default Babel configuration.
-
-```js
-module.exports = {
-  presets: ["@ts-engine/babel-preset"],
-  // your config goes here
-};
-```
-
-## React support
-
-[React](https://reactjs.org/) is supported out the box. If `react` is found in your `package.json` then React's [Babel](https://babeljs.io/) preset is applied automatically. This means your builds and tests will support JSX.
+Babel configuration is supported, see [Configuration](/docs/configuration).
