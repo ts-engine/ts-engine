@@ -29,4 +29,4 @@ The React ESLint config for ts-engine. React config is now applied automatically
 
 [`@ts-engine/babel-preset-react`](https://www.npmjs.com/package/@ts-engine/babel-preset-react)
 
-A Babel preset for ts-engine with The React support. React config is now applied automatically if React is detected.
+A Babel preset for ts-engine with React support. React config is now applied automatically if React is detected.

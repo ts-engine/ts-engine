@@ -2,9 +2,9 @@
 
 > Write TypeScript packages with optionally zero configuration.
 
-Setting up new [TypeScript](typescriptlang.org) packages is annoying. Installing the same packages over and over again, writing the same configuration files over and over again. Such duplication is pain and its easy for you tooling version to drift across mutliple packages if you maintain many.
+Setting up new [TypeScript](https://typescriptlang.org) packages is annoying. Installing and configuring the same packages over and over again is tedious and it is easy for tool versions to drift across multiple packages.
 
-ts-engine does away with installing all those packages and setting up all that configuration by providing all of it preconfigured via a single dependency.
+ts-engine aims to reduce package setup effort drastically. With just one dependency and optionally no configuration you can build, test and lint your packages.
 
 ```sh
 yarn add --dev @ts-engine/cli
