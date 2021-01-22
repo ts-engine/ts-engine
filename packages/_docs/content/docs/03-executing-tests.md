@@ -27,6 +27,17 @@ You can optionally provide a `jest.config.js` file. It will be automatically pic
 
 `jest.setup.ts` or `jest.setup.js` can optionally be provided. It will be automatically applied to `setupFilesAfterEnv` in Jest config. If both `jest.setup.ts` and `jest.setup.js` are found then only `jest.setup.ts` is applied.
 
-## Babel
+## Babel configuration
 
-[Babel](https://babeljs.io/) configuration files like `.babelrc` and `babel.config.js` are also automatically picked up.
+You can optionally provide a `.babelrc` or `babel.config.js`. It will be automatically picked up and applied. You can either provide your own config completely or extend ts-engine's default Babel configuration.
+
+```js
+module.exports = {
+  presets: ["@ts-engine/babel-preset"],
+  // your config goes here
+};
+```
+
+## React support
+
+[React](https://reactjs.org/) is supported out the box. If `react` is found in your `package.json` React's [Babel](https://babeljs.io/) preset is applied automatically. This means your builds and tests will support JSX.

@@ -18,7 +18,7 @@ tse build src/index.ts src/test-utils/test-harness.ts
 
 Build output is written to `dist/`, the output directory structure matches the input structure. CommonJS and ES Module outputs are produced as well as type declarations and sourcemaps.
 
-```sh
+```
 src/index.ts -> dist/index.js
              -> dist/index.js.map
              -> dist/index.d.ts
@@ -50,7 +50,7 @@ Watch for changes and rebuild.
 
 ## Babel configuration
 
-You can supply your own Babel configuration the usual way via `.babelrc` or `babel.config.js`. This will be picked up and used. You can either provide your own config completely or extend ts-engine's default Babel configuration.
+You can optionally provide a `.babelrc` or `babel.config.js`. It will be automatically picked up and applied. You can either provide your own config completely or extend ts-engine's default Babel configuration.
 
 ```js
 module.exports = {
@@ -58,3 +58,7 @@ module.exports = {
   // your config goes here
 };
 ```
+
+## React support
+
+[React](https://reactjs.org/) is supported out the box. If `react` is found in your `package.json` then React's [Babel](https://babeljs.io/) preset is applied automatically. This means your builds and tests will support JSX.
