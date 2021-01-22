@@ -1,9 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import { Doc } from "../lib/docs";
+import {
+  AiOutlineGithub,
+  AiOutlineMenuFold,
+  AiOutlineMenuUnfold,
+} from "react-icons/ai";
+import { Doc } from "../lib/content";
 import { Directory } from "./directory";
 import TsEngineSvg from "../icons/ts-engine.svg";
 import { version } from "../../package.json";
+import { Icon } from "./icon";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,52 +20,69 @@ export const Layout = (props: LayoutProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div>
+    <div className="pb-12">
       <header className="font-semibold font-mono p-2 md:p-4 bg-blue-500 text-white">
         <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="pr-4">
-              <TsEngineSvg className="w-16 h-16 md:w-20 md:h-20" />
-            </div>
-            <div>
-              <div>
-                <Link href="/">
-                  <a className="text-xl md:text-3xl">ts-engine</a>
-                </Link>
+          <Link href="/">
+            <a className="text-xl md:text-3xl">
+              <div className="flex items-center">
+                <div className="pr-4">
+                  <Icon
+                    icon={TsEngineSvg}
+                    className="w-16 h-16 md:w-20 md:h-20"
+                    label="ts-engine logo"
+                  />
+                </div>
+                <div>
+                  <div>ts-engine</div>
+                  <div className="text-xs md:text-lg">{version}</div>
+                </div>
               </div>
-              <div className="text-xs md:text-md">{version}</div>
-            </div>
-          </div>
+            </a>
+          </Link>
           <div className="p-4">
             <a
               className="hover:underline"
               href="https://github.com/ts-engine/ts-engine"
             >
-              GitHub
+              <Icon
+                icon={AiOutlineGithub}
+                className="w-8 h-8 md:w-10 md:h-10"
+                label="Go to GitHub"
+              />
             </a>
           </div>
         </div>
       </header>
       <div className="flex flex-col md:flex-row">
         <aside className="p-6 pb-0 md:p-6">
-          <div className="md:hidden">
+          <div className="md:hidden border-b-2 pb-6">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-md bg-blue-500 text-white"
             >
-              {isOpen ? "Hide" : "Open"} Doc directory
+              <Icon
+                icon={isOpen ? AiOutlineMenuFold : AiOutlineMenuUnfold}
+                label={isOpen ? "Close directory" : "Open directory"}
+                className="w-6 h-6"
+              />
             </button>
             {isOpen && (
               <div className="pt-4">
-                <Directory docs={props.docs} />
+                <Directory
+                  docs={props.docs}
+                  onNavigation={() => setIsOpen(false)}
+                />
               </div>
             )}
           </div>
-          <div className="hidden md:block">
-            <Directory docs={props.docs} />
+          <div className="hidden md:block border-r-2 pr-6 w-56 sticky top-6">
+            <Directory
+              docs={props.docs}
+              onNavigation={() => setIsOpen(false)}
+            />
           </div>
         </aside>
-
         <main className="container mx-auto p-6">{props.children}</main>
       </div>
     </div>

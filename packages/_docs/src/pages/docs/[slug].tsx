@@ -1,11 +1,10 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import { markdownToHtml } from "../../lib/markdown-to-html";
-import { getDocs, Doc } from "../../lib/docs";
+import { getDocs, Doc } from "../../lib/content";
 import { Layout } from "../../components/layout";
 
 interface DocPageProps {
-  docHtml: string;
+  doc: Doc;
   docs: Doc[];
 }
 
@@ -14,7 +13,7 @@ const DocPage = (props: DocPageProps) => {
     <Layout docs={props.docs}>
       <article
         className="prose lg:prose-lg"
-        dangerouslySetInnerHTML={{ __html: props.docHtml }}
+        dangerouslySetInnerHTML={{ __html: props.doc.html }}
       ></article>
     </Layout>
   );
@@ -27,9 +26,8 @@ export const getStaticProps: GetStaticProps<DocPageProps> = async (context) => {
 
   const docs = await getDocs();
   const doc = docs.find((d) => d.slug === slug);
-  const docHtml = await markdownToHtml(doc.markdown);
 
-  return { props: { docHtml, docs } };
+  return { props: { doc, docs } };
 };
 
 export const getStaticPaths = async () => {
