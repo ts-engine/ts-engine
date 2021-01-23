@@ -2,6 +2,7 @@ import React from "react";
 import { GetStaticProps } from "next";
 import { getDocs, Doc } from "../../lib/content";
 import { Layout } from "../../components/layout";
+import { Meta } from "../../components/meta";
 
 interface DocPageProps {
   doc: Doc;
@@ -10,12 +11,15 @@ interface DocPageProps {
 
 const DocPage = (props: DocPageProps) => {
   return (
-    <Layout docs={props.docs}>
-      <article
-        className="prose lg:prose-lg"
-        dangerouslySetInnerHTML={{ __html: props.doc.html }}
-      ></article>
-    </Layout>
+    <>
+      <Meta title={props.doc.title} />
+      <Layout docs={props.docs}>
+        <article
+          className="prose lg:prose-lg"
+          dangerouslySetInnerHTML={{ __html: props.doc.html }}
+        ></article>
+      </Layout>
+    </>
   );
 };
 

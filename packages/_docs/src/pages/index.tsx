@@ -1,5 +1,6 @@
 import React from "react";
 import { GetStaticProps } from "next";
+import { Meta } from "../components/meta";
 import { Layout } from "../components/layout";
 import { getDocs, Doc, getContentHtml } from "../lib/content";
 
@@ -10,12 +11,15 @@ interface IndexPageProps {
 
 const IndexPage = (props: IndexPageProps) => {
   return (
-    <Layout docs={props.docs}>
-      <article
-        className="prose lg:prose-lg"
-        dangerouslySetInnerHTML={{ __html: props.contentHtml }}
-      ></article>
-    </Layout>
+    <>
+      <Meta title="Home" />
+      <Layout docs={props.docs}>
+        <article
+          className="prose lg:prose-lg"
+          dangerouslySetInnerHTML={{ __html: props.contentHtml }}
+        ></article>
+      </Layout>
+    </>
   );
 };
 
