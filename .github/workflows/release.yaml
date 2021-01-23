@@ -40,4 +40,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          lerna publish from-package --yes
+          yarn run lerna publish from-package --yes
