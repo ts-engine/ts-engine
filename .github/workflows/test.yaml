@@ -2,7 +2,7 @@ name: Test
 
 on:
   release:
-    types: [prereleased]
+    types: [published]
 
 jobs:
   pipeline:
@@ -11,5 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Prereleased
-        run: echo "prereleased"
+      - name: Prerelease
+        if: "github.event.release.prerelease"
+        run: echo "prerelease"
+
+      - name: Release
+        if: "!github.event.release.prerelease"
+        run: echo "release"
