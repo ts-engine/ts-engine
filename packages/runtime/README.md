@@ -6,16 +6,11 @@
 </p>
 <h1 align="center">@ts-engine/runtime</h1>
 <p align="center">
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg" />
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Publish/badge.svg" />
+  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/CI/badge.svg" />
   <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine" />
 </p>
 
-The default runtime dependency for ts-engine.
-
-## Documentation
-
-Checkout the official docs over at https://ts-engine.dev.
+ts-engines runtime.
 
 ## Getting Started
 
@@ -24,3 +19,7 @@ Install the package.
 ```sh
 yarn add @ts-engine/runtime
 ```
+
+## Documentation
+
+Checkout the official docs over at https://ts-engine.dev.

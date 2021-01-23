@@ -1,7 +1,7 @@
 {
   "name": "@ts-engine/babel-preset",
   "version": "2.0.0-beta.1",
-  "description": "@ts-engine's Babel preset.",
+  "description": "ts-engine's Babel preset.",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"

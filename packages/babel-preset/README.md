@@ -6,16 +6,11 @@
 </p>
 <h1 align="center">@ts-engine/babel-preset</h1>
 <p align="center">
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg" />
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Publish/badge.svg" />
+  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/CI/badge.svg" />
   <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine" />
 </p>
 
-The default babel preset for ts-engine.
-
-## Documentation
-
-Checkout the official docs over at https://ts-engine.dev.
+ts-engine's Babel preset.
 
 ## Getting Started
 
@@ -25,15 +20,6 @@ Install the package
 yarn add --dev @ts-engine/babel-preset
 ```
 
-Create a babel config file
+## Documentation
 
-```js
-// .babel.config.js
-module.exports = {
-  presets: ["@ts-engine/babel-preset"],
-};
-```
-
-## React support
-
-This preset automatically applies `@babel/preset-react` if react is found in package.json.
+Checkout the official docs over at https://ts-engine.dev.

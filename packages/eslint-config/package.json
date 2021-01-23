@@ -1,7 +1,7 @@
 {
   "name": "@ts-engine/eslint-config",
   "version": "2.0.0-beta.1",
-  "description": "@ts-engine's ESLint config.",
+  "description": "ts-engine's ESLint config.",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
