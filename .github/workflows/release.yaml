@@ -28,16 +28,25 @@ jobs:
       - name: Test
         run: yarn test -- -- --coverage
 
-      - name: Integration Test
+      - name: Integration test
         run: |
           # need to reinstall to synmlink binaries for integration tests now the cli tool is built
           find . -name node_modules | xargs rm -rf
           yarn
           yarn test:integration
 
-      - name: Publish
+      - name: Prep publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          yarn run lerna publish from-package --yes
+
+      - name: Publish prerelease
+        if: "github.event.release.prerelease"
+        run: |
+          yarn run lerna publish --dist-tag next from-package --yes
+
+      - name: Publish release
+        if: "!github.event.release.prerelease"
+        run: |
+          yarn run lerna publish --dist-tag latest from-package --yes
