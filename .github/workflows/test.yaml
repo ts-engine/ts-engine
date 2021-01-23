@@ -1,0 +1,15 @@
+name: Test
+
+on:
+  release:
+    types: [prereleased]
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Prereleased
+        run: echo "prereleased"
