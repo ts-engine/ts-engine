@@ -7,10 +7,10 @@ Setting up new [TypeScript](https://typescriptlang.org) packages is annoying. In
 ts-engine aims to reduce package setup effort drastically. With just one dependency and optionally no configuration you can build, test and lint your packages.
 
 ```sh
-yarn add --dev @ts-engine/cli
+yarn add --dev @ts-engine/cli@next
 
 # for applications also install the runtime
-yarn add @ts-engine/runtime
+yarn add @ts-engine/runtime@next
 ```
 
 Build and typecheck your code using [Rollup](https://rollupjs.org), TypeScript and [Babel](https://babeljs.io).
