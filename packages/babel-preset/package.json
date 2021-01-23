@@ -3,6 +3,10 @@
   "version": "2.0.0-beta.1",
   "description": "ts-engine's Babel preset.",
   "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
@@ -20,7 +24,6 @@
     "testing",
     "jest"
   ],
-  "main": "index.js",
   "dependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",

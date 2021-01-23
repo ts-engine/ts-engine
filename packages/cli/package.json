@@ -6,6 +6,10 @@
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
+  "files": [
+    "dist",
+    "bin.js"
+  ],
   "keywords": [
     "ts-engine",
     "tse",
