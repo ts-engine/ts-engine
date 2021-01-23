@@ -1,10 +1,10 @@
 import React from "react";
-import Link from "next/link";
 import {
   AiOutlineGithub,
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
 } from "react-icons/ai";
+import { Link } from "./link";
 import { Directory, DirectoryConfig } from "./directory";
 import TsEngineSvg from "../icons/ts-engine.svg";
 import { version } from "../../package.json";
@@ -22,22 +22,20 @@ export const Layout = (props: LayoutProps) => {
     <div className="pb-12">
       <header className="font-semibold font-mono p-2 md:p-4 bg-blue-500 text-white">
         <div className="flex items-center justify-between">
-          <Link href="/">
-            <a className="text-xl md:text-3xl">
-              <div className="flex items-center">
-                <div className="pr-4">
-                  <Icon
-                    icon={TsEngineSvg}
-                    className="w-16 h-16 md:w-20 md:h-20"
-                    label="ts-engine logo"
-                  />
-                </div>
-                <div>
-                  <div>ts-engine</div>
-                  <div className="text-xs md:text-lg">{version}</div>
-                </div>
+          <Link href="/" className="text-xl md:text-3xl">
+            <div className="flex items-center">
+              <div className="pr-4">
+                <Icon
+                  icon={TsEngineSvg}
+                  className="w-16 h-16 md:w-20 md:h-20"
+                  label="ts-engine logo"
+                />
               </div>
-            </a>
+              <div>
+                <div>ts-engine</div>
+                <div className="text-xs md:text-lg">{version}</div>
+              </div>
+            </div>
           </Link>
           <div className="p-4">
             <a

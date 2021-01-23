@@ -1,7 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
-import { Doc } from "../lib/content";
+import { Link } from "./link";
 
 export interface DirectoryConfig {
   docLinks: {
@@ -26,13 +25,12 @@ export const Directory = (props: DirectoryProps) => {
     <nav>
       <ul>
         <li className="pb-2 text-lg">
-          <Link href="/">
-            <a
-              onClick={props.onNavigation}
-              className={`block w-100 hover:underline focus:underline whitespace-nowrap ${homeActiveStyle}`}
-            >
-              Home
-            </a>
+          <Link
+            href="/"
+            onClick={props.onNavigation}
+            className={`block w-100 hover:underline focus:underline whitespace-nowrap ${homeActiveStyle}`}
+          >
+            Home
           </Link>
         </li>
         {props.config.docLinks.map((p) => {
@@ -42,13 +40,12 @@ export const Directory = (props: DirectoryProps) => {
 
           return (
             <li key={p.slug} className="pb-2 text-lg">
-              <Link href={path}>
-                <a
-                  onClick={props.onNavigation}
-                  className={`block w-100 hover:underline focus:underline whitespace-nowrap ${docActiveStyle}`}
-                >
-                  {p.title}
-                </a>
+              <Link
+                href={path}
+                onClick={props.onNavigation}
+                className={`block w-100 hover:underline focus:underline whitespace-nowrap ${docActiveStyle}`}
+              >
+                {p.title}
               </Link>
             </li>
           );

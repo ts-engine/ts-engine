@@ -2,7 +2,7 @@ import React from "react";
 import { GetStaticProps } from "next";
 import { Meta } from "../components/meta";
 import { Layout } from "../components/layout";
-import { getDocs, Doc, getContentHtml } from "../lib/content";
+import { getDocs, getContentHtml } from "../lib/content";
 import { DirectoryConfig } from "../components/directory";
 
 interface IndexPageProps {
