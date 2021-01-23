@@ -1,8 +1,0 @@
-{
-  "name": "@e2e-test/command-lint-fixable",
-  "version": "1.11.0",
-  "private": true,
-  "devDependencies": {
-    "@ts-engine/cli": "1.11.0"
-  }
-}

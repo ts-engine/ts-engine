@@ -1,102 +1,142 @@
-import chalk from "chalk";
+import path from "path";
+import fs from "fs-extra";
 import typescript from "typescript";
-import { logProgress } from "./log-progress";
-import { createTypeScriptConfig } from "./config";
-import type { Package } from "./get-package";
+import glob from "glob-promise";
+import prettyMs from "pretty-ms";
+import chalk from "chalk";
 
-interface TypecheckOptions {
-  emit: boolean;
-  package: Package;
+const typeScriptOptions: typescript.CompilerOptions = {
+  declaration: true,
+  esModuleInterop: true,
+  jsx: typescript.JsxEmit.React,
+  lib: ["lib.esnext.d.ts", "lib.dom.d.ts"],
+  resolveJsonModule: true,
+  skipLibCheck: true,
+  strict: true,
+  outDir: "dist",
+  allowJs: true,
+  experimentalDecorators: true,
+  emitDecoratorMetadata: true,
+  allowSyntheticDefaultImports: true,
+  noEmitOnError: true,
+  listEmittedFiles: true,
+};
+
+const typescriptHost = typescript.createCompilerHost(typeScriptOptions);
+interface ProcessFilesOptions {
+  emitTypes: boolean;
 }
 
-export const typecheck = async (
-  options: TypecheckOptions
-): Promise<boolean> => {
-  const tsConfig = createTypeScriptConfig({ emit: options.emit });
-
-  const program = typescript.createProgram(
-    options.package.srcFilepaths.filter((f) => !f.includes("__tests__")),
-    tsConfig
-  );
-
-  // Obtain diagnostics
-  const emitResult = await logProgress(
-    new Promise<typescript.EmitResult>((resolve) => {
-      const result = program.emit();
-      resolve(result);
-    }),
-    options.emit
-      ? `Writing type definitions to ${tsConfig.outDir}/`
-      : "Typechecking source code",
-    "typecheck"
-  );
-
-  const allDiagnostics = typescript
+const processFiles = async (files: string[], options: ProcessFilesOptions) => {
+  const program = typescript.createProgram(files, {
+    ...typeScriptOptions,
+    noEmit: !options.emitTypes,
+    emitDeclarationOnly: options.emitTypes,
+  });
+  const emitResult = program.emit();
+  const diagnostics = typescript
     .getPreEmitDiagnostics(program)
     .concat(emitResult.diagnostics);
 
-  if (allDiagnostics.length === 0) {
-    // Early escape if no issues
-    console.log(chalk.greenBright("✓ No issues found"));
+  return {
+    diagnostics,
+    emitResult,
+  };
+};
 
-    return Promise.resolve(true);
+export interface RunTypescriptResult {
+  passed: boolean;
+  output: string;
+}
+
+export const typecheck = async (
+  entryFilepaths: string[]
+): Promise<RunTypescriptResult> => {
+  const startMs = Date.now();
+
+  // find all test files to typecheck
+  const testFiles = glob
+    .sync("{,**/}*.{test,spec}.{.d.ts,ts,tsx}")
+    .map((p) => path.resolve(p))
+    .filter((p) => !p.includes("/node_modules/"))
+    .filter((p) => !p.includes("/dist/"))
+    .filter((p) => !p.includes("/coverage/"));
+
+  // find all source files to typecheck and emit types for
+  const sourceFiles = glob
+    .sync("{,**/}*.{d.ts,ts,tsx}")
+    .map((p) => path.resolve(p))
+    .filter((p) => !testFiles.includes(p)) // don't want tp emit types for test files
+    .filter((p) => !p.includes("/node_modules/"))
+    .filter((p) => !p.includes("/dist/"))
+    .filter((p) => !p.includes("/coverage/"));
+
+  const testFilesResults = await processFiles(testFiles, {
+    emitTypes: false,
+  });
+  const sourceFilesResults = await processFiles(sourceFiles, {
+    emitTypes: true,
+  });
+
+  const emittedFiles = [
+    ...(testFilesResults.emitResult.emittedFiles ?? []),
+    ...(sourceFilesResults.emitResult.emittedFiles ?? []),
+  ];
+  const emittedEntryFiles = emittedFiles.filter((emittedFile) =>
+    entryFilepaths.find((entryFile) =>
+      entryFile
+        .replace("src", "dist")
+        .startsWith(emittedFile.replace("d.ts", ""))
+    )
+  );
+
+  // create a copy of each type file for .cjs output files
+  for (let file of emittedEntryFiles ?? []) {
+    await fs.copyFile(file, file.replace(".d.ts", ".cjs.d.ts"));
   }
 
-  // Print out diagnostic summary
-  console.error();
-  console.error(chalk.redBright(`Found ${allDiagnostics.length} type errors`));
+  const endMs = Date.now();
+  const duration = prettyMs(endMs - startMs);
+  const totalFiles = sourceFiles.length + testFiles.length;
 
-  // Compile list of files with their error messages
-  type DiagnosticFile = { filePath: string; messages: string[] };
-  const files: DiagnosticFile[] = [];
-  const fileDiagnostics = allDiagnostics.filter((d) => d.file);
-  for (let diagnostic of fileDiagnostics) {
-    // Push new file
-    if (!files.find((f) => f.filePath === diagnostic.file?.fileName)) {
-      files.push({
-        filePath: diagnostic.file?.fileName as string,
-        messages: [],
-      });
+  const diagnostics = [
+    ...sourceFilesResults.diagnostics,
+    ...sourceFilesResults.diagnostics,
+  ];
+
+  if (diagnostics.length === 0) {
+    return {
+      passed: true,
+      output: chalk.green`Typechecked ${chalk.bold`${totalFiles}`} files (${chalk.bold`${duration}`})`,
+    };
+  }
+
+  const normalisedDiagnostics: typescript.Diagnostic[] = [];
+
+  for (let d of diagnostics) {
+    const exists = normalisedDiagnostics.find(
+      (nd) =>
+        nd.category === d.category &&
+        nd.code === d.code &&
+        nd.file?.fileName === d.file?.fileName &&
+        nd.length === d.length &&
+        nd.messageText === d.messageText &&
+        nd.source === d.source &&
+        nd.start === d.start
+    );
+
+    if (!exists) {
+      normalisedDiagnostics.push(d);
     }
-
-    // Compose message
-    let lineAndCharacter = diagnostic.file?.getLineAndCharacterOfPosition(
-      diagnostic.start as number
-    );
-    let message = typescript.flattenDiagnosticMessageText(
-      diagnostic.messageText,
-      "\n"
-    );
-
-    const composedMessage = `${chalk.redBright(
-      `(${lineAndCharacter!.line + 1},${lineAndCharacter!.character + 1})`
-    )} ${message} ${chalk.magentaBright(`(TS${diagnostic.code})`)}`;
-
-    // Push message
-    const file: DiagnosticFile = files.find(
-      (f) => f.filePath === diagnostic.file?.fileName
-    ) as DiagnosticFile;
-    file.messages.push(composedMessage);
   }
 
-  // Print file errors
-  for (let file of files) {
-    console.error();
-    console.error(chalk.greenBright(file.filePath));
+  const output = typescript.formatDiagnosticsWithColorAndContext(
+    normalisedDiagnostics,
+    typescriptHost
+  );
 
-    for (let message of file.messages) {
-      console.error(message);
-    }
-  }
-
-  // Print out general diagnostic error not related to a file
-  const generalDiagnostics = allDiagnostics.filter((d) => !d.file);
-  for (let diagnostic of generalDiagnostics) {
-    console.error();
-    console.error(
-      typescript.flattenDiagnosticMessageText(diagnostic.messageText, "\n")
-    );
-  }
-
-  return Promise.resolve(false);
+  return {
+    passed: false,
+    output: chalk.redBright`Typechecked ${chalk.bold`${totalFiles}`} files (${chalk.bold`${duration}`}).\n\n${output}`,
+  };
 };

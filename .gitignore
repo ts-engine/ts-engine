@@ -78,6 +78,7 @@ web_modules/
 
 # Next.js build output
 .next
+out
 
 # Nuxt.js build / generate output
 .nuxt
@@ -120,6 +121,3 @@ temp
 
 # MacOS
 .DS_Store
-
-# progress-estimator
-.progress-estimator

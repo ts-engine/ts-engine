@@ -1,0 +1,9 @@
+{
+  "name": "@integration-fixtures/lint-no-files",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "@ts-engine/cli": "2.0.0-beta.1"
+  }
+}

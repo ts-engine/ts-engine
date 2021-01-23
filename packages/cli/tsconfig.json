@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+   "noEmit": true,
+   "declaration": true,
+   "esModuleInterop": true,
+   "jsx": "react",
+   "resolveJsonModule": true,
+   "skipLibCheck": true,
+   "strict": true,
+   "allowJs": true,
+   "experimentalDecorators": true, 
+   "allowSyntheticDefaultImports": true,
+ },
+ "include": [
+   "src/**/*.ts",
+   "src/**/*.tsx",
+ ]
+}

@@ -1,3 +1,11 @@
+var packageJsonFinder = require("find-package-json");
+
+const packageJson = packageJsonFinder(process.cwd()).next().value;
+const hasReact =
+  (packageJson.dependencies && packageJson.dependencies.react) ||
+  (packageJson.devDependencies && packageJson.devDependencies.react) ||
+  (packageJson.peerDependencies && packageJson.peerDependencies.react);
+
 module.exports = {
   env: {
     browser: true,
@@ -10,7 +18,14 @@ module.exports = {
     "plugin:prettier/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
+    "plugin:import/typescript",
     "plugin:jest/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/recommended",
+    ...(hasReact
+      ? ["plugin:react/recommended", "plugin:react-hooks/recommended"]
+      : []),
   ],
   globals: {
     console: "readonly",
@@ -22,8 +37,18 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     sourceType: "module",
+    jsx: true,
   },
-  plugins: ["prettier", "@typescript-eslint", "import", "jest"],
+  plugins: [
+    "prettier",
+    "@typescript-eslint",
+    "import",
+    "jest",
+    "jsx-a11y",
+    "jest-dom",
+    "testing-library",
+    ...(hasReact ? ["react", "react-hooks"] : []),
+  ],
   rules: {
     "prettier/prettier": "error",
     "no-var": "error",
@@ -52,5 +77,12 @@ module.exports = {
     },
     // Always ignore typescript as it adds about 90 seconds to the runtime of the import plugin
     "import/ignore": ["typescript"],
+    ...(hasReact
+      ? {
+          react: {
+            version: "detect",
+          },
+        }
+      : {}),
   },
 };

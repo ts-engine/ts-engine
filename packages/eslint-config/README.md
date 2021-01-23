@@ -6,16 +6,11 @@
 </p>
 <h1 align="center">@ts-engine/eslint-config</h1>
 <p align="center">
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg" />
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Publish/badge.svg" />
+  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/CI/badge.svg" />
   <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine" />
 </p>
 
-Provides the ts-engine ESLint config if you want to extend it or allow your IDE to find it.
-
-## Documentation
-
-Checkout the official docs over at https://ts-engine.dev.
+ts-engine's ESLint config.
 
 ## Getting Started
 
@@ -25,11 +20,6 @@ Install the package
 yarn add --dev @ts-engine/eslint-config
 ```
 
-Create an ESLint config file
+## Documentation
 
-```json
-// .eslintrc
-{
-  "extends": "@ts-engine/eslint-config"
-}
-```
+Checkout the official docs over at https://ts-engine.dev.

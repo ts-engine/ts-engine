@@ -1,0 +1,21 @@
+{
+  "name": "@examples/express",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "tse build src/index.ts",
+    "lint": "tse lint src",
+    "start": "tse run src/index.ts",
+    "test": "tse test --coverage"
+  },
+  "devDependencies": {
+    "@ts-engine/cli": "2.0.0-beta.1",
+    "@ts-engine/runtime": "2.0.0-beta.1"
+  },
+  "dependencies": {
+    "@examples/maths": "^1.0.0",
+    "@types/express": "^4.17.11",
+    "express": "^4.17.1"
+  }
+}

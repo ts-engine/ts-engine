@@ -1,18 +1,28 @@
 {
   "name": "@ts-engine/runtime",
-  "version": "1.11.0",
-  "description": "@ts-engine's runtime dependency for Node.js applications.",
+  "version": "2.0.0-beta.1",
+  "description": "ts-engine's runtime.",
+  "license": "MIT",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
-  "license": "MIT",
   "keywords": [
     "ts-engine",
-    "babel",
+    "tse",
+    "tsengine",
     "typescript",
-    "runtime"
+    "cli",
+    "packaging",
+    "bundling",
+    "rollup",
+    "linting",
+    "eslint",
+    "testing",
+    "jest"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.10.5"
+    "@babel/runtime": "^7.12.5",
+    "core-js": "^3.7.0",
+    "regenerator-runtime": "^0.13.7"
   }
 }
