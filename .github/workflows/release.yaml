@@ -1,9 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - release-*
+  release:
+    types: [published]
 
 jobs:
   pipeline:
