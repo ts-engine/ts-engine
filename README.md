@@ -6,65 +6,54 @@
 </p>
 <h1 align="center">ts-engine</h1>
 <p align="center">
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Verify/badge.svg" />
-  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/Publish/badge.svg" />
+  <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/CI/badge.svg" />
   <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine" />
 </p>
 
-Write TypeScript packages with optionally zero configuration. Build, lint, start, test and typecheck without any configuration. Whilst ts-engine works out the box without any configuration it is open to extension. You can provide custom Babel, ESLint and Jest configuration.
+> Write TypeScript packages with optionally zero configuration.
+
+Setting up new [TypeScript](https://typescriptlang.org) packages is annoying. Installing and configuring the same packages over and over again is tedious and it is easy for tool versions to drift across multiple packages.
+
+ts-engine aims to reduce package setup effort drastically. With just one dependency and optionally no configuration you can build, test and lint your packages.
+
+## Getting Started
+
+Install the package.
+
+```sh
+yarn add --dev @ts-engine/cli
+
+# for applications also install the runtime
+yarn add @ts-engine/runtime
+```
+
+Build and typecheck your code using [Rollup](https://rollupjs.org), TypeScript and [Babel](https://babeljs.io).
+
+```sh
+tse build src/index.ts
+```
+
+Run your app directly from its TypeScript entry file.
+
+```sh
+tse run src/index.ts
+```
+
+Execute tests using [Jest](https://jestjs.io).
+
+```sh
+tse test
+```
+
+Lint your code using [ESLint](https://eslint.org) and format it with [Prettier](https://prettier.io).
+
+```sh
+tse lint .
+```
 
 ## Documentation
 
 Checkout the official docs over at https://ts-engine.dev.
-
-## Public packages
-
-<table align="center">
-  <tr>
-    <td>
-      <a href="./packages/babel-preset/README.md">@ts-engine/babel-preset</a>
-    </td>
-    <td>The default Babel preset for ts-engine. Automatically detects React and applies React babel plugins.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@ts-engine/babel-preset" rel="noopener noreferrer" target="_blank">
-        <img src="https://badgen.net/npm/v/@ts-engine/babel-preset">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="./packages/cli/README.md">@ts-engine/cli</a>
-    </td>
-    <td>Core package providing the ts-engine CLI.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@ts-engine/cli" rel="noopener noreferrer" target="_blank">
-        <img src="https://badgen.net/npm/v/@ts-engine/cli">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="./packages/eslint-config/README.md">@ts-engine/eslint-config</a>
-    </td>
-    <td>The default ESLint config for ts-engine. Automatically detects React and adds react and a11y rules.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@ts-engine/eslint-config" rel="noopener noreferrer" target="_blank">
-        <img src="https://badgen.net/npm/v/@ts-engine/eslint-config">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="./packages/eslint-config-react/README.md">@ts-engine/runtime</a>
-    </td>
-    <td>The default runtime dependency for ts-engine.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@ts-engine/runtime" rel="noopener noreferrer" target="_blank">
-        <img src="https://badgen.net/npm/v/@ts-engine/runtime">
-      </a>
-    </td>
-  </tr>
-</table>
 
 ## Examples
 
