@@ -5,7 +5,7 @@ slug: executing-tests
 
 # Executing tests
 
-ts-engine runs test suites using Jest. All options are automatically forwarded onto Jest.
+ts-engine runs test suites using Jest.
 
 ```sh
 tse test
@@ -20,6 +20,10 @@ The default test regex is:
 ```
 (/__tests__/.*|(.|/)(test|spec)).(js|ts|jsx|tsx|mjs|cjs|es)?$
 ```
+
+## Options
+
+All options are automatically forwarded onto Jest, see [Jest CLI Options](https://jestjs.io/docs/en/cli).
 
 ## Configuration
 

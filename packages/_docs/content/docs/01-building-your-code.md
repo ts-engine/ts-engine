@@ -14,6 +14,20 @@ tse build src/index.ts
 tse build src/index.ts src/test-utils/test-harness.ts
 ```
 
+## Options
+
+`--minify`
+
+Minify JavaScript output files using [terser](https://github.com/terser/terser).
+
+`--skip-typecheck`
+
+Opt out of typechecking, this will also stop type declarations being produced.
+
+`--watch`
+
+Watch for changes and rebuild.
+
 ## Output
 
 Build output is written to `dist/`, the output directory structure matches the input structure. CommonJS and ES Module outputs are produced as well as type declarations and sourcemaps.
@@ -33,20 +47,6 @@ src/test-utils/test-harness.ts -> dist/test-utils/test-harness.js
                                -> dist/test-utils/test-harness.cjs.map
                                -> dist/test-utils/test-harness.cjs.d.ts
 ```
-
-## Options
-
-`--minify`
-
-Minify JavaScript output files using [terser](https://github.com/terser/terser).
-
-`--skip-typecheck`
-
-Opt out of typechecking, this will also stop type declarations being produced.
-
-`--watch`
-
-Watch for changes and rebuild.
 
 ## Configuration
 
