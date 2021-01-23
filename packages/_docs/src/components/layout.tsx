@@ -5,15 +5,14 @@ import {
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
 } from "react-icons/ai";
-import { Doc } from "../lib/content";
-import { Directory } from "./directory";
+import { Directory, DirectoryConfig } from "./directory";
 import TsEngineSvg from "../icons/ts-engine.svg";
 import { version } from "../../package.json";
 import { Icon } from "./icon";
 
 interface LayoutProps {
   children: React.ReactNode;
-  docs: Doc[];
+  directoryConfig: DirectoryConfig;
 }
 
 export const Layout = (props: LayoutProps) => {
@@ -70,7 +69,7 @@ export const Layout = (props: LayoutProps) => {
             {isOpen && (
               <div className="pt-4">
                 <Directory
-                  docs={props.docs}
+                  config={props.directoryConfig}
                   onNavigation={() => setIsOpen(false)}
                 />
               </div>
@@ -78,7 +77,7 @@ export const Layout = (props: LayoutProps) => {
           </div>
           <div className="hidden md:block border-r-2 pr-6 w-56 sticky top-6">
             <Directory
-              docs={props.docs}
+              config={props.directoryConfig}
               onNavigation={() => setIsOpen(false)}
             />
           </div>

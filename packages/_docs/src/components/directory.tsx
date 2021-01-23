@@ -3,8 +3,14 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { Doc } from "../lib/content";
 
+export interface DirectoryConfig {
+  docLinks: {
+    slug: string;
+    title: string;
+  }[];
+}
 interface DirectoryProps {
-  docs: Doc[];
+  config: DirectoryConfig;
   onNavigation: () => void;
 }
 
@@ -29,7 +35,7 @@ export const Directory = (props: DirectoryProps) => {
             </a>
           </Link>
         </li>
-        {props.docs.map((p) => {
+        {props.config.docLinks.map((p) => {
           const path = `/docs/${p.slug}`;
           const isDocActive = router.asPath === path;
           const docActiveStyle = isDocActive ? activeStyle : "";
