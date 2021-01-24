@@ -28,6 +28,10 @@ Opt out of typechecking, this will also stop type declarations being produced.
 
 Watch for changes and rebuild.
 
+`--bundle`
+
+Bundle dependencies.
+
 ## Output
 
 Build output is written to `dist/`, the output directory structure matches the input structure. CommonJS and ES Module outputs are produced as well as type declarations and sourcemaps.
