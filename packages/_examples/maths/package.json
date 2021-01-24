@@ -12,6 +12,6 @@
     "test": "tse test --coverage"
   },
   "devDependencies": {
-    "@ts-engine/cli": "2.0.0-beta.1"
+    "@ts-engine/cli": "2.0.0-beta.2"
   }
 }
