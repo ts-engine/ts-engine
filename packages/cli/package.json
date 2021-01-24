@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/cli",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "Write TypeScript packages with optionally zero configuration.",
   "license": "MIT",
   "repository": {
