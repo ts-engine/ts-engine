@@ -99,6 +99,11 @@ it("should minify", async () => {
   expect(unminifiedLength).toBeGreaterThan(minifiedLength);
 });
 
+it.skip("should bundle", async () => {
+  // TODO - see bundle test in build.test.ts. Need to solve that problem
+  //        before writing this test
+});
+
 it.skip("should watch for changes", async () => {
   // TODO - implement me
 });

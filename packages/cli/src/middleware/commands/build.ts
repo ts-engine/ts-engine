@@ -6,6 +6,7 @@ interface BuildOptions {
   watch: boolean;
   minify: boolean;
   "skip-typecheck": boolean;
+  bundle: boolean;
 }
 
 export const build = () => async (
@@ -18,14 +19,18 @@ export const build = () => async (
     await buildFilesAndWatch(filepaths, {
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
+      bundle: ctx.options.bundle,
       srcDir: ctx.package.srcDir,
+      dependencies: ctx.package.dependencies,
       throw: ctx.throw,
     });
   } else {
     await buildFiles(filepaths, {
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
+      bundle: ctx.options.bundle,
       srcDir: ctx.package.srcDir,
+      dependencies: ctx.package.dependencies,
       throw: ctx.throw,
     });
   }

@@ -41,6 +41,7 @@ interface Fixture {
 type FixtureName =
   | "build-normal"
   | "build-minify"
+  | "build-bundle"
   | "build-react"
   | "build-syntax-error"
   | "build-type-error"

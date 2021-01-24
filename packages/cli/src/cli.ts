@@ -30,6 +30,11 @@ export const createCli = () => {
           description: "Minify output code.",
           type: "boolean",
         },
+        {
+          name: "bundle",
+          description: "Bundle dependencies.",
+          type: "boolean",
+        },
       ],
       positionals: [
         {
@@ -80,6 +85,11 @@ export const createCli = () => {
         {
           name: "minify",
           description: "Minify output code.",
+          type: "boolean",
+        },
+        {
+          name: "bundle",
+          description: "Bundle dependencies.",
           type: "boolean",
         },
       ],
