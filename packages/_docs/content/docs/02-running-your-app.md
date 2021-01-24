@@ -31,6 +31,10 @@ Opt out of typechecking, this will also stop type declarations being produced.
 
 Watch for changes, rebuild and restart your app.
 
+`--bundle`
+
+Bundle dependencies.
+
 ## Configuration
 
 Babel configuration is supported, see [Configuration](/docs/configuration).
