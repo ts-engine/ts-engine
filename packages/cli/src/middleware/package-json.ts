@@ -6,6 +6,7 @@ export interface PackageJsonContext {
   package: {
     dir: string;
     srcDir: string;
+    dependencies: string[];
   };
 }
 
@@ -13,14 +14,17 @@ export const packageJson = () => async (
   ctx: Context & PackageJsonContext,
   next: NextFunction
 ) => {
-  const packageJsonExists = await fs.pathExists(
-    path.resolve(process.cwd(), "package.json")
-  );
+  const packageJsonFilepath = path.resolve(process.cwd(), "package.json");
+  const packageJsonExists = await fs.pathExists(packageJsonFilepath);
 
   if (packageJsonExists) {
+    const json = await fs.readJSON(packageJsonFilepath);
+    const dependencies = Object.keys(json.dependencies ?? {});
+
     ctx.package = {
       dir: process.cwd(),
       srcDir: path.resolve(process.cwd(), "src"),
+      dependencies,
     };
 
     return next();

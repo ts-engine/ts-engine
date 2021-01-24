@@ -19,14 +19,6 @@ export const formatRandomColor = (str: string) => {
   return chalk.hex(randomColor({ luminosity: "bright" }))(str);
 };
 
-const isNpmModule = (module: string) => {
-  const isBuiltIn = builtInModules.includes(module);
-  const isRelativeFile = module.startsWith(".");
-  const isAbsoluteFile = path.isAbsolute(module);
-
-  return isBuiltIn || (!isRelativeFile && !isAbsoluteFile);
-};
-
 const getFilenameFromFilepath = (filepath: string) => {
   return filepath.substr(Math.max(0, filepath.lastIndexOf("/")));
 };
@@ -34,6 +26,8 @@ const getFilenameFromFilepath = (filepath: string) => {
 interface BuildRollupConfigOptions {
   input: string;
   minify: boolean;
+  bundle: boolean;
+  dependencies: string[];
 }
 
 const buildRollupConfig = (
@@ -47,13 +41,13 @@ const buildRollupConfig = (
       extensions: SUPPORTED_EXTENSIONS_WITH_DOTS,
       preferBuiltins: true,
     }),
+    commonjs(),
     babel({
       exclude: "node_modules/**",
       extensions: SUPPORTED_EXTENSIONS_WITH_DOTS,
       babelHelpers: "runtime",
       presets: ["@ts-engine/babel-preset"],
     }),
-    commonjs(),
   ];
 
   // terser minifies code so only apply it if minifying
@@ -85,15 +79,14 @@ const buildRollupConfig = (
     plugins,
     output: outputs,
     external: (id: string) => {
-      // input file is not an external
-      if (id === options.input) {
-        return false;
+      if (options.bundle) {
+        return builtInModules.includes(id);
       }
 
-      // external if its a built in node module like 'fs' or 'path
-      // or if the modsule is not a relative path and also doesn't point
-      // to a file on disk
-      return isNpmModule(id);
+      return (
+        builtInModules.includes(id) ||
+        (!id.startsWith(".") && !path.isAbsolute(id))
+      );
     },
   };
 };
@@ -126,7 +119,9 @@ const assertFilepaths = (
 interface BuildFilesOptions {
   minify: boolean;
   skipTypecheck: boolean;
+  bundle: boolean;
   srcDir: string;
+  dependencies: string[];
   throw: (code: number, message: string) => void;
   onBuildComplete?: (output: {
     filepath: string;
@@ -148,6 +143,8 @@ export const buildFiles = async (
     const rollupConfig = buildRollupConfig({
       input: filepath,
       minify: options.minify,
+      bundle: options.bundle,
+      dependencies: options.dependencies,
     });
     const outputOptions = rollupConfig.output as OutputOptions[];
     allOutputOptions.push(...outputOptions);
@@ -199,7 +196,9 @@ export const buildFiles = async (
 interface BuildFilesAndWatchOptions {
   minify: boolean;
   skipTypecheck: boolean;
+  bundle: boolean;
   srcDir: string;
+  dependencies: string[];
   throw: (code: number, message: string) => void;
   onBuildComplete?: (output: {
     filepath: string;
@@ -219,6 +218,8 @@ export const buildFilesAndWatch = async (
     const rollupConfig = buildRollupConfig({
       input: filepath,
       minify: options.minify,
+      bundle: options.bundle,
+      dependencies: options.dependencies,
     });
     const outputOptions = rollupConfig.output as OutputOptions[];
 
