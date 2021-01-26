@@ -22,6 +22,10 @@ By default the output files are in CommonJS format, however ES Module format is 
 
 Minify JavaScript output files using [terser](https://github.com/terser/terser).
 
+`--emit-types`
+
+Emit type declarations files.
+
 `--skip-typecheck`
 
 Opt out of typechecking, this will also stop type declarations being produced.
