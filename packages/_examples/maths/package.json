@@ -5,7 +5,7 @@
   "license": "MIT",
   "module": "dist/index.esm.js",
   "main": "dist/index.cjs.js",
-  "types": "dist/index.esm.d.ts",
+  "types": "dist/index.cjs.d.ts",
   "scripts": {
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "tse build src/index.ts --ext .cjs.js --emit-types",

@@ -99,7 +99,10 @@ export const typecheck = async (
   // correct type def extension for output extension if not .js
   if (options.ext !== ".js") {
     for (let file of emittedEntryFiles ?? []) {
-      await fs.rename(file, file.replace(".d.ts", `${options.ext}.d.ts`));
+      await fs.rename(
+        file,
+        file.replace(".d.ts", `${options.ext.replace(/\.js$/, "")}.d.ts`)
+      );
     }
   }
 
