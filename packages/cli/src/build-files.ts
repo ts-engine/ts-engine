@@ -168,7 +168,7 @@ export const buildFiles = async (
   }
 
   if (!options.skipTypecheck) {
-    const result = await typecheck(filepaths);
+    const result = await typecheck(filepaths, options.ext);
 
     if (result.passed) {
       console.log(result.output);
@@ -272,7 +272,7 @@ export const buildFilesAndWatch = async (
 
           let typecheckResult: RunTypescriptResult | null = null;
           if (!options.skipTypecheck) {
-            typecheckResult = await typecheck(filepaths);
+            typecheckResult = await typecheck(filepaths, options.ext);
             console.log(prefixLabel(typecheckResult.output));
           }
 

@@ -32,24 +32,26 @@ Watch for changes and rebuild.
 
 Bundle dependencies.
 
+`--output`
+
+Output module type, `cjs` or `esm`. Defaults to `cjs`.
+
+`--ext`
+
+Output file extension. Defaults to `.js`.
+
 ## Output
 
-Build output is written to `dist/`, the output directory structure matches the input structure. CommonJS and ES Module outputs are produced as well as type declarations and sourcemaps.
+Build output is written to `dist/`, the output directory structure matches the input structure. Along with the cjs or esm output type declarations and sourcemaps are also produced for each input.
 
 ```
 src/index.ts -> dist/index.js
              -> dist/index.js.map
              -> dist/index.d.ts
-             -> dist/index.cjs
-             -> dist/index.cjs.map
-             -> dist/index.cjs.d.ts
 
 src/test-utils/test-harness.ts -> dist/test-utils/test-harness.js
                                -> dist/test-utils/test-harness.js.map
                                -> dist/test-utils/test-harness.d.ts
-                               -> dist/test-utils/test-harness.cjs
-                               -> dist/test-utils/test-harness.cjs.map
-                               -> dist/test-utils/test-harness.cjs.d.ts
 ```
 
 ## Configuration

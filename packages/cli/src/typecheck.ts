@@ -50,7 +50,8 @@ export interface RunTypescriptResult {
 }
 
 export const typecheck = async (
-  entryFilepaths: string[]
+  entryFilepaths: string[],
+  ext: string
 ): Promise<RunTypescriptResult> => {
   const startMs = Date.now();
 
@@ -90,9 +91,11 @@ export const typecheck = async (
     )
   );
 
-  // create a copy of each type file for .cjs output files
-  for (let file of emittedEntryFiles ?? []) {
-    await fs.copyFile(file, file.replace(".d.ts", ".cjs.d.ts"));
+  // correct type def extension for output extension if not .js
+  if (ext !== ".js") {
+    for (let file of emittedEntryFiles ?? []) {
+      await fs.copyFile(file, file.replace(".d.ts", `${ext}.d.ts`));
+    }
   }
 
   const endMs = Date.now();
