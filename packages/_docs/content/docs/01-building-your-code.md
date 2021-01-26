@@ -48,7 +48,7 @@ Output file extension. Defaults to `.js`.
 
 ## Output
 
-Build output is written to `dist/`, the output directory structure matches the input structure. Along with the cjs or esm output type declarations and sourcemaps are also produced for each input.
+Build output is written to `dist/`, the output directory structure matches the input structure. A sourcemap is always produced alongside your output JavaScript file. If you use the `--emit-types` option then type definitions will also be produced.
 
 ```
 src/index.ts -> dist/index.js
