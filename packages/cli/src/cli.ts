@@ -26,6 +26,11 @@ export const createCli = () => {
           type: "boolean",
         },
         {
+          name: "emit-types",
+          description: "Emit types.",
+          type: "boolean",
+        },
+        {
           name: "minify",
           description: "Minify output code.",
           type: "boolean",

@@ -83,6 +83,16 @@ it("should report input file not found", async () => {
   expect(tseResult.stderr).toMatch(/src\/not-found\.ts not found\./);
 });
 
+it("should produce a type declaration file", async () => {
+  const tseResult = fixtures.normal.runTse(
+    "build src/hello.ts src/foo.ts --emit-types"
+  );
+
+  expect(tseResult.status).toBe(0);
+  await fixtures.normal.readFile("dist/hello.d.ts");
+  await fixtures.normal.readFile("dist/foo.d.ts");
+});
+
 it("should build react", async () => {
   const tseResult = fixtures.react.runTse("build src/index.tsx");
 

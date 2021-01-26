@@ -114,6 +114,7 @@ const assertFilepaths = (
 interface BuildFilesOptions {
   minify: boolean;
   skipTypecheck: boolean;
+  emitTypes: boolean;
   bundle: boolean;
   output: "cjs" | "esm";
   ext: string;
@@ -168,7 +169,11 @@ export const buildFiles = async (
   }
 
   if (!options.skipTypecheck) {
-    const result = await typecheck(filepaths, options.ext);
+    const result = await typecheck({
+      entryFilepaths: filepaths,
+      ext: options.ext,
+      emitTypes: options.emitTypes,
+    });
 
     if (result.passed) {
       console.log(result.output);
@@ -191,6 +196,7 @@ export const buildFiles = async (
 interface BuildFilesAndWatchOptions {
   minify: boolean;
   skipTypecheck: boolean;
+  emitTypes: boolean;
   bundle: boolean;
   output: "cjs" | "esm";
   ext: string;
@@ -272,7 +278,11 @@ export const buildFilesAndWatch = async (
 
           let typecheckResult: RunTypescriptResult | null = null;
           if (!options.skipTypecheck) {
-            typecheckResult = await typecheck(filepaths, options.ext);
+            typecheckResult = await typecheck({
+              entryFilepaths: filepaths,
+              ext: options.ext,
+              emitTypes: options.emitTypes,
+            });
             console.log(prefixLabel(typecheckResult.output));
           }
 

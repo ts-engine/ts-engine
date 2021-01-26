@@ -6,6 +6,7 @@ interface BuildOptions {
   watch: boolean;
   minify: boolean;
   "skip-typecheck": boolean;
+  "emit-types": boolean;
   bundle: boolean;
   output: "cjs" | "esm";
   ext: string;
@@ -29,6 +30,7 @@ export const build = () => async (
     await buildFilesAndWatch(filepaths, {
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
+      emitTypes: ctx.options["emit-types"],
       bundle: ctx.options.bundle,
       output,
       ext,
@@ -40,6 +42,7 @@ export const build = () => async (
     await buildFiles(filepaths, {
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
+      emitTypes: ctx.options["emit-types"],
       bundle: ctx.options.bundle,
       output,
       ext,

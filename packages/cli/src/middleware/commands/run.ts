@@ -56,6 +56,7 @@ export const run = () => async (
     await buildFilesAndWatch([filepath], {
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
+      emitTypes: false,
       bundle: ctx.options.bundle,
       output: "cjs",
       ext: ".js",
@@ -68,6 +69,7 @@ export const run = () => async (
     await buildFiles([filepath], {
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
+      emitTypes: false,
       bundle: ctx.options.bundle,
       output: "cjs",
       ext: ".js",
