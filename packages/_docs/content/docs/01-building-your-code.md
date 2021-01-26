@@ -14,6 +14,8 @@ tse build src/index.ts
 tse build src/index.ts src/test-utils/test-harness.ts
 ```
 
+By default the output files are in CommonJS format, however ES Module format is also supported. You can configure this with the `--output` option.
+
 ## Options
 
 `--minify`
