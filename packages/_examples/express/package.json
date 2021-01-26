@@ -10,8 +10,8 @@
     "test": "tse test --coverage"
   },
   "devDependencies": {
-    "@ts-engine/cli": "2.0.0-beta.2",
-    "@ts-engine/runtime": "2.0.0-beta.2"
+    "@ts-engine/cli": "2.0.0-beta.3",
+    "@ts-engine/runtime": "2.0.0-beta.3"
   },
   "dependencies": {
     "@examples/maths": "^1.0.0",
