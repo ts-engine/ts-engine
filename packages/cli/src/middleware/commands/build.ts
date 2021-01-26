@@ -7,12 +7,20 @@ interface BuildOptions {
   minify: boolean;
   "skip-typecheck": boolean;
   bundle: boolean;
+  output: "cjs" | "esm";
+  extension: string;
 }
 
 export const build = () => async (
   ctx: Context<BuildOptions> & PackageJsonContext,
   next: NextFunction
 ) => {
+  const output = ctx.options.output ?? "cjs";
+
+  if (!["cjs", "esm"].includes(output)) {
+    ctx.throw(1, `Unknown output ${output}. Only cjs and esm are supported.`);
+  }
+
   const [...filepaths] = ctx.options._;
 
   if (ctx.options.watch) {
@@ -20,6 +28,7 @@ export const build = () => async (
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
       bundle: ctx.options.bundle,
+      output,
       srcDir: ctx.package.srcDir,
       dependencies: ctx.package.dependencies,
       throw: ctx.throw,
@@ -29,6 +38,7 @@ export const build = () => async (
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
       bundle: ctx.options.bundle,
+      output,
       srcDir: ctx.package.srcDir,
       dependencies: ctx.package.dependencies,
       throw: ctx.throw,

@@ -27,6 +27,7 @@ interface BuildRollupConfigOptions {
   input: string;
   minify: boolean;
   bundle: boolean;
+  output: "cjs" | "esm";
   dependencies: string[];
 }
 
@@ -61,23 +62,16 @@ const buildRollupConfig = (
   const dir = path.dirname(options.input).replace("src", "dist");
   const filename = getFilenameFromFilepath(options.input);
   const filenameWithNoExtension = filename.split(".").slice(0, -1).join(".");
-  const outputs: rollup.OutputOptions[] = [
-    {
-      file: path.join(dir, `${filenameWithNoExtension}.cjs`),
-      format: "cjs",
-      sourcemap: true,
-    },
-    {
-      file: path.join(dir, `${filenameWithNoExtension}.js`),
-      format: "es",
-      sourcemap: true,
-    },
-  ];
+  const output: rollup.OutputOptions = {
+    file: path.join(dir, `${filenameWithNoExtension}.js`),
+    format: options.output,
+    sourcemap: true,
+  };
 
   return {
     input: options.input,
     plugins,
-    output: outputs,
+    output,
     external: (id: string) => {
       if (options.bundle) {
         return builtInModules.includes(id);
@@ -120,12 +114,13 @@ interface BuildFilesOptions {
   minify: boolean;
   skipTypecheck: boolean;
   bundle: boolean;
+  output: "cjs" | "esm";
   srcDir: string;
   dependencies: string[];
   throw: (code: number, message: string) => void;
   onBuildComplete?: (output: {
     filepath: string;
-    format: "cjs" | "es";
+    format: "cjs" | "esm";
     passedTypecheck: boolean;
   }) => void;
 }
@@ -136,37 +131,39 @@ export const buildFiles = async (
 ) => {
   assertFilepaths(filepaths, { srcDir: options.srcDir, throw: options.throw });
 
-  const allOutputOptions: OutputOptions[] = [];
-
   // build each file
   for (let filepath of filepaths) {
     const rollupConfig = buildRollupConfig({
       input: filepath,
       minify: options.minify,
       bundle: options.bundle,
+      output: options.output,
       dependencies: options.dependencies,
     });
-    const outputOptions = rollupConfig.output as OutputOptions[];
-    allOutputOptions.push(...outputOptions);
+    const outputOptions = rollupConfig.output as OutputOptions;
 
     try {
       const bundle = await rollup.rollup({
         ...rollupConfig,
       });
 
-      await Promise.all(
-        outputOptions.map(async (output: OutputOptions) => {
-          const start = Date.now();
-          await bundle.write(output);
-          const end = Date.now();
-          const duration = prettyMs(end - start);
-          console.log(
-            chalk.cyan`${filepath} ${chalk.bold`->`} ${
-              output.file
-            } (${chalk.bold`${duration}`})`
-          );
-        })
+      const start = Date.now();
+      await bundle.write(outputOptions);
+      const end = Date.now();
+      const duration = prettyMs(end - start);
+      console.log(
+        chalk.cyan`${filepath} ${chalk.bold`->`} ${
+          outputOptions.file
+        } (${chalk.bold`${options.output}, ${duration}`})`
       );
+
+      // report build succeeded for each output
+      options.onBuildComplete &&
+        options.onBuildComplete({
+          filepath: outputOptions.file as string,
+          format: outputOptions.format as "cjs" | "esm",
+          passedTypecheck: true,
+        });
     } catch (e) {
       options.throw(1, chalk.redBright(e));
     }
@@ -181,28 +178,19 @@ export const buildFiles = async (
       options.throw(1, result.output);
     }
   }
-
-  // report build succeeded for each output
-  for (let output of allOutputOptions) {
-    options.onBuildComplete &&
-      options.onBuildComplete({
-        filepath: output.file as string,
-        format: output.format as "cjs" | "es",
-        passedTypecheck: true,
-      });
-  }
 };
 
 interface BuildFilesAndWatchOptions {
   minify: boolean;
   skipTypecheck: boolean;
   bundle: boolean;
+  output: "cjs" | "esm";
   srcDir: string;
   dependencies: string[];
   throw: (code: number, message: string) => void;
   onBuildComplete?: (output: {
     filepath: string;
-    format: "cjs" | "es";
+    format: "cjs" | "esm";
     passedTypecheck: boolean;
   }) => void;
 }
@@ -219,9 +207,10 @@ export const buildFilesAndWatch = async (
       input: filepath,
       minify: options.minify,
       bundle: options.bundle,
+      output: options.output,
       dependencies: options.dependencies,
     });
-    const outputOptions = rollupConfig.output as OutputOptions[];
+    const outputOptions = rollupConfig.output as OutputOptions;
 
     // only need a label prefix when more than one input
     const label =
@@ -262,31 +251,27 @@ export const buildFilesAndWatch = async (
             console.error(prefixLabel(chalk.redBright(currentError)));
             currentError = null;
           } else {
-            for (let output of outputOptions) {
-              console.log(
-                prefixLabel(
-                  chalk.cyan`${filepath} ${chalk.bold`->`} ${
-                    output.file
-                  } (${chalk.bold`${time}`})`
-                )
-              );
-            }
-
-            let typecheckResult: RunTypescriptResult | null = null;
-            if (!options.skipTypecheck) {
-              typecheckResult = await typecheck(filepaths);
-              console.log(prefixLabel(typecheckResult.output));
-            }
-
-            for (let output of outputOptions) {
-              options.onBuildComplete &&
-                options.onBuildComplete({
-                  filepath: output.file as string,
-                  format: output.format as "cjs" | "es",
-                  passedTypecheck: typecheckResult?.passed ?? true,
-                });
-            }
+            console.log(
+              prefixLabel(
+                chalk.cyan`${filepath} ${chalk.bold`->`} ${
+                  outputOptions.file
+                } (${chalk.bold`${options.output}, ${time}`})`
+              )
+            );
           }
+
+          let typecheckResult: RunTypescriptResult | null = null;
+          if (!options.skipTypecheck) {
+            typecheckResult = await typecheck(filepaths);
+            console.log(prefixLabel(typecheckResult.output));
+          }
+
+          options.onBuildComplete &&
+            options.onBuildComplete({
+              filepath: outputOptions.file as string,
+              format: outputOptions.format as "cjs" | "esm",
+              passedTypecheck: typecheckResult?.passed ?? true,
+            });
 
           console.log(prefixLabel(chalk.grey`Watching for changes...`));
           break;

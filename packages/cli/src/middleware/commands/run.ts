@@ -30,7 +30,7 @@ export const run = () => async (
 
   const onBuildComplete = (output: {
     filepath: string;
-    format: "cjs" | "es";
+    format: "cjs" | "esm";
     passedTypecheck: boolean;
   }) => {
     if (output.format === "cjs" && output.passedTypecheck) {
@@ -57,6 +57,7 @@ export const run = () => async (
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
       bundle: ctx.options.bundle,
+      output: "cjs",
       srcDir: ctx.package.srcDir,
       dependencies: ctx.package.dependencies,
       throw: ctx.throw,
@@ -67,6 +68,7 @@ export const run = () => async (
       minify: ctx.options.minify,
       skipTypecheck: ctx.options["skip-typecheck"],
       bundle: ctx.options.bundle,
+      output: "cjs",
       srcDir: ctx.package.srcDir,
       dependencies: ctx.package.dependencies,
       throw: ctx.throw,

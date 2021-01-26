@@ -35,6 +35,16 @@ export const createCli = () => {
           description: "Bundle dependencies.",
           type: "boolean",
         },
+        {
+          name: "output",
+          description: "Output module type, cjs or esm. Defaults to cjs.",
+          type: "string",
+        },
+        {
+          name: "ext",
+          description: "Output file extension. Defaults to '.js'.",
+          type: "string",
+        },
       ],
       positionals: [
         {
