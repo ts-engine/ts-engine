@@ -50,7 +50,30 @@ it("should build all input files as esm", async () => {
   expect(helloOutput).not.toMatch(/use strict/); // use strict is not placed in esm builds but is in cjs
 
   const fooOutput = await fixtures.normal.readFile("dist/foo.js");
-  expect(helloOutput).not.toMatch(/use strict/);
+  expect(fooOutput).not.toMatch(/use strict/);
+});
+
+it("should output given extension", () => {
+  const tseResult = fixtures.normal.runTse(
+    "build src/hello.ts src/foo.ts --ext .cjs.js"
+  );
+
+  expect(tseResult.status).toBe(0);
+  expect(tseResult.stdout).toMatch(/Typechecked 4 files/);
+  expect(tseResult.stdout).toMatch(
+    /src\/hello.ts -> dist\/hello.cjs.js \(cjs,/
+  );
+  expect(tseResult.stdout).toMatch(/src\/foo.ts -> dist\/foo.cjs.js \(cjs,/);
+
+  const helloResult = fixtures.normal.runNode("dist/hello.cjs.js");
+
+  expect(helloResult.status).toBe(0);
+  expect(helloResult.stdout).toMatch(/hello world/);
+
+  const fooResult = fixtures.normal.runNode("dist/foo.cjs.js");
+
+  expect(fooResult.status).toBe(0);
+  expect(fooResult.stdout).toMatch(/foo bar/);
 });
 
 it("should report input file not found", async () => {

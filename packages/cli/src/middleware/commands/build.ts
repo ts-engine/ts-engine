@@ -8,6 +8,7 @@ interface BuildOptions {
   "skip-typecheck": boolean;
   bundle: boolean;
   output: "cjs" | "esm";
+  ext: string;
   extension: string;
 }
 
@@ -16,6 +17,7 @@ export const build = () => async (
   next: NextFunction
 ) => {
   const output = ctx.options.output ?? "cjs";
+  const ext = ctx.options.ext ?? ".js";
 
   if (!["cjs", "esm"].includes(output)) {
     ctx.throw(1, `Unknown output ${output}. Only cjs and esm are supported.`);
@@ -29,6 +31,7 @@ export const build = () => async (
       skipTypecheck: ctx.options["skip-typecheck"],
       bundle: ctx.options.bundle,
       output,
+      ext,
       srcDir: ctx.package.srcDir,
       dependencies: ctx.package.dependencies,
       throw: ctx.throw,
@@ -39,6 +42,7 @@ export const build = () => async (
       skipTypecheck: ctx.options["skip-typecheck"],
       bundle: ctx.options.bundle,
       output,
+      ext,
       srcDir: ctx.package.srcDir,
       dependencies: ctx.package.dependencies,
       throw: ctx.throw,

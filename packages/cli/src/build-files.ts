@@ -28,6 +28,7 @@ interface BuildRollupConfigOptions {
   minify: boolean;
   bundle: boolean;
   output: "cjs" | "esm";
+  ext: string;
   dependencies: string[];
 }
 
@@ -63,7 +64,7 @@ const buildRollupConfig = (
   const filename = getFilenameFromFilepath(options.input);
   const filenameWithNoExtension = filename.split(".").slice(0, -1).join(".");
   const output: rollup.OutputOptions = {
-    file: path.join(dir, `${filenameWithNoExtension}.js`),
+    file: path.join(dir, `${filenameWithNoExtension}${options.ext}`),
     format: options.output,
     sourcemap: true,
   };
@@ -115,6 +116,7 @@ interface BuildFilesOptions {
   skipTypecheck: boolean;
   bundle: boolean;
   output: "cjs" | "esm";
+  ext: string;
   srcDir: string;
   dependencies: string[];
   throw: (code: number, message: string) => void;
@@ -131,6 +133,8 @@ export const buildFiles = async (
 ) => {
   assertFilepaths(filepaths, { srcDir: options.srcDir, throw: options.throw });
 
+  const outputs: OutputOptions[] = [];
+
   // build each file
   for (let filepath of filepaths) {
     const rollupConfig = buildRollupConfig({
@@ -138,9 +142,11 @@ export const buildFiles = async (
       minify: options.minify,
       bundle: options.bundle,
       output: options.output,
+      ext: options.ext,
       dependencies: options.dependencies,
     });
     const outputOptions = rollupConfig.output as OutputOptions;
+    outputs.push(outputOptions);
 
     try {
       const bundle = await rollup.rollup({
@@ -156,14 +162,6 @@ export const buildFiles = async (
           outputOptions.file
         } (${chalk.bold`${options.output}, ${duration}`})`
       );
-
-      // report build succeeded for each output
-      options.onBuildComplete &&
-        options.onBuildComplete({
-          filepath: outputOptions.file as string,
-          format: outputOptions.format as "cjs" | "esm",
-          passedTypecheck: true,
-        });
     } catch (e) {
       options.throw(1, chalk.redBright(e));
     }
@@ -178,6 +176,16 @@ export const buildFiles = async (
       options.throw(1, result.output);
     }
   }
+
+  for (let output of outputs) {
+    // report build succeeded for each output
+    options.onBuildComplete &&
+      options.onBuildComplete({
+        filepath: output.file as string,
+        format: output.format as "cjs" | "esm",
+        passedTypecheck: true,
+      });
+  }
 };
 
 interface BuildFilesAndWatchOptions {
@@ -185,6 +193,7 @@ interface BuildFilesAndWatchOptions {
   skipTypecheck: boolean;
   bundle: boolean;
   output: "cjs" | "esm";
+  ext: string;
   srcDir: string;
   dependencies: string[];
   throw: (code: number, message: string) => void;
@@ -208,6 +217,7 @@ export const buildFilesAndWatch = async (
       minify: options.minify,
       bundle: options.bundle,
       output: options.output,
+      ext: options.ext,
       dependencies: options.dependencies,
     });
     const outputOptions = rollupConfig.output as OutputOptions;
