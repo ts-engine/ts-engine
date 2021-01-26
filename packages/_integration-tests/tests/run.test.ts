@@ -21,8 +21,7 @@ it("should run", async () => {
 
   expect(tseResult.status).toBe(0);
   expect(tseResult.stdout).toMatch(/Typechecked 1 files/);
-  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.cjs/);
-  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.js/);
+  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.js \(cjs,/);
   expect(tseResult.stdout).toMatch(/hello world/);
 });
 
@@ -38,8 +37,7 @@ it("should run react", async () => {
 
   expect(tseResult.status).toBe(0);
   expect(tseResult.stdout).toMatch(/Typechecked 1 files/);
-  expect(tseResult.stdout).toMatch(/src\/index.tsx -> dist\/index.cjs/);
-  expect(tseResult.stdout).toMatch(/src\/index.tsx -> dist\/index.js/);
+  expect(tseResult.stdout).toMatch(/src\/index.tsx -> dist\/index.js \(cjs,/);
   expect(tseResult.stdout).toMatch(/<span>hello world<\/span>/);
 });
 
@@ -70,8 +68,7 @@ it("should skip typecheck", async () => {
   );
 
   expect(tseResult.status).toBe(0);
-  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.cjs/);
-  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.js/);
+  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.js \(cjs,/);
   expect(tseResult.stdout).toMatch(/1 \+ 2 = 3/);
 });
 
@@ -79,8 +76,9 @@ it("should minify", async () => {
   const unminifiedResult = fixtures.minify.runTse("run src/index.ts");
 
   expect(unminifiedResult.status).toBe(0);
-  expect(unminifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.cjs/);
-  expect(unminifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.js/);
+  expect(unminifiedResult.stdout).toMatch(
+    /src\/index.ts -> dist\/index.js \(cjs,/
+  );
   expect(unminifiedResult.stdout).toMatch(/minify me!/);
 
   const unminifiedLength = (await fixtures.minify.readFile("dist/index.js"))
@@ -89,15 +87,16 @@ it("should minify", async () => {
   const minifiedResult = fixtures.minify.runTse("run src/index.ts --minify");
 
   expect(minifiedResult.status).toBe(0);
-  expect(minifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.cjs/);
-  expect(minifiedResult.stdout).toMatch(/src\/index.ts -> dist\/index.js/);
+  expect(minifiedResult.stdout).toMatch(
+    /src\/index.ts -> dist\/index.js \(cjs,/
+  );
   expect(unminifiedResult.stdout).toMatch(/minify me!/);
 
   const minifiedLength = (await fixtures.minify.readFile("dist/index.js"))
     .length;
 
   expect(unminifiedLength).toBeGreaterThan(minifiedLength);
-});
+}, 10000);
 
 it.skip("should bundle", async () => {
   // TODO - see bundle test in build.test.ts. Need to solve that problem

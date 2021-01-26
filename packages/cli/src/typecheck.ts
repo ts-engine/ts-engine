@@ -49,8 +49,14 @@ export interface RunTypescriptResult {
   output: string;
 }
 
+interface TypecheckOptions {
+  entryFilepaths: string[];
+  ext: string;
+  emitTypes: boolean;
+}
+
 export const typecheck = async (
-  entryFilepaths: string[]
+  options: TypecheckOptions
 ): Promise<RunTypescriptResult> => {
   const startMs = Date.now();
 
@@ -75,7 +81,7 @@ export const typecheck = async (
     emitTypes: false,
   });
   const sourceFilesResults = await processFiles(sourceFiles, {
-    emitTypes: true,
+    emitTypes: options.emitTypes,
   });
 
   const emittedFiles = [
@@ -83,16 +89,21 @@ export const typecheck = async (
     ...(sourceFilesResults.emitResult.emittedFiles ?? []),
   ];
   const emittedEntryFiles = emittedFiles.filter((emittedFile) =>
-    entryFilepaths.find((entryFile) =>
+    options.entryFilepaths.find((entryFile) =>
       entryFile
         .replace("src", "dist")
         .startsWith(emittedFile.replace("d.ts", ""))
     )
   );
 
-  // create a copy of each type file for .cjs output files
-  for (let file of emittedEntryFiles ?? []) {
-    await fs.copyFile(file, file.replace(".d.ts", ".cjs.d.ts"));
+  // correct type def extension for output extension if not .js
+  if (options.ext !== ".js") {
+    for (let file of emittedEntryFiles ?? []) {
+      await fs.rename(
+        file,
+        file.replace(".d.ts", `${options.ext.replace(/\.js$/, "")}.d.ts`)
+      );
+    }
   }
 
   const endMs = Date.now();

@@ -17,22 +17,60 @@ beforeEach(async () => {
   await fixtures.bundle.reset();
 });
 
-it("should build all input files", async () => {
+it("should build all input files as cjs by default", async () => {
   const tseResult = fixtures.normal.runTse("build src/hello.ts src/foo.ts");
 
   expect(tseResult.status).toBe(0);
   expect(tseResult.stdout).toMatch(/Typechecked 4 files/);
-  expect(tseResult.stdout).toMatch(/src\/hello.ts -> dist\/hello.cjs/);
-  expect(tseResult.stdout).toMatch(/src\/hello.ts -> dist\/hello.js/);
-  expect(tseResult.stdout).toMatch(/src\/foo.ts -> dist\/foo.cjs/);
-  expect(tseResult.stdout).toMatch(/src\/foo.ts -> dist\/foo.js/);
+  expect(tseResult.stdout).toMatch(/src\/hello.ts -> dist\/hello.js \(cjs,/);
+  expect(tseResult.stdout).toMatch(/src\/foo.ts -> dist\/foo.js \(cjs,/);
 
-  const helloResult = fixtures.normal.runNode("dist/hello.cjs");
+  const helloResult = fixtures.normal.runNode("dist/hello.js");
 
   expect(helloResult.status).toBe(0);
   expect(helloResult.stdout).toMatch(/hello world/);
 
-  const fooResult = fixtures.normal.runNode("dist/foo.cjs");
+  const fooResult = fixtures.normal.runNode("dist/foo.js");
+
+  expect(fooResult.status).toBe(0);
+  expect(fooResult.stdout).toMatch(/foo bar/);
+});
+
+it("should build all input files as esm", async () => {
+  const tseResult = fixtures.normal.runTse(
+    "build src/hello.ts src/foo.ts --output esm"
+  );
+
+  expect(tseResult.status).toBe(0);
+  expect(tseResult.stdout).toMatch(/Typechecked 4 files/);
+  expect(tseResult.stdout).toMatch(/src\/hello.ts -> dist\/hello.js \(esm,/);
+  expect(tseResult.stdout).toMatch(/src\/foo.ts -> dist\/foo.js \(esm,/);
+
+  const helloOutput = await fixtures.normal.readFile("dist/hello.js");
+  expect(helloOutput).not.toMatch(/use strict/); // use strict is not placed in esm builds but is in cjs
+
+  const fooOutput = await fixtures.normal.readFile("dist/foo.js");
+  expect(fooOutput).not.toMatch(/use strict/);
+});
+
+it("should output given extension", () => {
+  const tseResult = fixtures.normal.runTse(
+    "build src/hello.ts src/foo.ts --ext .cjs.js"
+  );
+
+  expect(tseResult.status).toBe(0);
+  expect(tseResult.stdout).toMatch(/Typechecked 4 files/);
+  expect(tseResult.stdout).toMatch(
+    /src\/hello.ts -> dist\/hello.cjs.js \(cjs,/
+  );
+  expect(tseResult.stdout).toMatch(/src\/foo.ts -> dist\/foo.cjs.js \(cjs,/);
+
+  const helloResult = fixtures.normal.runNode("dist/hello.cjs.js");
+
+  expect(helloResult.status).toBe(0);
+  expect(helloResult.stdout).toMatch(/hello world/);
+
+  const fooResult = fixtures.normal.runNode("dist/foo.cjs.js");
 
   expect(fooResult.status).toBe(0);
   expect(fooResult.stdout).toMatch(/foo bar/);
@@ -45,13 +83,23 @@ it("should report input file not found", async () => {
   expect(tseResult.stderr).toMatch(/src\/not-found\.ts not found\./);
 });
 
+it("should produce a type declaration file", async () => {
+  const tseResult = fixtures.normal.runTse(
+    "build src/hello.ts src/foo.ts --emit-types"
+  );
+
+  expect(tseResult.status).toBe(0);
+  await fixtures.normal.readFile("dist/hello.d.ts");
+  await fixtures.normal.readFile("dist/foo.d.ts");
+});
+
 it("should build react", async () => {
   const tseResult = fixtures.react.runTse("build src/index.tsx");
 
   expect(tseResult.status).toBe(0);
   expect(tseResult.stdout).toMatch(/Typechecked 1 files/);
 
-  const nodeResult = fixtures.react.runNode("dist/index.cjs");
+  const nodeResult = fixtures.react.runNode("dist/index.js");
 
   expect(nodeResult.status).toBe(0);
   expect(nodeResult.stdout).toMatch(/<span>hello world<\/span>/);
@@ -104,6 +152,17 @@ it("should minify", async () => {
   expect(unminifiedLength).toBeGreaterThan(minifiedLength);
 });
 
+it("should enforce a known output type", async () => {
+  const tseResult = fixtures.normal.runTse(
+    "build src/hello.ts --output unknown"
+  );
+
+  expect(tseResult.status).toBe(1);
+  expect(tseResult.stderr).toMatch(
+    /Unknown output unknown. Only cjs and esm are supported./
+  );
+});
+
 it.skip("should bundle", async () => {
   // TODO - for some reason the bundle build does not work in this test, but works
   //        when executed in practice
@@ -114,7 +173,7 @@ it.skip("should bundle", async () => {
   const unbundledLength = (await fixtures.bundle.readFile("dist/index.js"))
     .length;
 
-  const unbundledExecResult = fixtures.bundle.runNode("dist/index.cjs");
+  const unbundledExecResult = fixtures.bundle.runNode("dist/index.js");
   expect(unbundledExecResult.status).toBe(0);
   expect(unbundledExecResult.stdout).toMatch(/<span>hello world<\/span>/);
 
@@ -125,7 +184,7 @@ it.skip("should bundle", async () => {
   const bundledLength = (await fixtures.bundle.readFile("dist/index.js"))
     .length;
 
-  const bundledExecResult = fixtures.bundle.runNode("dist/index.cjs");
+  const bundledExecResult = fixtures.bundle.runNode("dist/index.js");
   expect(bundledExecResult.status).toBe(0);
   expect(bundledExecResult.stdout).toMatch(/<span>hello world<\/span>/);
 

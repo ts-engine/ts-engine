@@ -59,4 +59,4 @@ it("should fix errors", async () => {
   expect(await fixtures.fix.readFile("index.ts")).toBe(
     `export const one = 1;\n`
   );
-});
+}, 10000);

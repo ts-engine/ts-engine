@@ -26,6 +26,11 @@ export const createCli = () => {
           type: "boolean",
         },
         {
+          name: "emit-types",
+          description: "Emit types.",
+          type: "boolean",
+        },
+        {
           name: "minify",
           description: "Minify output code.",
           type: "boolean",
@@ -34,6 +39,16 @@ export const createCli = () => {
           name: "bundle",
           description: "Bundle dependencies.",
           type: "boolean",
+        },
+        {
+          name: "output",
+          description: "Output module type, cjs or esm. Defaults to cjs.",
+          type: "string",
+        },
+        {
+          name: "ext",
+          description: "Output file extension. Defaults to '.js'.",
+          type: "string",
         },
       ],
       positionals: [

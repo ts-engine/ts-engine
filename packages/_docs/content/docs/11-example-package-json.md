@@ -11,11 +11,13 @@ slug: example-package-json
 {
   "name": "my-library",
   "version": "1.0.0",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.esm.d.ts",
   "scripts": {
-    "build": "tse build src/index.ts",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "tse build src/index.ts --emit-types --ext .cjs.js",
+    "build:esm": "tse build src/index.ts --emit-types --ext .esm.js --output esm",
     "lint": "tse lint .",
     "test": "tse test --coverage"
   },
@@ -33,7 +35,7 @@ When writing an application remember to install `@ts-engine/runtime`.
 {
   "name": "my-app",
   "version": "1.0.0",
-  "main": "dist/index.cjs",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tse build src/index.ts",
     "lint": "tse lint .",
