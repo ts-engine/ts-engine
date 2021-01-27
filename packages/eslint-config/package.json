@@ -1,8 +1,9 @@
 {
   "name": "@ts-engine/eslint-config",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "ts-engine's ESLint config.",
   "license": "MIT",
+  "homepage": "https://ts-engine.dev",
   "main": "index.js",
   "files": [
     "index.js"
