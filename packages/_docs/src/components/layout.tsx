@@ -19,7 +19,7 @@ export const Layout = (props: LayoutProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div className="pb-12">
+    <div className="flex flex-col min-h-screen">
       <header className="font-semibold font-mono p-2 md:p-4 bg-blue-500 text-white">
         <div className="flex items-center justify-between">
           <Link href="/" className="text-xl md:text-3xl">
@@ -51,7 +51,7 @@ export const Layout = (props: LayoutProps) => {
           </div>
         </div>
       </header>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row pb-6 flex-grow">
         <aside className="p-6 pb-0 md:p-6">
           <div className="md:hidden border-b-2 pb-6">
             <button
@@ -82,6 +82,11 @@ export const Layout = (props: LayoutProps) => {
         </aside>
         <main className="container mx-auto p-6">{props.children}</main>
       </div>
+      <footer className="container mx-auto text-center">
+        <div className="inline-block border-t-2 p-8">
+          Copyright © 2021 Lee Cheneler
+        </div>
+      </footer>
     </div>
   );
 };
