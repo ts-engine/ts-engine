@@ -1,8 +1,9 @@
 {
   "name": "@ts-engine/runtime",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "ts-engine's runtime.",
   "license": "MIT",
+  "homepage": "https://ts-engine.dev",
   "repository": {
     "url": "https://github.com/ts-engine/ts-engine"
   },
