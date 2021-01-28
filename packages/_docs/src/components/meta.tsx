@@ -9,7 +9,6 @@ export const Meta = (props: MetaProps) => {
   return (
     <Head>
       <title>ts-engine - {props.title}</title>
-      <link rel="shortcut icon" href="/favicon.svg" />
     </Head>
   );
 };

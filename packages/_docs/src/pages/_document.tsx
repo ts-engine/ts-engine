@@ -15,6 +15,7 @@ class Document extends NextDocument {
             name="Description"
             content="Write TypeScript packages with optionally zero configuration."
           />
+          <link rel="shortcut icon" type="image/svg+xml" href="/favicon.svg" />
         </Head>
         <body>
           <Main />
