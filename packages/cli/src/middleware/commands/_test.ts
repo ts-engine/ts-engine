@@ -65,9 +65,9 @@ export const _test = () => async (ctx: Context, next: NextFunction) => {
         ".(js|jsx|ts|tsx|mjs|cjs|es)$": [
           "babel-jest", 
           { 
-            "configFile": ${
+            "configFile": "${
               babelConfigJsFilename ?? babelrcJsFilename ?? babelrcFilename
-            }
+            }"
           }
         ]
       }`),
