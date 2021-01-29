@@ -61,3 +61,9 @@ it("should forward args to jest", async () => {
 
   expect(tseResult.status).toBe(0);
 });
+
+it.skip("should load babel.config.js", async () => {});
+
+it.skip("should load .babelrc.js", async () => {});
+
+it.skip("should load .babelrc", async () => {});
