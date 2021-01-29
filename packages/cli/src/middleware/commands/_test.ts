@@ -51,9 +51,33 @@ export const _test = () => async (ctx: Context, next: NextFunction) => {
         }
       : {};
 
+  let transformConfig = {};
+  const babelrcFilename = path.resolve(process.cwd(), ".babelrc");
+  const babelrcJsFilename = path.resolve(process.cwd(), ".babelrc.js");
+  const babelConfigJsFilename = path.resolve(process.cwd(), "babel.config.js");
+  const babelrcExists = fs.existsSync(babelrcFilename);
+  const babelrcJsExists = fs.existsSync(babelrcJsFilename);
+  const babelConfigJsExists = fs.existsSync(babelConfigJsFilename);
+
+  if (babelrcExists || babelrcJsExists || babelConfigJsExists) {
+    transformConfig = {
+      transform: JSON.parse(`{
+        ".(js|jsx|ts|tsx|mjs|cjs|es)$": [
+          "babel-jest", 
+          { 
+            "configFile": ${
+              babelConfigJsFilename ?? babelrcJsFilename ?? babelrcFilename
+            }
+          }
+        ]
+      }`),
+    };
+  }
+
   const config = JSON.stringify({
     ...BASE_JEST_CONFIG,
     ...jestSetupConfig,
+    ...transformConfig,
     ...jestConfig,
   });
 
