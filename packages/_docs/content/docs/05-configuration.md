@@ -33,7 +33,7 @@ You can optionally provide a `.eslintrc` or `.eslintrc.js`. It will be automatic
 ```json
 {
   "extends": "@ts-engine/eslint-config",
-  "rules" {
+  "rules": {
     // your rules go here
   }
 }
