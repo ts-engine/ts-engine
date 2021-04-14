@@ -98,7 +98,7 @@ export const typecheck = async (
 
   // correct type def extension for output extension if not .js
   if (options.ext !== ".js") {
-    for (let file of emittedEntryFiles ?? []) {
+    for (const file of emittedEntryFiles ?? []) {
       await fs.rename(
         file,
         file.replace(".d.ts", `${options.ext.replace(/\.js$/, "")}.d.ts`)
@@ -124,7 +124,7 @@ export const typecheck = async (
 
   const normalisedDiagnostics: typescript.Diagnostic[] = [];
 
-  for (let d of diagnostics) {
+  for (const d of diagnostics) {
     const exists = normalisedDiagnostics.find(
       (nd) =>
         nd.category === d.category &&
