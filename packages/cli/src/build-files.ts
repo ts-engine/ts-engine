@@ -95,7 +95,7 @@ const assertFilepaths = (
   filepaths: string[],
   options: AssertFilepathsOptions
 ) => {
-  for (let filepath of filepaths) {
+  for (const filepath of filepaths) {
     const absoluteFilepath = path.resolve(filepath);
 
     if (!absoluteFilepath.startsWith(options.srcDir)) {
@@ -137,7 +137,7 @@ export const buildFiles = async (
   const outputs: OutputOptions[] = [];
 
   // build each file
-  for (let filepath of filepaths) {
+  for (const filepath of filepaths) {
     const rollupConfig = buildRollupConfig({
       input: filepath,
       minify: options.minify,
@@ -182,7 +182,7 @@ export const buildFiles = async (
     }
   }
 
-  for (let output of outputs) {
+  for (const output of outputs) {
     // report build succeeded for each output
     options.onBuildComplete &&
       options.onBuildComplete({
@@ -217,7 +217,7 @@ export const buildFilesAndWatch = async (
   assertFilepaths(filepaths, { srcDir: options.srcDir, throw: options.throw });
 
   // build each file
-  for (let filepath of filepaths) {
+  for (const filepath of filepaths) {
     const rollupConfig = buildRollupConfig({
       input: filepath,
       minify: options.minify,

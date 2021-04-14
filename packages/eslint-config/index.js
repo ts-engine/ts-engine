@@ -23,6 +23,7 @@ module.exports = {
     "plugin:jsx-a11y/recommended",
     "plugin:jest-dom/recommended",
     "plugin:testing-library/recommended",
+    "plugin:@typescript-eslint/recommended",
     ...(hasReact
       ? ["plugin:react/recommended", "plugin:react-hooks/recommended"]
       : []),
@@ -59,6 +60,12 @@ module.exports = {
     "no-unused-vars": "off",
     "import/named": "off",
     "import/no-unresolved": "off",
+    // some typescript-eslint recommended rules I disagree with in current ecosystem
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
   },
   settings: {
     "import/resolver": {
