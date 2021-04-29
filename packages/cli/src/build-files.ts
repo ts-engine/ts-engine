@@ -43,13 +43,13 @@ const buildRollupConfig = (
       extensions: SUPPORTED_EXTENSIONS_WITH_DOTS,
       preferBuiltins: true,
     }),
-    commonjs(),
     babel({
       exclude: "node_modules/**",
       extensions: SUPPORTED_EXTENSIONS_WITH_DOTS,
       babelHelpers: "runtime",
       presets: ["@ts-engine/babel-preset"],
     }),
+    commonjs(),
   ];
 
   // terser minifies code so only apply it if minifying
