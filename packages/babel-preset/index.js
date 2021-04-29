@@ -22,7 +22,9 @@ const getEnvOptions = () => {
 module.exports = () => {
   return {
     presets: [
-      ...(hasReact ? [require("@babel/preset-react")] : []),
+      ...(hasReact
+        ? [[require("@babel/preset-react"), { runtime: "automatic" }]]
+        : []),
       require("@babel/preset-typescript"),
       [require("@babel/preset-env"), getEnvOptions()],
     ],
