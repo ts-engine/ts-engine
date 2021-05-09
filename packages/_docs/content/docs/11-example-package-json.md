@@ -29,8 +29,6 @@ slug: example-package-json
 
 ## For an application
 
-When writing an application remember to install `@ts-engine/runtime`.
-
 ```json
 {
   "name": "my-app",
@@ -41,9 +39,6 @@ When writing an application remember to install `@ts-engine/runtime`.
     "lint": "tse lint .",
     "start": "tse run src/index.ts",
     "test": "tse test --coverage"
-  },
-  "dependencies": {
-    "@ts-engine/runtime": "latest"
   },
   "devDependencies": {
     "@ts-engine/cli": "latest"

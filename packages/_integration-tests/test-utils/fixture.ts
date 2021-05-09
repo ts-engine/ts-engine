@@ -50,6 +50,7 @@ type FixtureName =
   | "lint-pass"
   | "lint-warning"
   | "lint-no-files"
+  | "run-async"
   | "run-normal"
   | "run-minify"
   | "run-react"

@@ -1,6 +1,7 @@
 import { createFixture } from "../test-utils/fixture";
 
 const fixtures = {
+  async: createFixture("run-async"),
   normal: createFixture("run-normal"),
   react: createFixture("run-react"),
   syntaxError: createFixture("run-syntax-error"),
@@ -9,6 +10,7 @@ const fixtures = {
 };
 
 beforeEach(async () => {
+  await fixtures.async.reset();
   await fixtures.normal.reset();
   await fixtures.minify.reset();
   await fixtures.react.reset();
@@ -18,6 +20,15 @@ beforeEach(async () => {
 
 it("should run", async () => {
   const tseResult = fixtures.normal.runTse("run src/index.ts");
+
+  expect(tseResult.status).toBe(0);
+  expect(tseResult.stdout).toMatch(/Typechecked 1 files/);
+  expect(tseResult.stdout).toMatch(/src\/index.ts -> dist\/index.js \(cjs,/);
+  expect(tseResult.stdout).toMatch(/hello world/);
+});
+
+it("should run async code", async () => {
+  const tseResult = fixtures.async.runTse("run src/index.ts");
 
   expect(tseResult.status).toBe(0);
   expect(tseResult.stdout).toMatch(/Typechecked 1 files/);

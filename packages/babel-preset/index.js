@@ -8,10 +8,23 @@ const hasReact =
 
 const getEnvOptions = () => {
   if (process.env.NODE_ENV === "test" || process.env.BABEL_ENV === "test") {
-    return { useBuiltIns: "usage", corejs: { version: 3 } };
+    return {
+      useBuiltIns: "usage",
+      corejs: { version: 3 },
+      exclude: [
+        "babel-plugin-transform-async-to-generator",
+        "babel-plugin-transform-regenerator",
+      ],
+    };
   }
 
-  return { modules: false };
+  return {
+    modules: false,
+    exclude: [
+      "babel-plugin-transform-async-to-generator",
+      "babel-plugin-transform-regenerator",
+    ],
+  };
 };
 
 // We require() plugins and presets here as letting babel resolve them
@@ -35,10 +48,6 @@ module.exports = () => {
       require("@babel/plugin-proposal-object-rest-spread"),
       require("@babel/plugin-proposal-optional-chaining"),
       require("@babel/plugin-proposal-nullish-coalescing-operator"),
-      [
-        require("@babel/plugin-transform-runtime"),
-        { regenerator: true, corejs: 3, proposals: true },
-      ],
     ],
   };
 };
