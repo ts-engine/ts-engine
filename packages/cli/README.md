@@ -4,7 +4,7 @@
     alt="ts-engine logo" 
   />
 </p>
-<h1 align="center">@ts-engine/cli</h1>
+<h1 align="center">ts-engine</h1>
 <p align="center">
   <img style="display: inline-block; margin-right: 5px;" src="https://github.com/ts-engine/ts-engine/workflows/CI/badge.svg" />
   <img style="display: inline-block; margin-right: 5px;" src="https://badgen.net/github/release/ts-engine/ts-engine" />
@@ -22,9 +22,6 @@ Install the package.
 
 ```sh
 yarn add --dev @ts-engine/cli
-
-# for applications also install the runtime
-yarn add @ts-engine/runtime
 ```
 
 Build and typecheck your code using [Rollup](https://rollupjs.org), TypeScript and [Babel](https://babeljs.io).
@@ -54,3 +51,7 @@ tse lint .
 ## Documentation
 
 Checkout the official docs over at https://ts-engine.dev.
+
+## Examples
+
+Example Node.js applications and libraries can be found [here](./packages/_examples).

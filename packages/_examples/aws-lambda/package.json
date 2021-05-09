@@ -8,6 +8,6 @@
     "lint": "tse lint src"
   },
   "devDependencies": {
-    "@ts-engine/cli": "2.0.0-beta.7"
+    "@ts-engine/cli": "2.0.0-beta.8"
   }
 }

@@ -22,9 +22,6 @@ Install the package.
 
 ```sh
 yarn add --dev @ts-engine/cli
-
-# for applications also install the runtime
-yarn add @ts-engine/runtime
 ```
 
 Build and typecheck your code using [Rollup](https://rollupjs.org), TypeScript and [Babel](https://babeljs.io).

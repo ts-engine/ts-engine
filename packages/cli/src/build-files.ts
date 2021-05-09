@@ -39,17 +39,17 @@ const buildRollupConfig = (
   const plugins = [
     preserveShebangs(),
     json(),
+    commonjs(),
     resolve({
       extensions: SUPPORTED_EXTENSIONS_WITH_DOTS,
       preferBuiltins: true,
     }),
     babel({
-      exclude: "node_modules/**",
+      exclude: ["node_modules/**", /\/core-js\//],
       extensions: SUPPORTED_EXTENSIONS_WITH_DOTS,
-      babelHelpers: "runtime",
+      babelHelpers: "bundled",
       presets: ["@ts-engine/babel-preset"],
     }),
-    commonjs(),
   ];
 
   // terser minifies code so only apply it if minifying
@@ -74,6 +74,10 @@ const buildRollupConfig = (
     plugins,
     output,
     external: (id: string) => {
+      if (id === options.input) {
+        return false;
+      }
+
       if (options.bundle) {
         return builtInModules.includes(id);
       }
