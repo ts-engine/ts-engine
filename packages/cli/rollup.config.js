@@ -24,7 +24,7 @@ module.exports = {
     babel({
       exclude: "node_modules/**",
       extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
-      babelHelpers: "runtime",
+      babelHelpers: "bundled",
       presets: ["@ts-engine/babel-preset"],
     }),
     commonjs(),
