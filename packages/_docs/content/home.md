@@ -8,7 +8,7 @@ ts-engine aims to reduce package setup effort drastically. With just one depende
 
 ```sh
 # install the cli tool
-yarn add --dev @ts-engine/cli@next
+yarn add --dev @ts-engine/cli
 ```
 
 Build and typecheck your code using [Rollup](https://rollupjs.org), TypeScript and [Babel](https://babeljs.io).
