@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/cli",
-  "version": "2.0.0-beta.8",
+  "version": "2.0.0",
   "description": "Write TypeScript packages with optionally zero configuration.",
   "license": "MIT",
   "homepage": "https://ts-engine.dev",
@@ -42,8 +42,8 @@
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
-    "@ts-engine/babel-preset": "^2.0.0-beta.8",
-    "@ts-engine/eslint-config": "^2.0.0-beta.8",
+    "@ts-engine/babel-preset": "^2.0.0",
+    "@ts-engine/eslint-config": "^2.0.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.7",
     "builtin-modules": "^3.1.0",
