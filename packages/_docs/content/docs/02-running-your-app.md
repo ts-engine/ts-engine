@@ -13,7 +13,7 @@ tse run src/index.ts
 # pass ts-engine options before the file you want to run
 tse run --watch src/index.ts
 
-# pass options you want forwarded to your app after the file you want to run
+# pass your app options after the file you want to run
 tse run src/index.ts --port 3000
 ```
 

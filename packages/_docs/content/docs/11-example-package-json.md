@@ -5,6 +5,8 @@ slug: example-package-json
 
 # Example package.json
 
+Check out the comprehensive [CLI reference](/docs/cli-reference).
+
 ## For a library
 
 ```json
