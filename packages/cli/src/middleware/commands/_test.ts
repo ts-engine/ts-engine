@@ -32,7 +32,10 @@ export const _test = () => async (ctx: Context, next: NextFunction) => {
     try {
       jestConfig = require(jestConfigFilename);
     } catch (error) {
-      ctx.throw(1, `Failed to load jest.config.js: ${error.message}`);
+      ctx.throw(
+        1,
+        `Failed to load jest.config.js: ${(error as Error).message}`
+      );
     }
   }
 
