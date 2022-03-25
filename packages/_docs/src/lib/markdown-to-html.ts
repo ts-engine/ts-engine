@@ -1,4 +1,4 @@
-import unified from "unified";
+import { unified } from "unified";
 import parse from "remark-parse";
 import highlight from "remark-highlight.js";
 import remark2rehype from "remark-rehype";

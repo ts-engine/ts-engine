@@ -22,10 +22,13 @@ module.exports = {
     "plugin:jest/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:jest-dom/recommended",
-    "plugin:testing-library/recommended",
     "plugin:@typescript-eslint/recommended",
     ...(hasReact
-      ? ["plugin:react/recommended", "plugin:react-hooks/recommended"]
+      ? [
+          "plugin:react/recommended",
+          "plugin:react-hooks/recommended",
+          "plugin:testing-library/react",
+        ]
       : []),
   ],
   globals: {

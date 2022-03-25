@@ -5,7 +5,7 @@ import * as rollup from "rollup";
 import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
-import babel from "@rollup/plugin-babel";
+import { babel } from "@rollup/plugin-babel";
 import { terser } from "rollup-plugin-terser";
 import { preserveShebangs } from "rollup-plugin-preserve-shebangs";
 import builtInModules from "builtin-modules";
