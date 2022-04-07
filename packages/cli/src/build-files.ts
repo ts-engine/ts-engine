@@ -43,6 +43,7 @@ const buildRollupConfig = (
     resolve({
       extensions: SUPPORTED_EXTENSIONS_WITH_DOTS,
       preferBuiltins: true,
+      exportConditions: ["node"],
     }),
     babel({
       exclude: ["node_modules/**", /\/core-js\//],
