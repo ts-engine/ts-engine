@@ -9,7 +9,7 @@
     "start": "tse run src/index.ts"
   },
   "devDependencies": {
-    "@ts-engine/cli": "3.0.3",
+    "@ts-engine/cli": "3.0.4",
     "@types/express": "^4.17.11"
   },
   "dependencies": {
