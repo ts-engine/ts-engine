@@ -243,7 +243,7 @@ export const buildFilesAndWatch = async (
     const watcher = rollup.watch({
       ...rollupConfig,
       watch: {
-        exclude: ["node_modules/**", "dist/**", "coverage/**"],
+        exclude: ["dist/**", "coverage/**"],
         buildDelay: 300,
       },
     });
