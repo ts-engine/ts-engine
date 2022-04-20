@@ -1,6 +1,6 @@
 {
   "name": "@ts-engine/babel-preset",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "ts-engine's Babel preset.",
   "license": "MIT",
   "homepage": "https://ts-engine.dev",
