@@ -16,6 +16,7 @@ Check out the comprehensive [CLI reference](/docs/cli-reference).
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.esm.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "tse build src/index.ts --emit-types --ext .cjs.js",
