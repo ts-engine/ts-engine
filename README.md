@@ -1,3 +1,5 @@
+**DEPRECATED: Due to the ecosystem evolving a lot of the last few years ts-engine is not longer the useful tool it once was and is no longer being maintained.**
+
 <p align="center">
   <img 
     src="https://raw.githubusercontent.com/ts-engine/assets/master/logo.png"
